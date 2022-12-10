@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#FFD1D1"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    app:strokeColor="#F5C0A2"
+    app:strokeWidth="0.5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVProfilePhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/profile_photo1"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/TVUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/IVProfilePhoto"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Siti"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TVPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVProfilePhoto"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Today was a fine day so I woke up early and went for a jog. Suddenly, a dog came out of nowhere and chased after me, i then ran 50km/h to get rid of it. After that I went to the nearby coffee shop to have my breakfast. When I’m on the way home, i accidentally stepped on a dog’s shit. In conclusion, today is an awful day."
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/IVPostPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_below="@+id/TVPost"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/post_photo1"/>
+
+        <ImageView
+            android:id="@+id/IVLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_like"/>
+
+        <TextView
+            android:id="@+id/TVLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="11dp"
+            android:layout_toEndOf="@+id/IVLike"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Like"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/IVComment"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_toEndOf="@+id/TVLike"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="30dp"
+            android:src="@drawable/ic_comment"/>
+
+        <TextView
+            android:id="@+id/TVComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="11dp"
+            android:layout_toEndOf="@+id/IVComment"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Comment"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/IVShare"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/TVShare"
+            android:src="@drawable/ic_share" />
+
+        <TextView
+            android:id="@+id/TVShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Share"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

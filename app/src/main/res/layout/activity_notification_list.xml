@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LLNotificationList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFD1D1"
+    tools:context=".NotificationListActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/TBNotificationListAct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#D0D2FF"
+        android:minHeight="?attr/actionBarSize" />
+
+    <View
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/SRLNotificationList">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVNotificationItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

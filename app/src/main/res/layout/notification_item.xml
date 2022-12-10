@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/MCVNotificationItem"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:backgroundTint="#FFD1D1"
+    app:strokeColor="@color/black"
+    app:strokeWidth="0.5dp">
+
+    <RelativeLayout
+        android:id="@+id/RLNotificationItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVProfilePhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/profile_photo1"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/TVNotificationBrief"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/IVProfilePhoto"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Mary liked your post."
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TVNotificationDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TVNotificationBrief"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/IVProfilePhoto"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Today was a fine day so I woke up early and went for a jog. Suddenly, a dog came out of nowhere and chased after me, i then ran 50km/h to get rid of it. After that I went to the nearby coffee shop to have my breakfast. When I’m on the way home, i accidentally stepped on a dog’s shit. In conclusion, today is an awful day."
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
