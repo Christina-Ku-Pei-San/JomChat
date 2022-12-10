@@ -23,7 +23,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/SRLNotificationList">
+        android:id="@+id/SRLNotificationList"
+        tools:ignore="MissingClass">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVNotificationItem"
