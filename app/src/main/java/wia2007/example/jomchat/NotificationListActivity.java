@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -15,18 +18,24 @@ public class NotificationListActivity extends AppCompatActivity {
     private NotificationAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    ImageView ivProfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_list);
 
+        ivProfile = findViewById(R.id.IVProfilePhoto);
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationListActivity.this, ProfileActivity.class);
+                startActivity(startintent);
+            }
+        });
+
         createNotificationList();
         buildRecyclerView();
-    }
-
-    public void changeItem(int position, String text) {
-        mNotificationList.get(position).changeText1(text);
-        mAdapter.notifyItemChanged(position);
     }
 
     public void createNotificationList() {
@@ -60,7 +69,8 @@ public class NotificationListActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new NotificationAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                changeItem(position, "Clicked");
+                Intent intent = new Intent(NotificationListActivity.this, NotificationActivity.class);
+                startActivity(intent);
             }
         });
     }

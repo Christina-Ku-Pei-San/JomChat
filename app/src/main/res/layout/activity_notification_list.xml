@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LLNotificationList"
     android:layout_width="match_parent"
@@ -8,17 +9,79 @@
     android:background="#FFD1D1"
     tools:context=".NotificationListActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/TBNotificationListAct"
+    <RelativeLayout
+        android:id="@+id/RLNotificationListAct"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#D0D2FF"
-        android:minHeight="?attr/actionBarSize" />
+        android:layout_height="100dp"
+        android:background="#D0D2FF">
 
-    <View
-        android:background="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/IVMessenger"
+            android:layout_marginStart="7.5dp"
+            android:layout_marginBottom="6.5dp"
+            android:src="@drawable/ic_circle"/>
+
+        <ImageView
+            android:id="@+id/IVHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_home" />
+
+        <ImageView
+            android:id="@+id/IVMessenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/IVHome"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_messenger"/>
+
+        <ImageView
+            android:id="@+id/IVNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/IVMessenger"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_notification"/>
+
+        <TextView
+            android:id="@+id/TVNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:layout_toEndOf="@id/IVNotification"
+            android:fontFamily="@font/bangers"
+            android:text="NOTIFICATION"
+            android:textColor="@android:color/black"
+            android:textSize="28sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVProfilePhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/profile_photo1"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp"/>
+
+        <View
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
