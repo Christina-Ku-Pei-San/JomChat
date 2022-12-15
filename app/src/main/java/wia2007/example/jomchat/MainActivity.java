@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnPost, btnProfile, btnNotificationList, btnNotification;
+    Button btnPost, btnProfile, btnNotificationList, btnNotification, login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(startintent);
+            }
+        });
+        login = findViewById(R.id.gogo);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent lg = new Intent(MainActivity.this, SignUpActivityActivity.class);
+                startActivity(lg);
             }
         });
     }
