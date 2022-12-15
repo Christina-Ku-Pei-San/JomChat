@@ -142,7 +142,7 @@
         app:helperText="Required*"
         app:helperTextTextColor="@color/red"
         android:hint="Enter Password"
-        app:endIconMode="password_toggle">
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterPassword"
@@ -162,7 +162,7 @@
         android:layout_below="@id/til_password"
         app:helperText="Required*"
         app:helperTextTextColor="@color/red"
-        app:endIconMode="password_toggle"
+        app:passwordToggleEnabled="true"
         android:hint="Confirm Password">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -182,12 +182,12 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="15dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/button"
         android:backgroundTint="@color/light_yellow"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Sign Up"
-        android:textColor="#8B90FF"
+        android:textColor="@color/purple_500"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
 
 </RelativeLayout>
