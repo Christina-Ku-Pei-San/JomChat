@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFD1D1"
-
-    >
+    android:background="#FFD1D1">
 
     <TextView
         android:id="@+id/TV_signUp"
@@ -16,7 +14,9 @@
         android:layout_marginTop="18dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="SIGN UP"
-        android:textSize="35sp">
+        android:textColor="@color/purple_500"
+        android:textSize="35sp"
+        android:textStyle="bold">
 
     </TextView>
 
@@ -38,7 +38,8 @@
             android:id="@+id/til_enterName"
             android:layout_width="300dp"
             android:layout_height="60dp"
-            android:fontFamily="@font/droid_sans_mono" />
+            android:fontFamily="@font/droid_sans_mono"
+            android:textColorHighlight="@color/purple_500" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

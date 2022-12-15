@@ -4,7 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="#FFD1D1">
+
+    <TextView
+        android:id="@+id/jomchat_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/droid_sans_mono"
+        android:text="JOMCHAT"
+        android:textColor="@color/purple_500"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/username_login"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Username"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/jomchat_login"
+        android:layout_marginTop="150dp"
+        app:helperText="Required*"
+        app:helperTextTextColor="@color/red"
+        app:endIconMode="clear_text"
+        android:layout_centerHorizontal="true"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_username"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:fontFamily="@font/droid_sans_mono"
+            android:textSize="20sp"
+             />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_login"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Password"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/username_login"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        app:helperText="Required*"
+        app:helperTextTextColor="@color/red"
+        app:endIconMode="password_toggle"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_password"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:fontFamily="@font/droid_sans_mono"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/TV_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jomchat_login"
+        android:text="Username"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="60dp"
+        android:textSize="25sp"
+        android:textColor="@color/purple_500"
+        android:fontFamily="@font/droid_sans_mono">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/TV_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username_login"
+        android:text="Password"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="60dp"
+        android:textSize="25sp"
+        android:textColor="@color/purple_500"
+        android:fontFamily="@font/droid_sans_mono">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_login"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/button"
+        android:fontFamily="@font/droid_sans_mono"
+        android:text="Login"
+        android:textColor="#8B90FF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_login"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/button"
+        android:backgroundTint="@color/light_yellow"
+        android:fontFamily="@font/droid_sans_mono"
+        android:text="Sign Up"
+        android:textColor="#8B90FF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
 
 </RelativeLayout>
 
