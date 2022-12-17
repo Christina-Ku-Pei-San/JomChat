@@ -52,7 +52,7 @@ public class SignUpActivityActivity extends AppCompatActivity {
         autoCompleteYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String department = parent.getItemAtPosition(position).toString();
+                String years = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(), "Year: " + years, Toast.LENGTH_SHORT).show();
 
             }
