@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnPost, btnProfile, btnNotificationList, btnNotification, login;
+    Button btnPost, btnProfile, btnNotificationList, btnNotification, login, btnPostList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,16 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent lg = new Intent(MainActivity.this, SignUpActivityActivity.class);
+                Intent lg = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(lg);
+            }
+        });
+        btnPostList = findViewById(R.id.BtnPostList);
+        btnPostList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(MainActivity.this, PostListActivity.class);
+                startActivity(startintent);
             }
         });
     }

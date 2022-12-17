@@ -28,7 +28,7 @@
         android:layout_below="@+id/jomchat_login"
         android:layout_marginTop="150dp"
         app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
+        app:helperTextTextColor="@android:color/holo_red_dark"
         app:endIconMode="clear_text"
         android:layout_centerHorizontal="true"
         >

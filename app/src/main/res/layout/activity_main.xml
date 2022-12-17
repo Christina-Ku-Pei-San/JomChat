@@ -38,4 +38,10 @@
         android:layout_height="wrap_content"
         android:text="login" />
 
+    <Button
+        android:id="@+id/BtnPostList"
+        android:layout_width="319dp"
+        android:layout_height="wrap_content"
+        android:text=" Post List Activity" />
+
 </LinearLayout>
