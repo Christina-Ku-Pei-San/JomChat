@@ -55,73 +55,46 @@
             android:layout_marginTop="8dp"
             android:src="@drawable/post_photo1"/>
 
-        <ImageView
+
+        <Button
             android:id="@+id/IVLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/IVPostPhoto"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_like"/>
+            android:layout_marginTop="-4dp"
+            android:backgroundTint="#FFD1D1"
+            android:drawableLeft="@drawable/ic_like"
+            android:text="like"
+            android:textColor="@color/black"
+            android:textSize="13dp" />
 
-        <TextView
-            android:id="@+id/TVLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/IVPostPhoto"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="11dp"
-            android:layout_toEndOf="@+id/IVLike"
-            android:fontFamily="@font/m_plus_1p"
-            android:text="Like"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-
-        <ImageView
+        <Button
             android:id="@+id/IVComment"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_below="@+id/IVPostPhoto"
-            android:layout_toEndOf="@+id/TVLike"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="30dp"
-            android:src="@drawable/ic_comment"/>
-
-        <TextView
-            android:id="@+id/TVComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/IVPostPhoto"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="11dp"
-            android:layout_toEndOf="@+id/IVComment"
-            android:fontFamily="@font/m_plus_1p"
-            android:text="Comment"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:layout_toRightOf="@+id/IVLike"
+            android:backgroundTint="#FFD1D1"
+            android:drawableLeft="@drawable/ic_comment"
+            android:text="comment"
+            android:textSize="13dp"
+            android:textColor="@color/black" />
 
-        <ImageView
+
+
+        <Button
             android:id="@+id/IVShare"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_below="@+id/IVPostPhoto"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_toStartOf="@+id/TVShare"
-            android:src="@drawable/ic_share" />
-
-        <TextView
-            android:id="@+id/TVShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/IVPostPhoto"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="11dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/m_plus_1p"
+            android:layout_toRightOf="@id/IVComment"
+            android:backgroundTint="#FFD1D1"
+            android:drawableLeft="@drawable/ic_share"
             android:text="Share"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="13dp"
+            android:textColor="@color/black"  />
+
+
 
     </RelativeLayout>
 
