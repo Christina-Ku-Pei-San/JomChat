@@ -23,24 +23,65 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AddPostActivity extends AppCompatActivity {
-ImageButton gallery_button, camera_button;
+    ImageButton gallery_button;
     Button submit_button;
     private ImageView imageView;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     TextInputEditText content;
+
+    ImageView ivBack, ivMessenger, ivNotification;
+    CircleImageView ivProfilePhoto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
-        imageView = findViewById(R.id.upload_image);
-        gallery_button = (ImageButton)findViewById(R.id.gallery);
+
+        ivBack = findViewById(R.id.IVBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(AddPostActivity.this, PostListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivMessenger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(AddPostActivity.this, MessengerListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivNotification = findViewById(R.id.IVNotification);
+        ivNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(AddPostActivity.this, NotificationListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(AddPostActivity.this, SettingActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        gallery_button = (ImageButton) findViewById(R.id.IBGallery);
         gallery_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,8 +90,8 @@ ImageButton gallery_button, camera_button;
                 }
             }
         });
-        submit_button =(Button)findViewById(R.id.submit);
 
+        submit_button = (Button) findViewById(R.id.BtnSubmit);
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,15 +102,12 @@ ImageButton gallery_button, camera_button;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
-
-
             }
         });
 
-
-
-
+//        imageView = findViewById(R.id.upload_image);
     }
+
     // function to let's the user to choose image from camera or gallery
     private void chooseImage(Context context){
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
@@ -96,6 +134,7 @@ ImageButton gallery_button, camera_button;
         });
         builder.show();
     }
+
     // function to check permission
     public static boolean checkAndRequestPermissions(final Activity context) {
         int WExtstorePermission = ContextCompat.checkSelfPermission(context,
@@ -118,6 +157,7 @@ ImageButton gallery_button, camera_button;
         }
         return true;
     }
+
     // Handled permission Result
     @Override
     public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
@@ -140,6 +180,7 @@ ImageButton gallery_button, camera_button;
                 break;
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

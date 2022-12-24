@@ -4,16 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class NotificationActivity extends AppCompatActivity {
     private ArrayList<CommentItem> mCommentList;
-
     private RecyclerView mRecyclerView;
     private CommentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    ImageView ivBack, ivHome, ivMessenger;
+    CircleImageView ivProfilePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,42 @@ public class NotificationActivity extends AppCompatActivity {
 
         createNotificationList();
         buildRecyclerView();
+
+        ivBack = findViewById(R.id.IVBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationActivity.this, NotificationListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivHome = findViewById(R.id.IVHome);
+        ivHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationActivity.this, PostListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivMessenger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationActivity.this, MessengerListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationActivity.this, SettingActivity.class);
+                startActivity(startintent);
+            }
+        });
     }
 
     public void createNotificationList() {

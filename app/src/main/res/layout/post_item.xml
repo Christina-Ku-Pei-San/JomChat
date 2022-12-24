@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/MCVPostItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="#FFD1D1"
@@ -10,9 +11,12 @@
     app:strokeWidth="0.5dp">
 
     <RelativeLayout
+        android:id="@+id/RLPostItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/IVProfilePhoto"
@@ -55,47 +59,40 @@
             android:layout_marginTop="8dp"
             android:src="@drawable/post_photo1"/>
 
-
         <Button
-            android:id="@+id/IVLike"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/BtnLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/IVPostPhoto"
-            android:layout_marginTop="-4dp"
             android:backgroundTint="#FFD1D1"
             android:drawableLeft="@drawable/ic_like"
-            android:text="like"
-            android:textColor="@color/black"
-            android:textSize="13dp" />
-
-        <Button
-            android:id="@+id/IVComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/IVPostPhoto"
-            android:layout_toRightOf="@+id/IVLike"
-            android:backgroundTint="#FFD1D1"
-            android:drawableLeft="@drawable/ic_comment"
-            android:text="comment"
-            android:textSize="13dp"
+            android:text="Like"
             android:textColor="@color/black" />
 
-
-
         <Button
-            android:id="@+id/IVShare"
+            android:id="@+id/BtnComment"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/IVPostPhoto"
-            android:layout_toRightOf="@id/IVComment"
+            android:layout_toEndOf="@+id/BtnLike"
+            android:backgroundTint="#FFD1D1"
+            android:drawableLeft="@drawable/ic_comment"
+            android:text="Comment"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/BtnShare"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_alignParentEnd="true"
             android:backgroundTint="#FFD1D1"
             android:drawableLeft="@drawable/ic_share"
             android:text="Share"
-            android:textSize="13dp"
-            android:textColor="@color/black"  />
-
-
-
+            android:textColor="@color/black" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

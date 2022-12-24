@@ -1,36 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/RLSearchPostAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFD1D1">
-    <EditText
-        android:id="@+id/etSearch"
+
+    <RelativeLayout
+        android:id="@+id/RLSearchPost"
         android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#D0D2FF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/IVBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/IVWhiteCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="7.5dp"
+            android:src="@drawable/ic_circle" />
+
+        <ImageView
+            android:id="@+id/IVHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_home" />
+
+        <ImageView
+            android:id="@+id/IVMessenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/IVHome"
+            android:src="@drawable/ic_messenger" />
+
+        <ImageView
+            android:id="@+id/IVNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/IVMessenger"
+            android:src="@drawable/ic_notification" />
+
+        <TextView
+            android:id="@+id/TVPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="46dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toEndOf="@id/IVNotification"
+            android:fontFamily="@font/bangers"
+            android:text="JOMCHAT"
+            android:textColor="@android:color/black"
+            android:textSize="28sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVProfilePhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/profile_photo1"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/black" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/ETSearch"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/RLSearchPost"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#FFFAD7"
         android:hint="Search"
-        android:minHeight="48dp" />
-
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingSearchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="#FFFFFF"
-        android:layout_alignBottom="@+id/etSearch"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/srch_button" />
+        android:minHeight="48dp"
+        android:padding="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv"
+        android:id="@+id/RVPostItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/etSearch"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@+id/ETSearch"/>
 
 </RelativeLayout>

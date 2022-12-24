@@ -2,22 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RLLoginAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:background="#FFD1D1">
 
     <TextView
-        android:id="@+id/jomchat_login"
+        android:id="@+id/TV_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="JOMCHAT"
-        android:textColor="@color/purple_500"
+        android:textColor="#8B90FF"
         android:textSize="40sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/TV_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TV_Login"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/droid_sans_mono"
+        android:text="Username"
+        android:textColor="#8B90FF"
+        android:textSize="25sp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_login"
@@ -25,21 +39,19 @@
         android:hint="Username"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/jomchat_login"
-        android:layout_marginTop="150dp"
+        android:layout_below="@+id/TV_Login"
+        android:layout_marginTop="130dp"
         app:helperText="Required*"
         app:helperTextTextColor="@android:color/holo_red_dark"
         app:endIconMode="clear_text"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_centerHorizontal="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_username"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:fontFamily="@font/droid_sans_mono"
-            android:textSize="20sp"
-             />
+            android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -53,8 +65,7 @@
         android:layout_centerHorizontal="true"
         app:helperText="Required*"
         app:helperTextTextColor="@color/red"
-        app:endIconMode="password_toggle"
-        >
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_password"
@@ -62,39 +73,37 @@
             android:layout_height="60dp"
             android:fontFamily="@font/droid_sans_mono"
             android:textSize="20sp"
-            android:inputType="textPassword"
-            />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/TV_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/jomchat_login"
-        android:text="Username"
-        android:layout_marginTop="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="60dp"
-        android:textSize="25sp"
-        android:textColor="@color/purple_500"
-        android:fontFamily="@font/droid_sans_mono">
-
-    </TextView>
 
     <TextView
         android:id="@+id/TV_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/username_login"
-        android:text="Password"
-        android:layout_marginTop="50dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="60dp"
-        android:textSize="25sp"
-        android:textColor="@color/purple_500"
-        android:fontFamily="@font/droid_sans_mono">
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/droid_sans_mono"
+        android:text="Password"
+        android:textColor="#8B90FF"
+        android:textSize="25sp"/>
 
-    </TextView>
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/password_login"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/light_yellow"
+        android:fontFamily="@font/droid_sans_mono"
+        android:text="Sign Up"
+        android:textColor="#8B90FF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
 
     <Button
         android:id="@+id/btn_login"
@@ -104,31 +113,13 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="100dp"
         android:layout_marginRight="30dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="#8B90FF"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Login"
-        android:textColor="@color/light_yellow"
+        android:textColor="#FFFAD7"
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="10dp" />
-
-    <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="138dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/password_login"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp"
-
-        android:backgroundTint="@color/light_yellow"
-        android:fontFamily="@font/droid_sans_mono"
-        android:text="Sign Up"
-        android:textColor="@color/purple_500"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:cornerRadius="10dp" />
-
 
 </RelativeLayout>
 

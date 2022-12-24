@@ -5,26 +5,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class SearchPostActivity extends AppCompatActivity {
-    ImageView ivBack, ivMessenger, ivNotification;
-    CircleImageView ivProfilePhoto;
-    EditText etSearch;
+public class ChangePasswordActivity extends AppCompatActivity {
+    ImageView ivBack, ivHome, ivMessenger, ivNotification;
+    Button btnConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_post);
+        setContentView(R.layout.activity_change_password);
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, PostListActivity.class);
+                Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivHome = findViewById(R.id.IVHome);
+        ivHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(ChangePasswordActivity.this, PostListActivity.class);
                 startActivity(startintent);
             }
         });
@@ -33,7 +39,7 @@ public class SearchPostActivity extends AppCompatActivity {
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, MessengerListActivity.class);
+                Intent startintent = new Intent(ChangePasswordActivity.this, MessengerListActivity.class);
                 startActivity(startintent);
             }
         });
@@ -42,20 +48,18 @@ public class SearchPostActivity extends AppCompatActivity {
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, NotificationListActivity.class);
+                Intent startintent = new Intent(ChangePasswordActivity.this, NotificationListActivity.class);
                 startActivity(startintent);
             }
         });
 
-        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
-        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
+        btnConfirm = findViewById(R.id.btn_confirm);
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, SettingActivity.class);
+                Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
                 startActivity(startintent);
             }
         });
-
-        etSearch = findViewById(R.id.ETSearch);
     }
 }

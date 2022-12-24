@@ -9,16 +9,40 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/BtnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login Activity" />
+
+    <Button
+        android:id="@+id/BtnSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SignUp Activity" />
+
+    <Button
+        android:id="@+id/BtnPostList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post List Activity" />
+
+    <Button
         android:id="@+id/BtnPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post Activity" />
 
     <Button
-        android:id="@+id/BtnProfile"
+        android:id="@+id/BtnMessengerList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile Activity" />
+        android:text="Messenger List Activity" />
+
+    <Button
+        android:id="@+id/BtnMessenger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Messenger Activity" />
 
     <Button
         android:id="@+id/BtnNotificationList"
@@ -33,15 +57,15 @@
         android:text="Notification Activity" />
 
     <Button
-        android:id="@+id/gogo"
-        android:layout_width="match_parent"
+        android:id="@+id/BtnSetting"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="login" />
+        android:text="Setting Activity" />
 
     <Button
-        android:id="@+id/BtnPostList"
-        android:layout_width="319dp"
+        android:id="@+id/BtnProfile"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Post List Activity" />
+        android:text="Profile Activity" />
 
 </LinearLayout>

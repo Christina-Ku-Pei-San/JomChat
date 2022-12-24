@@ -2,37 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/CLAddPostAct"
+    android:id="@+id/CLSettingAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFD1D1"
-    tools:context=".SearchPostActivity">
+    tools:context=".SettingActivity">
 
     <RelativeLayout
-        android:id="@+id/RLAddPost"
+        android:id="@+id/RLSetting"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#D0D2FF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/IVBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_back" />
-
-        <ImageView
-            android:id="@+id/IVWhiteCircle"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="7.5dp"
-            android:src="@drawable/ic_circle" />
 
         <ImageView
             android:id="@+id/IVHome"
@@ -64,7 +46,7 @@
             android:src="@drawable/ic_notification" />
 
         <TextView
-            android:id="@+id/TVPost"
+            android:id="@+id/TVSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -72,7 +54,7 @@
             android:layout_marginLeft="30dp"
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
-            android:text="JOMCHAT"
+            android:text="Settings"
             android:textColor="@android:color/black"
             android:textSize="28sp" />
 
@@ -95,70 +77,57 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/BtnSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="#8B90FF"
-        android:text="Submit"
-        android:textColor="#FFFAD7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/IVUploadedImage"
-        android:layout_width="250dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/BtnSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TILAddPost"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TILAddPost"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:id="@+id/BtnViewProfile"
+        android:layout_width="225dp"
+        android:layout_height="60dp"
         android:layout_marginTop="50dp"
-        android:background="#FFFAD7"
-        android:padding="10dp"
-        app:boxCornerRadiusBottomEnd="20dp"
-        app:boxCornerRadiusBottomStart="20dp"
-        app:boxCornerRadiusTopEnd="20dp"
-        app:boxCornerRadiusTopStart="20dp"
+        android:backgroundTint="#FFF7BB"
+        android:text="View Profile"
+        android:textColor="#8B90FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/RLAddPost">
+        app:layout_constraintTop_toBottomOf="@+id/RLSetting" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/TETAddPost"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFAD7"
-            android:hint="Content"
-            android:textColor="@color/black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageButton
-        android:id="@+id/IBGallery"
-        android:layout_width="48dp"
+    <Switch
+        android:id="@+id/SwDarkMode"
+        android:layout_width="225dp"
         android:layout_height="48dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="10dp"
-        android:adjustViewBounds="true"
-        android:background="#FFFAD7"
+        android:layout_marginTop="30dp"
+        android:background="#FFF7BB"
         android:padding="8dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@id/TILAddPost"
+        android:text="DARK MODE"
+        android:textAlignment="center"
+        android:textColor="#8B90FF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_attach_file"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnViewProfile" />
+
+    <Button
+        android:id="@+id/BtnChangePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#FFF7BB"
+        android:text="Change Password"
+        android:textColor="#8B90FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SwDarkMode" />
+
+    <Button
+        android:id="@+id/BtnLogout"
+        android:layout_width="225dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#FFF7BB"
+        android:text="Logout"
+        android:textColor="#8B90FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnChangePassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

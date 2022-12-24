@@ -2,16 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LLPostAct"
+    android:id="@+id/LLMessengerListAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEDED"
+    android:background="#FFD1D1"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:scrollbars="vertical"
-    tools:context=".PostActivity">
+    tools:context=".MessengerListActivity">
 
     <RelativeLayout
-        android:id="@+id/RLPost"
+        android:id="@+id/RLMessengerList"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#D0D2FF"
@@ -19,21 +19,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/IVBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_back" />
-
-        <ImageView
             android:id="@+id/IVWhiteCircle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="7.5dp"
+            android:layout_toEndOf="@id/IVHome"
             android:src="@drawable/ic_circle" />
 
         <ImageView
@@ -66,7 +57,7 @@
             android:src="@drawable/ic_notification" />
 
         <TextView
-            android:id="@+id/TVPost"
+            android:id="@+id/TVMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -74,7 +65,7 @@
             android:layout_marginLeft="30dp"
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
-            android:text="JOMCHAT"
+            android:text="Message"
             android:textColor="@android:color/black"
             android:textSize="28sp" />
 
@@ -96,28 +87,33 @@
             android:background="@color/black" />
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/NSVPost"
+    <EditText
+        android:id="@+id/ETSearch"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RLSearchPostAct"
+        android:layout_margin="16dp"
+        android:background="#FFFAD7"
+        android:hint="Search"
+        android:minHeight="48dp"
+        android:padding="8dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F5C0A2" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/SRLMessengerList"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/LLPost"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVMessengerItem"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
 
-            <include
-                layout="@layout/post_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <include
-                layout="@layout/post_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

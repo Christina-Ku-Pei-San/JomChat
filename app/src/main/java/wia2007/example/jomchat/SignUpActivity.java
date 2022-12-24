@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-public class SignUpActivityActivity extends AppCompatActivity {
-    Button login;
+public class SignUpActivity extends AppCompatActivity {
+    ImageView ivBack;
+    Button btnSignUp;
 
     String[] departments = {"Artificial Intelligence", "Computer System Networking", "Software Engineering",
             "Information System", "Data Science", "Multimedia Computing"};
@@ -24,10 +26,20 @@ public class SignUpActivityActivity extends AppCompatActivity {
 
     AutoCompleteTextView autoCompleteYear;
     ArrayAdapter<String> adapterYears;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_up_activity);
+        setContentView(R.layout.activity_sign_up);
+
+        ivBack = findViewById(R.id.IVBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(startintent);
+            }
+        });
 
         autoCompleteDepartment = findViewById(R.id.auto_complete_department);
 
@@ -43,6 +55,7 @@ public class SignUpActivityActivity extends AppCompatActivity {
 
             }
         });
+
         autoCompleteYear = findViewById(R.id.auto_complete_year);
 
         adapterYears = new ArrayAdapter<String>(this,R.layout.list_year,years);
@@ -58,5 +71,13 @@ public class SignUpActivityActivity extends AppCompatActivity {
             }
         });
 
+        btnSignUp = findViewById(R.id.btn_signup);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(startintent);
+            }
+        });
     }
 }

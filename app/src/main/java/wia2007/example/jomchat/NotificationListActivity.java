@@ -11,31 +11,60 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class NotificationListActivity extends AppCompatActivity {
     private ArrayList<NotificationItem> mNotificationList;
-
     private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ImageView ivProfile;
+    ImageView ivBack, ivHome, ivMessenger;
+    CircleImageView ivProfilePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_list);
 
-        ivProfile = findViewById(R.id.IVProfilePhoto);
-        ivProfile.setOnClickListener(new View.OnClickListener() {
+        createNotificationList();
+        buildRecyclerView();
+
+        ivBack = findViewById(R.id.IVBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(NotificationListActivity.this, ProfileActivity.class);
+                Intent startintent = new Intent(NotificationListActivity.this, PostListActivity.class);
                 startActivity(startintent);
             }
         });
 
-        createNotificationList();
-        buildRecyclerView();
+        ivHome = findViewById(R.id.IVHome);
+        ivHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationListActivity.this, PostListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivMessenger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationListActivity.this, MessengerListActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(NotificationListActivity.this, SettingActivity.class);
+                startActivity(startintent);
+            }
+        });
     }
 
     public void createNotificationList() {

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RLSignUpAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFD1D1">
+    android:background="#FFD1D1"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:id="@+id/IVBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_back" />
 
     <TextView
         android:id="@+id/TV_signUp"
@@ -14,11 +23,9 @@
         android:layout_marginTop="18dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="SIGN UP"
-        android:textColor="@color/purple_500"
+        android:textColor="#8B90FF"
         android:textSize="35sp"
-        android:textStyle="bold">
-
-    </TextView>
+        android:textStyle="bold"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
@@ -31,8 +38,7 @@
         android:hint="Name"
         app:endIconMode="clear_text"
         app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
-        >
+        app:helperTextTextColor="@color/red">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterName"
@@ -58,12 +64,10 @@
         app:helperTextTextColor="@color/red">
 
         <com.google.android.material.textfield.TextInputEditText
-
             android:id="@+id/til_enterUsername"
             android:layout_width="300dp"
             android:layout_height="60dp"
-            android:fontFamily="@font/droid_sans_mono"
-            />
+            android:fontFamily="@font/droid_sans_mono" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -83,8 +87,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="textEmailAddress"
-            />
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -105,12 +108,10 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="none"
-            />
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-
         android:id="@+id/til_department"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="300dp"
@@ -127,8 +128,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="none"
-            />
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -170,8 +170,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="textPassword"
-            />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -185,7 +184,7 @@
         android:backgroundTint="@color/light_yellow"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Sign Up"
-        android:textColor="@color/purple_500"
+        android:textColor="#8B90FF"
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="10dp" />

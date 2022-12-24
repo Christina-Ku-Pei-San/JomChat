@@ -5,35 +5,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SearchPostActivity extends AppCompatActivity {
-    ImageView ivBack, ivMessenger, ivNotification;
+public class MessengerActivity extends AppCompatActivity {
+    ImageView ivBack, ivHome, ivNotification;
     CircleImageView ivProfilePhoto;
-    EditText etSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_post);
+        setContentView(R.layout.activity_messenger);
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, PostListActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, MessengerListActivity.class);
                 startActivity(startintent);
             }
         });
 
-        ivMessenger = findViewById(R.id.IVMessenger);
-        ivMessenger.setOnClickListener(new View.OnClickListener() {
+        ivHome = findViewById(R.id.IVHome);
+        ivHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, MessengerListActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, PostListActivity.class);
                 startActivity(startintent);
             }
         });
@@ -42,7 +40,7 @@ public class SearchPostActivity extends AppCompatActivity {
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, NotificationListActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, NotificationListActivity.class);
                 startActivity(startintent);
             }
         });
@@ -51,11 +49,9 @@ public class SearchPostActivity extends AppCompatActivity {
         ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SearchPostActivity.this, SettingActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, SettingActivity.class);
                 startActivity(startintent);
             }
         });
-
-        etSearch = findViewById(R.id.ETSearch);
     }
 }
