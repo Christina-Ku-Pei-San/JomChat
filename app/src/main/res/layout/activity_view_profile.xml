@@ -104,22 +104,6 @@
             app:layout_constraintVertical_bias="0.136" />
 
         <TextView
-            android:id="@+id/editNickName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:fontFamily="@font/m_plus_1p"
-            android:text="Lily"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/IVProfilePic"
-            app:layout_constraintVertical_bias="0.017" />
-
-        <TextView
             android:id="@+id/TVName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -165,7 +149,23 @@
             app:layout_constraintVertical_bias="0.713" />
 
         <TextView
-            android:id="@+id/userName"
+            android:id="@+id/editNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="Lily"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/IVProfilePic"
+            app:layout_constraintVertical_bias="0.017" />
+
+        <EditText
+            android:id="@+id/editUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/m_plus_1p"
@@ -177,10 +177,10 @@
             app:layout_constraintHorizontal_bias="0.449"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.461" />
+            app:layout_constraintVertical_bias="0.461"/>
 
-        <TextView
-            android:id="@+id/userYear"
+        <EditText
+            android:id="@+id/editUserYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/m_plus_1p"
@@ -194,8 +194,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.585" />
 
-        <TextView
-            android:id="@+id/userDepartment"
+        <EditText
+            android:id="@+id/editUserDepartment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/m_plus_1p"
@@ -210,14 +210,14 @@
             app:layout_constraintVertical_bias="0.713" />
 
         <Button
-            android:id="@+id/BtnViewPost"
+            android:id="@+id/BtnSaveChanges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#8B90FF"
             android:capitalize="words"
             android:fontFamily="@font/m_plus_1p_bold"
             android:padding="8dp"
-            android:text="View Post"
+            android:text="Save Changes"
             android:textAllCaps="false"
             android:textColor="#FFFAD7"
             android:textColorHint="#FFFAD7"

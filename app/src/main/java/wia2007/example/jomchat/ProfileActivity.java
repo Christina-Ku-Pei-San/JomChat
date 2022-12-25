@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
     ImageView ivBack, ivHome, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
-    Button btnViewPost;
+    Button BtnViewPost = findViewById(R.id.BtnViewPost);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,11 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnViewPost = findViewById(R.id.BtnViewPost);
+        BtnViewPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
