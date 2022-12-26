@@ -12,7 +12,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class SignUpActivity extends AppCompatActivity {
+    private TextInputLayout textInputName;
+    private TextInputLayout textInputUsername;
+    private TextInputLayout textInputEmail;
+    private TextInputLayout textInputPassword;
+    private TextInputLayout textInputConfirmPassword;
     ImageView ivBack;
     Button btnSignUp;
 
@@ -31,6 +38,14 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        textInputName = findViewById(R.id.til_name);
+        textInputUsername = findViewById(R.id.til_username);
+        textInputEmail = findViewById(R.id.til_email);
+        textInputPassword = findViewById(R.id.til_password);
+        textInputConfirmPassword = findViewById(R.id.til_reconfirmPassword);
+
+
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -79,5 +94,42 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(startintent);
             }
         });
+
+    }
+    private boolean validateEmail() {
+        String emailInput = textInputEmail.getEditText().getText().toString().trim();
+
+        if (emailInput.isEmpty()) {
+            textInputEmail.setError("Field can't be empty");
+            return false;
+        } else {
+            textInputEmail.setError(null);
+            return true;
+        }
+    }
+    private boolean validateUsername() {
+        String usernameInput = textInputUsername.getEditText().getText().toString().trim();
+
+        if (usernameInput.isEmpty()) {
+            textInputUsername.setError("Field can't be empty");
+            return false;
+        } else if (usernameInput.length() > 15) {
+            textInputUsername.setError("Username too long");
+            return false;
+        } else {
+            textInputUsername.setError(null);
+            return true;
+        }
+    }
+    private boolean validatePassword() {
+        String passwordInput = textInputPassword.getEditText().getText().toString().trim();
+
+        if (passwordInput.isEmpty()) {
+            textInputPassword.setError("Field can't be empty");
+            return false;
+        } else {
+            textInputPassword.setError(null);
+            return true;
+        }
     }
 }

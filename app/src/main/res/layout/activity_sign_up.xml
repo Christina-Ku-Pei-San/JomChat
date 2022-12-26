@@ -36,15 +36,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:hint="Name"
+        app:errorEnabled="true"
         app:endIconMode="clear_text"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red">
+        app:helperTextTextColor="@color/red"
+        app:boxStrokeColor="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterName"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:fontFamily="@font/droid_sans_mono"
+            android:inputType="text"
             android:textColorHighlight="@color/purple_500" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,7 +54,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_username"
         app:counterEnabled="true"
-        app:counterMaxLength="20"
+        app:counterMaxLength="15"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
@@ -60,13 +62,16 @@
         android:layout_below="@id/til_name"
         android:hint="Username"
         app:endIconMode="clear_text"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red">
+        app:errorEnabled="true"
+        app:helperTextTextColor="@color/red"
+        app:boxStrokeColor="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterUsername"
             android:layout_width="300dp"
             android:layout_height="60dp"
+            android:inputType="text"
+            android:maxLength="15"
             android:fontFamily="@font/droid_sans_mono" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,9 +83,10 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/til_username"
-        app:helperText="Required*"
+        app:errorEnabled="true"
         app:helperTextTextColor="@color/red"
-        android:hint="Email">
+        android:hint="Email"
+        app:boxStrokeColor="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterEmail"
@@ -101,7 +107,8 @@
         android:layout_below="@id/til_email"
         app:helperText="Required*"
         app:helperTextTextColor="@color/red"
-        android:hint="Select Year">
+        android:hint="Select Year"
+        app:boxStrokeColor="@color/purple_500">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_year"
@@ -121,7 +128,8 @@
         app:helperText="Required*"
         app:helperTextTextColor="@color/red"
         android:layout_below="@id/til_year"
-        android:hint="@string/select">
+        android:hint="@string/select"
+        app:boxStrokeColor="@color/purple_500">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_department"
@@ -142,7 +150,8 @@
         app:helperText="Required*"
         app:helperTextTextColor="@color/red"
         android:hint="Enter Password"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        app:boxStrokeColor="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterPassword"
@@ -163,7 +172,8 @@
         app:helperText="Required*"
         app:helperTextTextColor="@color/red"
         app:passwordToggleEnabled="true"
-        android:hint="Confirm Password">
+        android:hint="Confirm Password"
+        app:boxStrokeColor="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_reconfirmPassword"
