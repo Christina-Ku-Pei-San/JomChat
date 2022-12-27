@@ -31,22 +31,24 @@
         android:id="@+id/til_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/TV_signUp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:hint="Name"
         app:errorEnabled="true"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
         app:endIconMode="clear_text"
-        app:helperTextTextColor="@color/red"
         app:boxStrokeColor="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterName"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="text"
+            android:maxLength="30"
             android:textColorHighlight="@color/purple_500" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,20 +58,19 @@
         app:counterEnabled="true"
         app:counterMaxLength="15"
         android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/til_name"
         android:hint="Username"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-        app:helperTextTextColor="@color/red"
         app:boxStrokeColor="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterUsername"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLength="15"
             android:fontFamily="@font/droid_sans_mono" />
@@ -79,8 +80,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_email"
         android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/til_username"
         app:errorEnabled="true"
@@ -91,7 +92,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterEmail"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -100,20 +101,18 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:id="@+id/til_year"
         android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         app:endIconMode="dropdown_menu"
         android:layout_below="@id/til_email"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
         android:hint="Select Year"
         app:boxStrokeColor="@color/purple_500">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_year"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -122,11 +121,9 @@
         android:id="@+id/til_department"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
         android:layout_below="@id/til_year"
         android:hint="@string/select"
         app:boxStrokeColor="@color/purple_500">
@@ -134,7 +131,7 @@
         <AutoCompleteTextView
             android:id="@+id/auto_complete_department"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -143,12 +140,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_password"
         android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/til_department"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
         android:hint="Enter Password"
         app:passwordToggleEnabled="true"
         app:boxStrokeColor="@color/purple_500">
@@ -156,7 +151,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterPassword"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -165,12 +160,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_confirm_password"
         android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/til_password"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
         app:passwordToggleEnabled="true"
         android:hint="Confirm Password"
         app:boxStrokeColor="@color/purple_500">
@@ -178,7 +171,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_reconfirmPassword"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>

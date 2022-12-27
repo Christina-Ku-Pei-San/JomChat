@@ -38,18 +38,18 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:hint="Username"
         android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/TV_Login"
         android:layout_marginTop="130dp"
-        app:helperText="Required*"
-        app:helperTextTextColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
         app:endIconMode="clear_text"
         android:layout_centerHorizontal="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_username"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:inputType="text"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,18 +59,17 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:hint="Password"
         android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/username_login"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
+        app:errorEnabled="true"
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_password"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:textSize="20sp"
             android:inputType="textPassword" />

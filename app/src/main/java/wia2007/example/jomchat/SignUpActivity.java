@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,19 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.regex.Pattern;
+
 public class SignUpActivity extends AppCompatActivity {
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
+                    //"(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#_$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{8,}" +               //at least 8 characters
+                    "$");
     private TextInputLayout textInputName;
     private TextInputLayout textInputUsername;
     private TextInputLayout textInputEmail;
@@ -43,9 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         textInputUsername = findViewById(R.id.til_username);
         textInputEmail = findViewById(R.id.til_email);
         textInputPassword = findViewById(R.id.til_password);
-        textInputConfirmPassword = findViewById(R.id.til_reconfirmPassword);
-
-
+        textInputConfirmPassword = findViewById(R.id.til_confirm_password);
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -102,11 +113,16 @@ public class SignUpActivity extends AppCompatActivity {
         if (emailInput.isEmpty()) {
             textInputEmail.setError("Field can't be empty");
             return false;
-        } else {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+            textInputEmail.setError("Please enter a valid email address");
+            return false;
+        }
+        else {
             textInputEmail.setError(null);
             return true;
         }
     }
+
     private boolean validateUsername() {
         String usernameInput = textInputUsername.getEditText().getText().toString().trim();
 
@@ -127,9 +143,61 @@ public class SignUpActivity extends AppCompatActivity {
         if (passwordInput.isEmpty()) {
             textInputPassword.setError("Field can't be empty");
             return false;
-        } else {
+        }  else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            textInputPassword.setError("Password too weak");
+            return false;
+        }
+        else {
             textInputPassword.setError(null);
             return true;
         }
+    }
+
+    private boolean validateName() {
+        String nameInput = textInputName.getEditText().getText().toString().trim();
+
+        if (nameInput.isEmpty()) {
+            textInputName.setError("Field can't be empty");
+            return false;
+        } else if (nameInput.length() > 30) {
+            textInputName.setError("Username too long");
+            return false;
+        } else {
+            textInputName.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateConfirmPassword() {
+        String confirm_passwordInput = textInputConfirmPassword.getEditText().getText().toString().trim();
+
+        if (confirm_passwordInput.isEmpty()) {
+            textInputConfirmPassword.setError("Field can't be empty");
+            return false;
+        }  else if (textInputPassword != textInputConfirmPassword) {
+            textInputConfirmPassword.setError("Confirm password does not match");
+            return false;
+        }
+        else {
+            textInputConfirmPassword.setError(null);
+            return true;
+        }
+    }
+    public void signUpInput(View v) {
+        if (!validateEmail() | !validateUsername() | !validatePassword() | !validateName() | !validateConfirmPassword()) {
+            return;
+        }
+
+        String input = "Email: " + textInputEmail.getEditText().getText().toString();
+        input += "\n";
+        input += "Username: " + textInputUsername.getEditText().getText().toString();
+        input += "\n";
+        input += "Password: " + textInputPassword.getEditText().getText().toString();
+        input += "\n";
+        input += "Name: " + textInputName.getEditText().getText().toString();
+        input += "\n";
+        input += "Confirm Password: " + textInputConfirmPassword.getEditText().getText().toString();
+
+        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
     }
 }
