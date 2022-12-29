@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/CLMessengerAct"
+    android:id="@+id/RLMessengerAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFD1D1"
@@ -12,9 +12,7 @@
         android:id="@+id/RLMessenger"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="#D0D2FF">
 
         <ImageView
             android:id="@+id/IVBack"
@@ -95,4 +93,79 @@
             android:background="@color/black" />
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/IVProfilePhoto2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/RLMessenger"
+        android:layout_margin="16dp"
+        android:src="@drawable/profile_photo1"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="1dp" />
+
+    <TextView
+        android:id="@+id/TVUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RLMessenger"
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@id/IVProfilePhoto2"
+        android:text="John"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RVMessageItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/getmessage"
+        android:layout_below="@id/IVProfilePhoto2"
+        android:scrollbars="vertical" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Type a message"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingEnd="10dp"
+        android:textSize="18sp"
+        android:background="@drawable/message_background"
+        android:textAlignment="textStart"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="55dp"
+        android:textColor="@color/black"
+        android:textColorHint="#A8A7A7"
+        android:id="@+id/getmessage" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/carviewofsendmessage"
+        android:layout_toRightOf="@id/getmessage"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="#0D8F80"
+        android:layout_alignParentBottom="true"
+        app:cardCornerRadius="45dp">
+
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_arrow_forward_24"
+            android:padding="5dp"
+            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"
+            android:id="@+id/imageviewsendmessage"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            app:tint="@color/white">
+
+        </ImageButton>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
