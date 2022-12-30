@@ -1,7 +1,5 @@
 package wia2007.example.jomchat;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -13,7 +11,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Pattern;
 
@@ -33,6 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputPassword;
     private TextInputLayout textInputConfirmPassword;
+
+    private String nameInput, usernameInput, emailInput, passwordInput, confirm_passwordInput;
+
     ImageView ivBack;
     Button btnSignUp;
 
@@ -46,6 +55,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     AutoCompleteTextView autoCompleteYear;
     ArrayAdapter<String> adapterYears;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +80,8 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         autoCompleteDepartment = findViewById(R.id.auto_complete_department);
-
         adapterDepartments = new ArrayAdapter<String>(this,R.layout.list_department,departments);
-
         autoCompleteDepartment.setAdapter(adapterDepartments);
-
         autoCompleteDepartment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -83,11 +92,8 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         autoCompleteYear = findViewById(R.id.auto_complete_year);
-
         adapterYears = new ArrayAdapter<String>(this,R.layout.list_year,years);
-
         autoCompleteYear.setAdapter(adapterYears);
-
         autoCompleteYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,15 +107,44 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(startintent);
+                nameInput = textInputName.getEditText().getText().toString().trim();
+                usernameInput = textInputUsername.getEditText().getText().toString().trim();
+                emailInput = textInputEmail.getEditText().getText().toString().trim();
+                passwordInput = textInputPassword.getEditText().getText().toString().trim();
+                confirm_passwordInput = textInputConfirmPassword.getEditText().getText().toString();
+                signUpInput(view);
             }
         });
 
     }
-    private boolean validateEmail() {
-        String emailInput = textInputEmail.getEditText().getText().toString().trim();
 
+    private boolean validateName() {
+        if (nameInput.isEmpty()) {
+            textInputName.setError("Field can't be empty");
+            return false;
+        } else if (nameInput.length() > 30) {
+            textInputName.setError("Username too long");
+            return false;
+        } else {
+            textInputName.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateUsername() {
+        if (usernameInput.isEmpty()) {
+            textInputUsername.setError("Field can't be empty");
+            return false;
+        } else if (usernameInput.length() > 15) {
+            textInputUsername.setError("Username too long");
+            return false;
+        } else {
+            textInputUsername.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateEmail() {
         if (emailInput.isEmpty()) {
             textInputEmail.setError("Field can't be empty");
             return false;
@@ -123,23 +158,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateUsername() {
-        String usernameInput = textInputUsername.getEditText().getText().toString().trim();
-
-        if (usernameInput.isEmpty()) {
-            textInputUsername.setError("Field can't be empty");
-            return false;
-        } else if (usernameInput.length() > 15) {
-            textInputUsername.setError("Username too long");
-            return false;
-        } else {
-            textInputUsername.setError(null);
-            return true;
-        }
-    }
     private boolean validatePassword() {
-        String passwordInput = textInputPassword.getEditText().getText().toString().trim();
-
         if (passwordInput.isEmpty()) {
             textInputPassword.setError("Field can't be empty");
             return false;
@@ -153,28 +172,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateName() {
-        String nameInput = textInputName.getEditText().getText().toString().trim();
-
-        if (nameInput.isEmpty()) {
-            textInputName.setError("Field can't be empty");
-            return false;
-        } else if (nameInput.length() > 30) {
-            textInputName.setError("Username too long");
-            return false;
-        } else {
-            textInputName.setError(null);
-            return true;
-        }
-    }
-
     private boolean validateConfirmPassword() {
-        String confirm_passwordInput = textInputConfirmPassword.getEditText().getText().toString().trim();
-
         if (confirm_passwordInput.isEmpty()) {
             textInputConfirmPassword.setError("Field can't be empty");
             return false;
-        }  else if (textInputPassword != textInputConfirmPassword) {
+        }  else if (!passwordInput.equals(confirm_passwordInput)) {
             textInputConfirmPassword.setError("Confirm password does not match");
             return false;
         }
@@ -183,21 +185,51 @@ public class SignUpActivity extends AppCompatActivity {
             return true;
         }
     }
+
     public void signUpInput(View v) {
         if (!validateEmail() | !validateUsername() | !validatePassword() | !validateName() | !validateConfirmPassword()) {
             return;
         }
+        else {
+            databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    // check if username is not registered before
+                    if (snapshot.hasChild(usernameInput)) {
+                        Toast.makeText(getApplicationContext(), "Username exists", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+//                        String input = "Email: " + email;
+//                        input += "\n";
+//                        input += "Username: " + username;
+//                        input += "\n";
+//                        input += "Password: " + password;
+//                        input += "\n";
+//                        input += "Name: " + name;
+//                        input += "\n";
+//                        input += "Confirm Password: " + textInputConfirmPassword.getEditText().getText().toString();
+//
+//                        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_LONG).show();
 
-        String input = "Email: " + textInputEmail.getEditText().getText().toString();
-        input += "\n";
-        input += "Username: " + textInputUsername.getEditText().getText().toString();
-        input += "\n";
-        input += "Password: " + textInputPassword.getEditText().getText().toString();
-        input += "\n";
-        input += "Name: " + textInputName.getEditText().getText().toString();
-        input += "\n";
-        input += "Confirm Password: " + textInputConfirmPassword.getEditText().getText().toString();
+                        // sending data to firebase Realtime Database
+                        // we are using username as unique identity for every user
+                        // so all the other details of user comes under username
+                        databaseReference.child("users").child(usernameInput).child("name").setValue(nameInput);
+                        databaseReference.child("users").child(usernameInput).child("email").setValue(emailInput);
+                        databaseReference.child("users").child(usernameInput).child("password").setValue(passwordInput);
 
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "User Profile Added Sucessfully", Toast.LENGTH_SHORT).show();
+
+                        Intent startintent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        startActivity(startintent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 }
