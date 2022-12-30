@@ -31,7 +31,8 @@
         android:fontFamily="@font/droid_sans_mono"
         android:text="Username"
         android:textColor="#8B90FF"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_login"
@@ -86,7 +87,8 @@
         android:fontFamily="@font/droid_sans_mono"
         android:text="Password"
         android:textColor="#8B90FF"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_signup"
