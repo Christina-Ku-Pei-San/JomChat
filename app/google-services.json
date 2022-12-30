@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "381646774751",
+    "firebase_url": "https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "jomchat-9f535",
+    "storage_bucket": "jomchat-9f535.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381646774751:android:36c281d5fa2e6cc2b9e46a",
+        "android_client_info": {
+          "package_name": "wia2007.example.jomchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381646774751-6qi7mcjuih3cq6flqrna6jn7fbsd6evq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbiclmO6d_noOuK-CR4SFIh8YOzhZb6HA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381646774751-6qi7mcjuih3cq6flqrna6jn7fbsd6evq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
