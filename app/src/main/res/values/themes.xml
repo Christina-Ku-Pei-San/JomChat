@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.JOMCHAT" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.JOMCHAT" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -20,18 +20,51 @@
         <item name = "android:background">#FFD1D1</item>
     </style>
 
-    <style name = "SCREEN1">
+    <style name = "TOOLBAR">
         <item name = "android:background">#D0D2FF</item>
     </style>
 
     <!-- Text background if light mode on -->
     <style name="TEXT">
-        <item name = "android:textColor">#673AB7</item>
+        <item name = "android:textColor">#000000</item>
     </style>
 
     <!-- Button background if light mode on -->
     <style name="BUTTON">
+        <item name ="android:backgroundTint">#FFF7BB</item>
+        <item name ="android:textColor">#8B90FF</item>
+    </style>
+
+    <!-- Switch background if light mode on -->
+    <style name="SWITCH">
         <item name ="android:background">#FFF7BB</item>
         <item name ="android:textColor">#8B90FF</item>
     </style>
+
+    <!-- AddPost background if light mode on -->
+    <style name="ADDPOST">
+        <item name ="android:background">#FFF7BB</item>
+        <item name="android:textColor">#6E6B6B</item>
+        <item name ="textInputOutlinedStyle"> @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <!-- Text input layout background if light mode on -->
+    <style name="TEXTINPUTLAYOUT">
+        <item name ="boxStrokeColor">@color/purple_500</item>
+        <item name="boxBackgroundColor">#FFF7BB</item>
+        <item name ="textInputOutlinedStyle"> @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <!-- Drop down menu background if light mode on -->
+    <style name="DROPDOWNMENU">
+        <item name ="boxStrokeColor">@color/purple_500</item>
+        <item name="boxBackgroundColor">#FFF7BB</item>
+        <item name ="textInputOutlinedStyle"> @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu</item>
+    </style>
+
+    <style name="BUTTON2">
+        <item name ="android:backgroundTint">#8B90FF</item>
+        <item name ="android:textColor">#FFF7BB</item>
+    </style>
+
 </resources>

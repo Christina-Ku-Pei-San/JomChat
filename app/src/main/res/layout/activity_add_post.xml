@@ -5,14 +5,14 @@
     android:id="@+id/CLAddPostAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD1D1"
+    style="@style/SCREEN"
     tools:context=".SearchPostActivity">
 
     <RelativeLayout
         android:id="@+id/RLAddPost"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF"
+        style="@style/TOOLBAR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -73,7 +73,7 @@
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="JOMCHAT"
-            android:textColor="@android:color/black"
+           style="@style/TEXT"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -99,9 +99,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:backgroundTint="#8B90FF"
+        style="@style/BUTTON"
         android:text="Submit"
-        android:textColor="#FFFAD7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -122,11 +121,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TILAddPost"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/ADDPOST"
         android:layout_width="300dp"
         android:layout_height="200dp"
         android:layout_marginTop="50dp"
-        android:background="#FFFAD7"
         android:padding="10dp"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
@@ -141,7 +139,7 @@
             android:id="@+id/TETAddPost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFAD7"
+            style="@style/ADDPOST"
             android:hint="Content"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -153,7 +151,7 @@
         android:layout_marginRight="60dp"
         android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
-        android:background="#FFFAD7"
+        style="@style/BUTTON"
         android:padding="8dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@id/TILAddPost"

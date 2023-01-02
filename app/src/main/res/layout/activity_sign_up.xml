@@ -5,14 +5,17 @@
     android:id="@+id/RLSignUpAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD1D1"
+    style="@style/SCREEN"
     tools:context=".SignUpActivity">
 
     <ImageView
         android:id="@+id/IVBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/ic_back" />
 
     <TextView
@@ -23,24 +26,24 @@
         android:layout_marginTop="18dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="SIGN UP"
-        android:textColor="#8B90FF"
+        style="@style/TEXT"
         android:textSize="35sp"
         android:textStyle="bold"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/TEXTINPUTLAYOUT"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/TV_signUp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:hint="Name"
-        app:errorEnabled="true"
+        app:boxBackgroundMode="outline"
         app:counterEnabled="true"
         app:counterMaxLength="30"
         app:endIconMode="clear_text"
-        app:boxStrokeColor="@color/purple_500">
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterName"
@@ -53,41 +56,40 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_username"
-        app:counterEnabled="true"
-        app:counterMaxLength="15"
+        style="@style/TEXTINPUTLAYOUT"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/til_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:hint="Username"
+        app:boxBackgroundMode="outline"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
         app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:boxStrokeColor="@color/purple_500">
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterUsername"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/droid_sans_mono"
             android:inputType="text"
-            android:maxLength="15"
-            android:fontFamily="@font/droid_sans_mono" />
+            android:maxLength="15" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_email"
+        style="@style/TEXTINPUTLAYOUT"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/til_username"
-        app:errorEnabled="true"
-        app:helperTextTextColor="@color/red"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:hint="Email"
-        app:boxStrokeColor="@color/purple_500">
+        app:boxBackgroundMode="outline"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterEmail"
@@ -98,16 +100,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:id="@+id/til_year"
+        style="@style/DROPDOWNMENU"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        app:endIconMode="dropdown_menu"
         android:layout_below="@id/til_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:hint="Select Year"
-        app:boxStrokeColor="@color/purple_500">
+        app:boxBackgroundMode="outline"
+        app:endIconMode="dropdown_menu">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_year"
@@ -119,14 +121,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_department"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/DROPDOWNMENU"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/til_year"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:hint="@string/select"
-        app:boxStrokeColor="@color/purple_500">
+        app:boxBackgroundMode="outline"
+        app:endIconMode="dropdown_menu">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_department"
@@ -137,16 +140,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_password"
+        style="@style/TEXTINPUTLAYOUT"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/til_department"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:hint="Enter Password"
-        app:passwordToggleEnabled="true"
-        app:boxStrokeColor="@color/purple_500">
+        app:boxBackgroundMode="outline"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_enterPassword"
@@ -157,16 +160,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_confirm_password"
+        style="@style/TEXTINPUTLAYOUT"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/til_password"
-        app:passwordToggleEnabled="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:hint="Confirm Password"
-        app:boxStrokeColor="@color/purple_500">
+        app:boxBackgroundMode="outline"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/til_reconfirmPassword"
@@ -184,10 +187,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="15dp"
         android:layout_marginRight="30dp"
-        android:backgroundTint="@color/light_yellow"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Sign Up"
-        android:textColor="#8B90FF"
+        style="@style/BUTTON"
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="10dp" />
