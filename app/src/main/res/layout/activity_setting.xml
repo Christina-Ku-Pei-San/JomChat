@@ -5,14 +5,14 @@
     android:id="@+id/CLSettingAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD1D1"
+    style="@style/SCREEN"
     tools:context=".SettingActivity">
 
     <RelativeLayout
         android:id="@+id/RLSetting"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF"
+        style="@style/SCREEN1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -47,6 +47,7 @@
 
         <TextView
             android:id="@+id/TVSettings"
+            style="@style/TEXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -55,7 +56,6 @@
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="Settings"
-            android:textColor="@android:color/black"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -78,12 +78,11 @@
 
     <Button
         android:id="@+id/BtnViewProfile"
+        style="@style/BUTTON"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"
-        android:backgroundTint="#FFF7BB"
         android:text="View Profile"
-        android:textColor="#8B90FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,11 +93,10 @@
         android:layout_width="225dp"
         android:layout_height="48dp"
         android:layout_marginTop="30dp"
-        android:background="#FFF7BB"
         android:padding="8dp"
+        style="@style/BUTTON"
         android:text="DARK MODE"
         android:textAlignment="center"
-        android:textColor="#8B90FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,12 +104,11 @@
 
     <Button
         android:id="@+id/BtnChangePassword"
-        android:layout_width="wrap_content"
+        style="@style/BUTTON"
+        android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:backgroundTint="#FFF7BB"
         android:text="Change Password"
-        android:textColor="#8B90FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,12 +116,11 @@
 
     <Button
         android:id="@+id/BtnLogout"
+        style="@style/BUTTON"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:backgroundTint="#FFF7BB"
         android:text="Logout"
-        android:textColor="#8B90FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
