@@ -37,10 +37,12 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputLayout textInputName;
     private TextInputLayout textInputUsername;
     private TextInputLayout textInputEmail;
+    private TextInputLayout textInputYear;
+    private TextInputLayout textInputDepartment;
     private TextInputLayout textInputPassword;
     private TextInputLayout textInputConfirmPassword;
 
-    private String nameInput, usernameInput, emailInput, passwordInput, confirm_passwordInput;
+    private String nameInput, usernameInput, emailInput, passwordInput, confirm_passwordInput, yearInput, departmentInput;
 
     ImageView ivBack;
     Button btnSignUp;
@@ -67,6 +69,8 @@ public class SignUpActivity extends AppCompatActivity {
         textInputName = findViewById(R.id.til_name);
         textInputUsername = findViewById(R.id.til_username);
         textInputEmail = findViewById(R.id.til_email);
+        textInputYear = findViewById(R.id.til_year);
+        textInputDepartment = findViewById(R.id.til_department);
         textInputPassword = findViewById(R.id.til_password);
         textInputConfirmPassword = findViewById(R.id.til_confirm_password);
 
@@ -79,26 +83,26 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        autoCompleteDepartment = findViewById(R.id.auto_complete_department);
-        adapterDepartments = new ArrayAdapter<String>(this,R.layout.list_department,departments);
-        autoCompleteDepartment.setAdapter(adapterDepartments);
-        autoCompleteDepartment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String department = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Department: " + department, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
         autoCompleteYear = findViewById(R.id.auto_complete_year);
         adapterYears = new ArrayAdapter<String>(this,R.layout.list_year,years);
         autoCompleteYear.setAdapter(adapterYears);
         autoCompleteYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String years = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Year: " + years, Toast.LENGTH_SHORT).show();
+                yearInput = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Year: " + yearInput, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        autoCompleteDepartment = findViewById(R.id.auto_complete_department);
+        adapterDepartments = new ArrayAdapter<String>(this,R.layout.list_department,departments);
+        autoCompleteDepartment.setAdapter(adapterDepartments);
+        autoCompleteDepartment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                departmentInput = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Department: " + departmentInput, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -110,6 +114,8 @@ public class SignUpActivity extends AppCompatActivity {
                 nameInput = textInputName.getEditText().getText().toString().trim();
                 usernameInput = textInputUsername.getEditText().getText().toString().trim();
                 emailInput = textInputEmail.getEditText().getText().toString().trim();
+                yearInput = textInputYear.getEditText().getText().toString();
+                departmentInput = textInputDepartment.getEditText().getText().toString();
                 passwordInput = textInputPassword.getEditText().getText().toString().trim();
                 confirm_passwordInput = textInputConfirmPassword.getEditText().getText().toString();
                 signUpInput(view);
@@ -158,6 +164,26 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    private boolean validateYear() {
+        if (yearInput.isEmpty()) {
+            textInputYear.setError("Field can't be empty");
+            return false;
+        } else  {
+            textInputYear.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateDepartment() {
+        if (departmentInput.isEmpty()) {
+            textInputDepartment.setError("Field can't be empty");
+            return false;
+        } else {
+            textInputDepartment.setError(null);
+            return true;
+        }
+    }
+
     private boolean validatePassword() {
         if (passwordInput.isEmpty()) {
             textInputPassword.setError("Field can't be empty");
@@ -187,7 +213,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void signUpInput(View v) {
-        if (!validateEmail() | !validateUsername() | !validatePassword() | !validateName() | !validateConfirmPassword()) {
+        if (!validateName() | !validateUsername() | !validateEmail() | !validateYear() | !validateDepartment() | !validatePassword() | !validateConfirmPassword()) {
             return;
         }
         else {
