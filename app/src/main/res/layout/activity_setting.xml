@@ -51,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="46dp"
+            android:layout_marginStart="44dp"
             android:layout_marginLeft="30dp"
-            android:layout_toEndOf="@id/IVNotification"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/bangers"
             android:text="Settings"
             android:textSize="28sp" />
@@ -91,7 +91,7 @@
     <Switch
         android:id="@+id/SwDarkMode"
         android:layout_width="225dp"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:padding="8dp"
         style="@style/BUTTON"
