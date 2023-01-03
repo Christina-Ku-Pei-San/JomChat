@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="#FFD1D1">
+    style="@style/SCREEN">
 
     <TextView
         android:id="@+id/TV_Login"
@@ -16,7 +16,7 @@
         android:layout_marginTop="50dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="JOMCHAT"
-        android:textColor="#8B90FF"
+       style="@style/TEXT"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -30,50 +30,52 @@
         android:layout_marginTop="80dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Username"
-        android:textColor="#8B90FF"
+        style="@style/TEXT"
         android:textSize="25sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_login"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Username"
+        style="@style/TEXTINPUTLAYOUT"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TV_Login"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="130dp"
-        app:errorEnabled="true"
+        android:hint="Username"
+        app:boxBackgroundMode="outline"
         app:endIconMode="clear_text"
-        android:layout_centerHorizontal="true">
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_username"
             android:layout_width="300dp"
-            android:inputType="text"
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
+            android:inputType="text"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_login"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Password"
+        style="@style/TEXTINPUTLAYOUT"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/username_login"
-        android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        app:errorEnabled="true"
-        app:endIconMode="password_toggle">
+        android:layout_marginTop="100dp"
+        android:hint="Password"
+        app:boxBackgroundMode="outline"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_password"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
-            android:textSize="20sp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -86,7 +88,7 @@
         android:layout_marginTop="50dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Password"
-        android:textColor="#8B90FF"
+        style="@style/TEXT"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -98,10 +100,9 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="100dp"
-        android:backgroundTint="@color/light_yellow"
+        style="@style/BUTTON"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Sign Up"
-        android:textColor="#8B90FF"
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="10dp" />
@@ -114,10 +115,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="100dp"
         android:layout_marginRight="30dp"
-        android:backgroundTint="#8B90FF"
+        style="@style/BUTTON2"
         android:fontFamily="@font/droid_sans_mono"
         android:text="Login"
-        android:textColor="#FFFAD7"
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="10dp" />

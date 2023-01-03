@@ -5,14 +5,14 @@
     android:id="@+id/RLPostListAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEDED"
+    style="@style/SCREEN2"
     tools:context=".PostListActivity">
 
     <RelativeLayout
         android:id="@+id/RLPostList"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF"
+        style="@style/TOOLBAR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -63,7 +63,7 @@
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="JOMCHAT"
-            android:textColor="@android:color/black"
+           style="@style/TEXT"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -93,8 +93,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        app:backgroundTint="#FFFFFF"
-        app:srcCompat="@drawable/ic_search_black"
+        style="@style/SEARCH"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -106,8 +105,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        android:tintMode="@color/white"
-        app:backgroundTint="#8B90FF"
+       style="@style/BUTTON2"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="SpeakableTextPresentCheck" />
 

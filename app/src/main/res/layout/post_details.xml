@@ -8,7 +8,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#F5C0A2"/>
+        style="@style/SCREEN"/>
 
     <LinearLayout
         android:id="@+id/LL2PostDetails"
@@ -23,7 +23,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_like"/>
+            style="@style/LIKER"/>
 
         <TextView
             android:id="@+id/TVPeopleLiked"
@@ -33,14 +33,14 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/m_plus_1p"
             android:text="4 people liked this."
-            android:textColor="@android:color/black"
+            style="@style/TEXT"
             android:textSize="16sp" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#F5C0A2"/>
+        style="@style/SCREEN"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVCommentItem"

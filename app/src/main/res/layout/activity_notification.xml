@@ -5,7 +5,7 @@
     android:id="@+id/LLNotificationAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEDED"
+    style="@style/SCREEN2"
     android:orientation="vertical"
     android:scrollbars="vertical"
     tools:context=".NotificationActivity">
@@ -14,7 +14,7 @@
         android:id="@+id/RLNotification"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF">
+        style="@style/TOOLBAR">
 
         <ImageView
             android:id="@+id/IVBack"
@@ -24,7 +24,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_back" />
+            style="@style/BACKBUTTON" />
 
         <ImageView
             android:id="@+id/IVWhiteCircle"
@@ -73,7 +73,7 @@
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="NOTIFICATION"
-            android:textColor="@android:color/black"
+            style="@style/TEXT"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -116,7 +116,7 @@
                 android:layout_toEndOf="@+id/IVProfilePhoto"
                 android:fontFamily="@font/m_plus_1p"
                 android:text="Mary liked your post."
-                android:textColor="@android:color/black"
+                style="@style/TEXT"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 

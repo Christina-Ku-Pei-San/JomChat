@@ -5,14 +5,14 @@
     android:id="@+id/RLMessengerAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD1D1"
+    style="@style/SCREEN"
     tools:context=".MessengerActivity">
 
     <RelativeLayout
         android:id="@+id/RLMessenger"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF">
+        style="@style/TOOLBAR">
 
         <ImageView
             android:id="@+id/IVBack"
@@ -22,7 +22,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_back" />
+            style="@style/BACKBUTTON"/>
 
         <ImageView
             android:id="@+id/IVWhiteCircle"
@@ -64,15 +64,15 @@
 
         <TextView
             android:id="@+id/TVMessage"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="46dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="20dp"
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="Message"
-            android:textColor="@android:color/black"
+            style="@style/TEXT"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -111,7 +111,8 @@
         android:layout_marginTop="24dp"
         android:layout_toRightOf="@id/IVProfilePhoto2"
         android:text="John"
-        android:textColor="@color/black"
+        android:fontFamily="@font/droid_sans_mono"
+        style="@style/TEXT"
         android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView

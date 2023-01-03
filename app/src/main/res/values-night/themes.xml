@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.JOMCHAT" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.JOMCHAT" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -29,7 +29,7 @@
 
         <!-- Button background if dark mode on -->
     <style name="BUTTON">
-    <item name ="android:background">#B9BABA</item>
+    <item name ="android:backgroundTint">#B9BABA</item>
     <item name ="android:textColor">#000000</item>
     </style>
 
@@ -56,6 +56,7 @@
     <!-- Text input layout background if night mode on -->
     <style name="DROPDOWNMENU">
         <item name ="boxStrokeColor">#FFFFFF</item>
+        <item name="boxBackgroundColor">#A6A6A2</item>
         <item name="android:textColor">#000000</item>
         <item name ="textInputOutlinedStyle"> @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu</item>
     </style>
@@ -63,5 +64,58 @@
     <style name="BUTTON2">
         <item name ="android:backgroundTint">#B9BABA</item>
         <item name ="android:textColor">#000000</item>
+    </style>
+
+    <style name="EDITTEXT">
+        <item name ="android:background">#6E6E6C</item>
+        <item name ="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name = "SCREEN2">
+        <item name = "android:background">#000000</item>
+    </style>
+
+    <style name = "POSTITEM">
+        <item name = "android:backgroundTint">#555353</item>
+        <item name = "android:strokeColor">#353432</item>
+    </style>
+
+    <style name = "LIKEPOST">
+        <item name = "android:drawableLeft">@drawable/ic_baseline_thumb_up_dark_mode</item>
+        <item name = "android:backgroundTint">#555353</item>
+        <item name = "android:textColor">#FFFFFF</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name = "COMMENTPOST">
+        <item name = "android:drawableLeft">@drawable/ic_outline_mode_comment_24_dark</item>
+        <item name = "android:backgroundTint">#555353</item>
+        <item name = "android:textColor">#FFFFFF</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name = "SHAREPOST">
+        <item name = "android:drawableLeft">@drawable/ic_baseline_share_24_dark</item>
+        <item name = "android:backgroundTint">#555353</item>
+        <item name = "android:textColor">#FFFFFF</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name = "LIKER">
+        <item name = "android:src">@drawable/ic_baseline_thumb_up_dark_mode</item>
+    </style>
+
+    <style name = "SEARCH">
+        <item name = "android:backgroundTint">#737171</item>
+        <item name = "srcCompat">@drawable/ic_baseline_search_24_dark</item>
+    </style>
+
+    <style name = "BACKBUTTON">
+        <item name = "android:src">@drawable/ic_baseline_arrow_back_24_dark</item>
+    </style>
+
+    <style name = "MESSENGER">
+        <item name = "android:backgroundTint">#000000</item>
+        <item name="android:strokeColor">#FFFFFF</item>
     </style>
 </resources>

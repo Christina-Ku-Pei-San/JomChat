@@ -5,7 +5,7 @@
     android:id="@+id/LLPostAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEDED"
+    style="@style/SCREEN2"
     android:orientation="vertical"
     android:scrollbars="vertical"
     tools:context=".PostActivity">
@@ -14,7 +14,7 @@
         android:id="@+id/RLPost"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF"
+        style="@style/TOOLBAR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -26,7 +26,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_back" />
+            style="@style/BACKBUTTON" />
 
         <ImageView
             android:id="@+id/IVWhiteCircle"
@@ -75,7 +75,7 @@
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="JOMCHAT"
-            android:textColor="@android:color/black"
+           style="@style/TEXT"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView

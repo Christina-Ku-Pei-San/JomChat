@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFD1D1"
+    style="@style/SCREEN"
     tools:context=".ProfileActivity">
 
     <RelativeLayout
         android:id="@+id/RLProfile"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF">
+        style="@style/TOOLBAR">
 
         <ImageView
             android:id="@+id/IVBack"
@@ -23,7 +23,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_back" />
+            style="@style/BACKBUTTON"/>
 
         <ImageView
             android:id="@+id/IVHome"
@@ -56,14 +56,14 @@
 
         <TextView
             android:id="@+id/TVProfile"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="50dp"
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="PROFILE"
-            android:textColor="@android:color/black"
+            style="@style/TEXT"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -107,9 +107,10 @@
             android:id="@+id/TVName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/m_plus_1p_bold"
+            android:fontFamily="@font/droid_sans_mono"
             android:text="Name"
-            android:textColor="#000000"
+            style="@style/TEXT"
+            android:textStyle="bold"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -122,9 +123,10 @@
             android:id="@+id/TVYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/m_plus_1p_bold"
+            android:fontFamily="@font/droid_sans_mono"
             android:text="Year"
-            android:textColor="#000000"
+            style="@style/TEXT"
+            android:textStyle="bold"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -137,9 +139,10 @@
             android:id="@+id/TVDepartment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/m_plus_1p_bold"
+            android:fontFamily="@font/droid_sans_mono"
             android:text="Department"
-            android:textColor="#000000"
+            style="@style/TEXT"
+            android:textStyle="bold"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -153,9 +156,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
-            android:fontFamily="@font/m_plus_1p"
+            android:fontFamily="@font/droid_sans_mono"
             android:text="Lily"
-            android:textColor="#000000"
+            style="@style/TEXT"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -168,9 +171,9 @@
             android:id="@+id/editUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/m_plus_1p"
+            android:fontFamily="@font/droid_sans_mono"
             android:text="Lily"
-            android:textColor="#000000"
+            style="@style/TEXT"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -183,9 +186,9 @@
             android:id="@+id/editUserYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/m_plus_1p"
+            android:fontFamily="@font/droid_sans_mono"
             android:text="2"
-            android:textColor="#000000"
+            style="@style/TEXT"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -196,31 +199,30 @@
 
         <EditText
             android:id="@+id/editUserDepartment"
+            style="@style/TEXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/m_plus_1p"
+            android:fontFamily="@font/droid_sans_mono"
             android:text="Artificial Intelligence"
-            android:textColor="#000000"
             android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/TVDepartment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.693"
+            app:layout_constraintHorizontal_bias="0.842"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.713" />
+            app:layout_constraintVertical_bias="0.723" />
 
         <Button
             android:id="@+id/BtnSaveChanges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#8B90FF"
+            style="@style/BUTTON2"
             android:capitalize="words"
-            android:fontFamily="@font/m_plus_1p_bold"
+            android:fontFamily="@font/droid_sans_mono"
             android:padding="8dp"
             android:text="Save Changes"
             android:textAllCaps="false"
-            android:textColor="#FFFAD7"
-            android:textColorHint="#FFFAD7"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

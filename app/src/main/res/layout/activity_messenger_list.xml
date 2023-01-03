@@ -5,7 +5,7 @@
     android:id="@+id/LLMessengerListAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD1D1"
+    style="@style/SCREEN"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".MessengerListActivity">
@@ -14,7 +14,7 @@
         android:id="@+id/RLMessengerList"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#D0D2FF"
+        style="@style/TOOLBAR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/RLSearchPostAct"
         android:layout_margin="16dp"
-        android:background="#FFFAD7"
+        style="@style/EDITTEXT"
         android:hint="Search"
         android:minHeight="48dp"
         android:padding="8dp" />

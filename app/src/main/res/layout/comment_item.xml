@@ -4,7 +4,7 @@
     android:id="@+id/RLCommentItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFEDED">
+    style="@style/SCREEN2">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/IVProfilePhoto"
@@ -26,9 +26,9 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/IVProfilePhoto"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/m_plus_1p"
+        android:fontFamily="@font/droid_sans_mono"
         android:text="Adam"
-        android:textColor="@android:color/black"
+        style="@style/TEXT"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
         android:layout_toEndOf="@+id/IVProfilePhoto"
         android:fontFamily="@font/m_plus_1p"
         android:text="So beautiful!"
-        android:textColor="@android:color/black"
+        style="@style/TEXT"
         android:textSize="15sp" />
 
     <View
@@ -48,6 +48,6 @@
         android:layout_height="1dp"
         android:layout_below="@id/TVComment"
         android:layout_marginTop="16dp"
-        android:background="#F5C0A2"/>
+        style="@style/SCREEN"/>
 
 </RelativeLayout>
