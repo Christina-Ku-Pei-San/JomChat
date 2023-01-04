@@ -94,33 +94,46 @@
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/IVProfilePhoto2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:id="@+id/specificuserimageinimageview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_below="@id/RLMessenger"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:src="@drawable/profile_photo1"
         app:civ_border_color="@color/black"
-        app:civ_border_width="1dp" />
+        app:civ_border_width="0.5dp" />
 
     <TextView
-        android:id="@+id/TVUsername"
+        android:id="@+id/Nameofspecificuser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/RLMessenger"
-        android:layout_marginTop="24dp"
-        android:layout_toRightOf="@id/IVProfilePhoto2"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@id/specificuserimageinimageview"
         android:text="John"
         android:fontFamily="@font/droid_sans_mono"
         style="@style/TEXT"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/BtnViewProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RLMessenger"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="false"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="View Profile"
+        android:textColor="@color/black"
+        style="@style/BUTTON" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVMessageItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/getmessage"
-        android:layout_below="@id/IVProfilePhoto2"
+        android:layout_below="@id/specificuserimageinimageview"
         android:scrollbars="vertical" />
 
     <EditText

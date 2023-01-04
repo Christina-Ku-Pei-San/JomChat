@@ -34,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
                     "(?=\\S+$)" +           //no white spaces
                     ".{8,}" +               //at least 8 characters
                     "$");
+
     private TextInputLayout textInputName;
     private TextInputLayout textInputUsername;
     private TextInputLayout textInputEmail;
@@ -42,21 +43,21 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputLayout textInputPassword;
     private TextInputLayout textInputConfirmPassword;
 
+    private ImageView ivBack;
+    private Button btnSignUp;
+
     private String nameInput, usernameInput, emailInput, passwordInput, confirm_passwordInput, yearInput, departmentInput;
 
-    ImageView ivBack;
-    Button btnSignUp;
-
-    String[] departments = {"Artificial Intelligence", "Computer System Networking", "Software Engineering",
+    private String[] departments = {"Artificial Intelligence", "Computer System Networking", "Software Engineering",
             "Information System", "Data Science", "Multimedia Computing"};
 
-    String[] years = {"1","2","3","4","Alumni"};
+    private String[] years = {"1","2","3","4","Alumni"};
 
-    AutoCompleteTextView autoCompleteDepartment;
-    ArrayAdapter<String> adapterDepartments;
+    private AutoCompleteTextView autoCompleteDepartment;
+    private ArrayAdapter<String> adapterDepartments;
 
-    AutoCompleteTextView autoCompleteYear;
-    ArrayAdapter<String> adapterYears;
+    private AutoCompleteTextView autoCompleteYear;
+    private ArrayAdapter<String> adapterYears;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -129,7 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
             textInputName.setError("Field can't be empty");
             return false;
         } else if (nameInput.length() > 30) {
-            textInputName.setError("Username too long");
+            textInputName.setError("Name too long");
             return false;
         } else {
             textInputName.setError(null);
@@ -225,23 +226,13 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Username exists", Toast.LENGTH_SHORT).show();
                     }
                     else {
-//                        String input = "Email: " + email;
-//                        input += "\n";
-//                        input += "Username: " + username;
-//                        input += "\n";
-//                        input += "Password: " + password;
-//                        input += "\n";
-//                        input += "Name: " + name;
-//                        input += "\n";
-//                        input += "Confirm Password: " + textInputConfirmPassword.getEditText().getText().toString();
-//
-//                        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_LONG).show();
-
                         // sending data to firebase Realtime Database
                         // we are using username as unique identity for every user
                         // so all the other details of user comes under username
                         databaseReference.child("users").child(usernameInput).child("name").setValue(nameInput);
                         databaseReference.child("users").child(usernameInput).child("email").setValue(emailInput);
+                        databaseReference.child("users").child(usernameInput).child("year").setValue(yearInput);
+                        databaseReference.child("users").child(usernameInput).child("department").setValue(departmentInput);
                         databaseReference.child("users").child(usernameInput).child("password").setValue(passwordInput);
 
                         Toast.makeText(getApplicationContext(), "User Profile Added Sucessfully", Toast.LENGTH_SHORT).show();

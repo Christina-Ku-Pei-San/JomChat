@@ -2,21 +2,17 @@ package wia2007.example.jomchat;
 
 public class MessageItem {
 
-    String message;
-//    String senderId;
-//    long timestamp;
-    String currenttime;
-    String  senderORreceiver;
+    private String message;
+    private long timestamp;
+    private String currenttime;
+    private String senderORreceiver;
 
-//    public MessageItem(String message, String senderId, long timestamp, String currenttime) {
-//        this.message = message;
-//        this.senderId = senderId;
-//        this.timestamp = timestamp;
-//        this.currenttime = currenttime;
-//    }
+    public MessageItem() {
+    }
 
-    public MessageItem(String message, String currenttime, String senderORreceiver) {
+    public MessageItem(String message, long timestamp, String currenttime, String senderORreceiver) {
         this.message = message;
+        this.timestamp = timestamp;
         this.currenttime = currenttime;
         this.senderORreceiver = senderORreceiver;
     }
@@ -29,21 +25,9 @@ public class MessageItem {
         this.message = message;
     }
 
-//    public String getSenderId() {
-//        return senderId;
-//    }
-//
-//    public void setSenderId(String senderId) {
-//        this.senderId = senderId;
-//    }
-//
-//    public long getTimestamp() {
-//        return timestamp;
-//    }
-//
-//    public void setTimestamp(long timestamp) {
-//        this.timestamp = timestamp;
-//    }
+    public long getTimestamp() { return timestamp; }
+
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
     public String getCurrenttime() {
         return currenttime;

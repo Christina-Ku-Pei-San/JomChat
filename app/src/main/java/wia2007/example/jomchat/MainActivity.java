@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.Set;
-
 public class MainActivity extends AppCompatActivity {
-    Button btnLogin, btnSignup, btnPostList, btnPost, btnMessengerList, btnMessenger, btnNotificationList, btnNotification, btnSetting, btnProfile;
+    private Button btnLogin, btnSignup, btnPostList, btnPost, btnMessengerList, btnMessenger, btnNotificationList, btnNotification, btnSetting, btnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

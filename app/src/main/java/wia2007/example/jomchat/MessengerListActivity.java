@@ -1,5 +1,6 @@
 package wia2007.example.jomchat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -20,71 +28,30 @@ public class MessengerListActivity extends AppCompatActivity {
     private MessengerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ImageView ivHome, ivNotification;
-    CircleImageView ivProfilePhoto;
-    EditText etSearch;
+    private ImageView ivHome, ivNotification;
+    private CircleImageView ivProfilePhoto;
+    private EditText etSearch;
+
+    private String musername;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messenger_list);
 
-        createNotificationList();
-        buildRecyclerView();
-
         ivHome = findViewById(R.id.IVHome);
-        ivHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(MessengerListActivity.this, PostListActivity.class);
-                startActivity(startintent);
-            }
-        });
-
         ivNotification = findViewById(R.id.IVNotification);
-        ivNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(MessengerListActivity.this, NotificationListActivity.class);
-                startActivity(startintent);
-            }
-        });
-
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
-        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(MessengerListActivity.this, SettingActivity.class);
-                startActivity(startintent);
-            }
-        });
-
         etSearch = findViewById(R.id.ETSearch);
-    }
 
-    public void createNotificationList() {
         mMessengerList = new ArrayList<>();
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "John", "Bye bye"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Jasmin", "Okay. See you later!"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Alex", "Let's go"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 9", "Line 10"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 11", "Line 12"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 13", "Line 14"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 15", "Line 16"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 17", "Line 18"));
-        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 19", "Line 20"));
-//        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 21", "Line 22"));
-//        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 23", "Line 24"));
-//        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 25", "Line 26"));
-//        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 27", "Line 28"));
-//        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, "Line 29", "Line 30"));
-    }
-
-    public void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.RVMessengerItem);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new MessengerAdapter(mMessengerList);
+        mAdapter = new MessengerAdapter(this, mMessengerList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -92,8 +59,86 @@ public class MessengerListActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new MessengerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(MessengerListActivity.this, MessengerActivity.class);
-                startActivity(intent);
+                Intent startintent = new Intent(MessengerListActivity.this, MessengerActivity.class);
+                startintent.putExtra("username", musername);
+                startintent.putExtra("receiverusername", mMessengerList.get(position).getText1());
+                startintent.putExtra("imageuri", mMessengerList.get(position).getImageResource());
+                startActivity(startintent);
+            }
+        });
+
+        musername = getIntent().getStringExtra("username");
+
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                mMessengerList.clear();
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    if (!data.getKey().equals(musername)) {
+                        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey(), "Bye bye"));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        etSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String search = etSearch.getText().toString();
+                Toast.makeText(getApplicationContext(), search,Toast.LENGTH_SHORT).show();
+
+                databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mMessengerList.clear();
+                        for (DataSnapshot data: snapshot.getChildren()) {
+//                    mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey(), "Bye bye"));
+//                    Toast.makeText(getApplicationContext(), data.getKey(),Toast.LENGTH_SHORT).show();
+                            if (!data.getKey().equals(musername)) {
+                                if (data.getKey().startsWith(search)) {
+                                    mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey(), "Bye bye"));
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        ivHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(MessengerListActivity.this, PostListActivity.class);
+                startintent.putExtra("username", musername);
+                startActivity(startintent);
+            }
+        });
+
+        ivNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(MessengerListActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", musername);
+                startActivity(startintent);
+            }
+        });
+
+        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(MessengerListActivity.this, SettingActivity.class);
+                startintent.putExtra("username", musername);
+                startActivity(startintent);
             }
         });
     }

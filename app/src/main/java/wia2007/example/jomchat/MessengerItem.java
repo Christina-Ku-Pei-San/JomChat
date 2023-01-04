@@ -6,6 +6,9 @@ public class MessengerItem {
     private String mText1;
     private String mText2;
 
+    public MessengerItem() {
+    }
+
     public MessengerItem(int imageResource, String text1, String text2) {
         mImageResource = imageResource;
         mText1 = text1;

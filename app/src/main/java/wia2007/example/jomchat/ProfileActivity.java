@@ -14,12 +14,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivity extends AppCompatActivity {
     ImageView ivBack, ivHome, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
-    Button BtnViewPost = findViewById(R.id.BtnViewPost);
+    Button BtnViewPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        BtnViewPost = findViewById(R.id.BtnViewPost);
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {

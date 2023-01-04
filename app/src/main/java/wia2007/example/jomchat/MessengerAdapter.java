@@ -1,5 +1,6 @@
 package wia2007.example.jomchat;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MessengerAdapter extends RecyclerView.Adapter<MessengerAdapter.MessengerViewHolder> {
+    private Context mContext;
     private ArrayList<MessengerItem> mMessengerList;
     private MessengerAdapter.OnItemClickListener mListener;
 
@@ -47,7 +49,8 @@ public class MessengerAdapter extends RecyclerView.Adapter<MessengerAdapter.Mess
         }
     }
 
-    public MessengerAdapter(ArrayList<MessengerItem> messengerList) {
+    public MessengerAdapter(Context context, ArrayList<MessengerItem> messengerList) {
+        mContext = context;
         mMessengerList = messengerList;
     }
 
