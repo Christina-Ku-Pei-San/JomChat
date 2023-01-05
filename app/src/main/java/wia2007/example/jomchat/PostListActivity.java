@@ -6,26 +6,35 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostListActivity extends AppCompatActivity {
-    FloatingActionButton search_button, add_button;
+    private FloatingActionButton search_button, add_button;
     private RecyclerView mRecyclerView;
     private PostAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ImageView ivMessenger, ivNotification;
-    CircleImageView ivProfilePhoto;
+    private ImageView ivMessenger, ivNotification;
+    private CircleImageView ivProfilePhoto;
 
-    String musername;
+    private String musername;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -33,10 +42,28 @@ public class PostListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_list);
 
-        ArrayList<PostItem> post =new ArrayList<>();
-        post.add(new PostItem(R.drawable.profile_pic,"Siti", "beautiful day", R.drawable.post_photo1));
-        post.add(new PostItem(R.drawable.profile_pic2,"Angel", "Boring day", R.drawable.post_photo1));
-        post.add(new PostItem(R.drawable.profile_photo1, "Adam", "I'm sad", 0));
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivNotification = findViewById(R.id.IVNotification);
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        search_button = (FloatingActionButton)findViewById(R.id.FABSearch);
+        add_button = (FloatingActionButton)findViewById(R.id.FABAdd);
+
+        ArrayList<PostItem> post = new ArrayList<>();
+        databaseReference.child("Post").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    String username = data.child("userName").getValue().toString();
+                    String content = data.child("imageContent").getValue().toString();
+                    post.add(new PostItem(R.drawable.profile_pic, username, content, R.drawable.post_photo1));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         mRecyclerView = findViewById(R.id.RVPostItem);
         mRecyclerView.setHasFixedSize(true);
@@ -48,7 +75,6 @@ public class PostListActivity extends AppCompatActivity {
 
         musername = getIntent().getStringExtra("username");
 
-        ivMessenger = findViewById(R.id.IVMessenger);
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +84,6 @@ public class PostListActivity extends AppCompatActivity {
             }
         });
 
-        ivNotification = findViewById(R.id.IVNotification);
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +93,6 @@ public class PostListActivity extends AppCompatActivity {
             }
         });
 
-        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,28 +111,23 @@ public class PostListActivity extends AppCompatActivity {
             }
         });
 
-        search_button = (FloatingActionButton)findViewById(R.id.FABSearch);
-        search_button.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent s = new Intent(PostListActivity.this,SearchPostActivity.class);
-                        s.putExtra("username", musername);
-                        startActivity(s);
-                    }
-                }
-        );
-        add_button = (FloatingActionButton)findViewById(R.id.FABAdd);
-        add_button.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent a = new Intent(PostListActivity.this, AddPostActivity.class);
-                        a.putExtra("username", musername);
-                        startActivity(a);
-                    }
-                }
-        );
+        search_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent s = new Intent(PostListActivity.this,SearchPostActivity.class);
+                s.putExtra("username", musername);
+                startActivity(s);
+            }
+        });
+
+        add_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(PostListActivity.this, AddPostActivity.class);
+                a.putExtra("username", musername);
+                startActivity(a);
+            }
+        });
     }
 //    private void InsertData(){
 //

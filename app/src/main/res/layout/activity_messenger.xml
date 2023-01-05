@@ -98,7 +98,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@id/RLMessenger"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/profile_photo1"
         app:civ_border_color="@color/black"
         app:civ_border_width="0.5dp" />
@@ -115,18 +118,43 @@
         style="@style/TEXT"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/BtnViewProfile"
+<!--    <Button-->
+<!--        android:id="@+id/BtnViewProfile"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/RLMessenger"-->
+<!--        android:layout_toRightOf="@id/Nameofspecificuser"-->
+<!--        android:layout_centerInParent="false"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:text="View Profile"-->
+<!--        style="@style/BUTTON" />-->
+
+    <RatingBar
+        android:id="@+id/favourite"
+        style="@style/FAVOURITE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/RLMessenger"
+        android:layout_toRightOf="@id/Nameofspecificuser"
+        android:numStars="1"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:stepSize="1" />
+
+    <EditText
+        android:id="@+id/ETSearch"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/RLMessenger"
         android:layout_alignParentEnd="true"
-        android:layout_centerInParent="false"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="View Profile"
-        android:textColor="@color/black"
-        style="@style/BUTTON" />
+        style="@style/EDITTEXT"
+        android:hint="Search"
+        android:minHeight="48dp"
+        android:padding="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVMessageItem"

@@ -3,10 +3,10 @@ package wia2007.example.jomchat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +34,14 @@ public class MessengerActivity extends AppCompatActivity {
     private ArrayList<MessageItem> mMessageList;
     private RecyclerView mRecyclerView;
     private MessageAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
 
-    private Button btnViewProfile;
     private CircleImageView ivProfilePhoto;
-    private EditText mgetmessage;
+    private EditText mgetmessage, etSearch;
     private ImageButton msendmessagebutton;
     private ImageView ivBack, ivHome, ivNotification, mimageviewofspecificuser;
     private TextView mnameofspecificuser;
+    private RatingBar rbFavourite;
 
     private String enteredmessage, mreceivername, mreceiverusername, musername, senderroom, receiverroom, currenttime;
     private Calendar calendar;
@@ -59,19 +59,12 @@ public class MessengerActivity extends AppCompatActivity {
         ivHome = findViewById(R.id.IVHome);
         ivNotification = findViewById(R.id.IVNotification);
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
-        btnViewProfile = findViewById(R.id.BtnViewProfile);
-        mgetmessage = findViewById(R.id.getmessage);
-        msendmessagebutton = findViewById(R.id.imageviewsendmessage);
         mimageviewofspecificuser = findViewById(R.id.specificuserimageinimageview);
         mnameofspecificuser = findViewById(R.id.Nameofspecificuser);
-
-        mMessageList = new ArrayList<>();
-        mRecyclerView = findViewById(R.id.RVMessageItem);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new MessageAdapter(MessengerActivity.this, mMessageList);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        rbFavourite = findViewById(R.id.favourite);
+        etSearch = findViewById(R.id.ETSearch);
+        mgetmessage = findViewById(R.id.getmessage);
+        msendmessagebutton = findViewById(R.id.imageviewsendmessage);
 
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("hh:mm a");
@@ -82,6 +75,32 @@ public class MessengerActivity extends AppCompatActivity {
         senderroom = musername + mreceiverusername;
         receiverroom = mreceiverusername + musername;
 
+        mMessageList = new ArrayList<>();
+        databaseReference.child("chats").child(senderroom).child("messages").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mMessageList.clear();
+                for (DataSnapshot snapshot1:snapshot.getChildren()) {
+                    MessageItem message = snapshot1.getValue(MessageItem.class);
+                    mMessageList.add(new MessageItem(message.getMessage(), message.getTimestamp(), message.getCurrenttime(), message.getSenderORreceiver(), message.getUsername(), message.getReceiverusername()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mRecyclerView = findViewById(R.id.RVMessageItem);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setStackFromEnd(true);
+        mAdapter = new MessageAdapter(MessengerActivity.this, mMessageList);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+
         mnameofspecificuser.setText(mreceiverusername);
 //        String uri = getIntent().getStringExtra("imageuri");
 //        if(uri.isEmpty()) {
@@ -91,21 +110,56 @@ public class MessengerActivity extends AppCompatActivity {
 //            Picasso.get().load(uri).into(mimageviewofspecificuser);
 //        }
 
-        mAdapter = new MessageAdapter(MessengerActivity.this, mMessageList);
-        databaseReference.child("chats").child(senderroom).child("messages").addValueEventListener(new ValueEventListener() {
+        mimageviewofspecificuser.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mMessageList.clear();
-                for (DataSnapshot snapshot1:snapshot.getChildren()) {
-                    MessageItem message = snapshot1.getValue(MessageItem.class);
-                    mMessageList.add(new MessageItem(message.getMessage(), message.getTimestamp(), message.getCurrenttime(), message.getSenderORreceiver()));
-                }
-                mAdapter.notifyDataSetChanged();
+            public void onClick(View view) {
+                Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
+                startintent.putExtra("username", musername);
+                startintent.putExtra("receiverusername", mreceivername);
+                startActivity(startintent);
             }
+        });
 
+        mnameofspecificuser.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onClick(View view) {
+                Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
+                startintent.putExtra("username", musername);
+                startintent.putExtra("receiverusername", mreceivername);
+                startActivity(startintent);
+            }
+        });
 
+        rbFavourite.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        etSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String search = etSearch.getText().toString();
+                Toast.makeText(getApplicationContext(), search,Toast.LENGTH_SHORT).show();
+
+                databaseReference.child("chats").child(senderroom).child("messages").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mMessageList.clear();
+                        for (DataSnapshot data: snapshot.getChildren()) {
+                            if (data.child("message").getValue().toString().contains(search)) {
+                                MessageItem message = data.getValue(MessageItem.class);
+                                mMessageList.add(new MessageItem(message.getMessage(), message.getTimestamp(), message.getCurrenttime(), message.getSenderORreceiver(), message.getUsername(), message.getReceiverusername()));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
@@ -120,8 +174,8 @@ public class MessengerActivity extends AppCompatActivity {
                     Date date = new Date();
                     currenttime = simpleDateFormat.format(calendar.getTime());
 //                    MessageItem message = new MessageItem(enteredmessage, musername, date.getTime(), currenttime);
-                    MessageItem messagesender = new MessageItem(enteredmessage, date.getTime(), currenttime, "sender");
-                    MessageItem messagereceiver = new MessageItem(enteredmessage, date.getTime(), currenttime, "receiver");
+                    MessageItem messagesender = new MessageItem(enteredmessage, date.getTime(), currenttime, "sender", musername, mreceiverusername);
+                    MessageItem messagereceiver = new MessageItem(enteredmessage, date.getTime(), currenttime, "receiver", musername, mreceiverusername);
                     databaseReference.child("chats")
                             .child(senderroom)
                             .child("messages")
@@ -140,7 +194,7 @@ public class MessengerActivity extends AppCompatActivity {
                                             });
                                 }
                             });
-                    mAdapter.notifyDataSetChanged();
+//                    mAdapter.notifyDataSetChanged();
                     mgetmessage.setText(null);
                 }
             }
@@ -149,22 +203,12 @@ public class MessengerActivity extends AppCompatActivity {
         databaseReference.child("users").child(mreceiverusername).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mreceivername = snapshot.getValue().toString();
+                mreceivername = snapshot.child("name").getValue().toString();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-
-        btnViewProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
-                startintent.putExtra("username", musername);
-                startintent.putExtra("receiverusername", mreceivername);
-                startActivity(startintent);
             }
         });
 

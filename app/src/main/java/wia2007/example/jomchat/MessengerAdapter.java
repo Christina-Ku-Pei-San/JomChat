@@ -27,13 +27,11 @@ public class MessengerAdapter extends RecyclerView.Adapter<MessengerAdapter.Mess
     public static class MessengerViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView1;
-        public TextView mTextView2;
 
         public MessengerViewHolder(View itemView, final MessengerAdapter.OnItemClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.IVProfilePhoto);
             mTextView1 = itemView.findViewById(R.id.TVUsername);
-            mTextView2 = itemView.findViewById(R.id.TVMessage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,7 +65,6 @@ public class MessengerAdapter extends RecyclerView.Adapter<MessengerAdapter.Mess
 
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
     }
 
     @Override

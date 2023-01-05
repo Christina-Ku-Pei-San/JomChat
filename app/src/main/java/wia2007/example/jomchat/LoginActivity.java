@@ -1,6 +1,7 @@
 package wia2007.example.jomchat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button btnSignUp, btnLogin;
+    Button btnSignUp, btnLogin;
     private TextInputLayout textInputUsername;
     static String usernameInput;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -80,6 +81,14 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
+                // After login is successful, set the flag in shared preferences
+                SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                sharedPreferences.edit().putBoolean("logged_in", true).apply();
+
+                // Launch the homepage activity
+                Intent intent = new Intent(LoginActivity.this, PostListActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

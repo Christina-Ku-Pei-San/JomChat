@@ -3,6 +3,7 @@ package wia2007.example.jomchat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -104,5 +105,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startintent);
             }
         });
+
+        // First, get a reference to the SharedPreferences object
+        SharedPreferences preferences = getSharedPreferences("MY_APP", MODE_PRIVATE);
+
+        // Check if the user is already logged in
+        boolean isLoggedIn = preferences.getBoolean("IS_LOGGED_IN", false);
+
+        if (isLoggedIn) {
+            // Show the homepage activity
+            startActivity(new Intent(this, PostListActivity.class));
+        } else {
+            // Show the login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        };
     }
 }

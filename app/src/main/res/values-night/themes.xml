@@ -118,4 +118,8 @@
         <item name = "android:backgroundTint">#000000</item>
         <item name="android:strokeColor">#FFFFFF</item>
     </style>
+
+    <style name="FAVOURITE">
+        <item name ="android:progressTint">#FFFFFF</item>
+    </style>
 </resources>

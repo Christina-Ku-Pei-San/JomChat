@@ -22,20 +22,20 @@
 
         <TextView
             android:id="@+id/TVUsername"
+            style="@style/TEXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="-4dp"
             android:layout_toEndOf="@+id/IVProfilePhoto"
             android:fontFamily="@font/droid_sans_mono"
             android:text="John"
-            style="@style/TEXT"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/TVMessage"
+            style="@style/TEXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TVUsername"
@@ -43,8 +43,8 @@
             android:layout_toEndOf="@+id/IVProfilePhoto"
             android:fontFamily="@font/droid_sans_mono"
             android:text="Bye bye"
-            style="@style/TEXT"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>
