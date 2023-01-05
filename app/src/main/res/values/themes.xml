@@ -120,4 +120,7 @@
         <item name="android:strokeColor">#000000</item>
     </style>
 
+    <style name="FAVOURITE">
+        <item name ="android:progressTint">#FFF7BB</item>
+    </style>
 </resources>

@@ -48,6 +48,21 @@ public class MessengerListActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.ETSearch);
 
         mMessengerList = new ArrayList<>();
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    if (!data.getKey().equals(musername)) {
+                        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         mRecyclerView = findViewById(R.id.RVMessengerItem);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -69,23 +84,6 @@ public class MessengerListActivity extends AppCompatActivity {
 
         musername = getIntent().getStringExtra("username");
 
-        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                mMessengerList.clear();
-                for (DataSnapshot data: snapshot.getChildren()) {
-                    if (!data.getKey().equals(musername)) {
-                        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey(), "Bye bye"));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,11 +95,9 @@ public class MessengerListActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         mMessengerList.clear();
                         for (DataSnapshot data: snapshot.getChildren()) {
-//                    mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey(), "Bye bye"));
-//                    Toast.makeText(getApplicationContext(), data.getKey(),Toast.LENGTH_SHORT).show();
                             if (!data.getKey().equals(musername)) {
                                 if (data.getKey().startsWith(search)) {
-                                    mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey(), "Bye bye"));
+                                    mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
                                 }
                             }
                         }
