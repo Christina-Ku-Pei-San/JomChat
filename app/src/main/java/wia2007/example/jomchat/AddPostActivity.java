@@ -1,29 +1,37 @@
 package wia2007.example.jomchat;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +39,42 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddPostActivity extends AppCompatActivity {
-    ImageButton gallery_button;
-    Button submit_button;
-    private ImageView imageView;
-    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
-    TextInputEditText content;
+    Button btnsubmit;
+    ImageButton gallery;
+    TextInputEditText postContent;
+    ImageView imgview;
+    StorageReference storageReference;
+    DatabaseReference databaseReference;
+    //int Image_Request_Code = 7;
+    ProgressDialog progressDialog ;
 
+    //another
+    //permission constants
+    //private static final int CAMERA_REQUEST_CODE =100;
+    //private static final int GALLERY_REQUEST_CODE =200;
+    //image pick constants
+    private static final int IMAGE_PICK_CAMERA_CODE = 300;
+    private static final int IMAGE_PICK_GALLERY_CODE = 400;
+
+    Uri image_rui=null;
+    //user info
+    String name, email,uid,dp;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference userDbRef;
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
+
+        //anaother
+        firebaseAuth = FirebaseAuth.getInstance();
+        //checkUserStatus();
+        //get some info of current user to include in post
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -81,34 +112,45 @@ public class AddPostActivity extends AppCompatActivity {
             }
         });
 
-        gallery_button = (ImageButton) findViewById(R.id.IBGallery);
-        gallery_button.setOnClickListener(new View.OnClickListener() {
+        storageReference = FirebaseStorage.getInstance().getReference("Images");
+        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
+          gallery = (ImageButton) findViewById(R.id.IBGallery);
+          btnsubmit= (Button)findViewById(R.id.BtnSubmit);
+          imgview = (ImageView)findViewById(R.id.IVUploadedImage);
+          postContent =(TextInputEditText) findViewById(R.id.TETAddPost);
+
+        progressDialog = new ProgressDialog(AddPostActivity.this);
+
+        gallery.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 if(checkAndRequestPermissions(AddPostActivity.this)){
                     chooseImage(AddPostActivity.this);
                 }
+
+
+
             }
         });
-
-        submit_button = (Button) findViewById(R.id.BtnSubmit);
-        submit_button.setOnClickListener(new View.OnClickListener() {
+        btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Context context = getApplicationContext();
+            public void onClick(View view) {
+                if(!postContent.getText().toString().isEmpty() && image_rui == null){
+                    uploadText();
+                }else{
+                    UploadImage();
+                }
 
-                CharSequence text = "Submitted!";
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+
+
             }
         });
 
-//        imageView = findViewById(R.id.upload_image);
-    }
 
-    // function to let's the user to choose image from camera or gallery
+    }
+    //ass
     private void chooseImage(Context context){
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
         // create a dialog for showing the optionsMenu
@@ -119,13 +161,11 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(optionsMenu[i].equals("Take Photo")){
                     // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
+                    pickFromCamera();
                 }
                 else if(optionsMenu[i].equals("Choose from Gallery")){
                     // choose from  external storage
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto , 1);
+                    pickFromGallery();
                 }
                 else if (optionsMenu[i].equals("Exit")) {
                     dialogInterface.dismiss();
@@ -134,7 +174,113 @@ public class AddPostActivity extends AppCompatActivity {
         });
         builder.show();
     }
+    //another
+    private void pickFromCamera(){
 
+
+        ContentValues cv = new ContentValues();
+        cv.put(MediaStore.Images.Media.TITLE,"Temp Pick");
+        cv.put(MediaStore.Images.Media.DESCRIPTION, "Temp Descr");
+        image_rui = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, image_rui);
+        startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
+    }
+    private void pickFromGallery(){
+        //intent to pick image from gallery
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
+
+    }
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (  resultCode == RESULT_OK ) {
+            if(requestCode == IMAGE_PICK_GALLERY_CODE){
+                //image is picked from gallery, get uri of image
+                image_rui = data.getData();
+                //set to imageview
+                imgview.setImageURI(image_rui);
+
+            }
+            else if(requestCode == IMAGE_PICK_CAMERA_CODE){
+                //image is picked from camera, get uri of image
+
+                imgview.setImageURI(image_rui);
+
+            }
+
+        }
+    }
+
+
+    public String GetFileExtension(Uri uri) {
+
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
+
+    }
+    public void uploadText(){
+        if(!postContent.getText().toString().isEmpty()){
+
+
+            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null);
+
+            String ImageUploadId = databaseReference.push().getKey();
+            databaseReference.child("Post").child(ImageUploadId).setValue(textUploadInfo);
+
+            Toast.makeText(getApplicationContext(), "Post Uploaded Successfully ", Toast.LENGTH_LONG).show();
+            postContent.setText("");
+        }
+    }
+
+
+
+    public void UploadImage() {
+
+        if (image_rui != null) {
+
+            progressDialog.setTitle("Image is Uploading...");
+            progressDialog.show();
+            StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(image_rui));
+            storageReference2.putFile(image_rui)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            String TempImageContent =postContent.getText().toString().trim();
+                            //String username = LoginActivity.usernameInput;
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                            @SuppressWarnings("VisibleForTests")
+                            uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString());
+                            // databaseReference.child("users").child("test").child("name").setValue("ck");
+                            String ImageUploadId = databaseReference.push().getKey();
+                            //databaseReference.child("user").child(MainActivity.ETusername.getText().toString()).setValue(imageUploadInfo);
+                            databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
+                            postContent.setText("");
+                            imgview.setImageURI(null);
+
+
+
+                        }
+                    });
+        }
+        else {
+
+            Toast.makeText(AddPostActivity.this, "Please Select Image ", Toast.LENGTH_LONG).show();
+
+        }
+    }
     // function to check permission
     public static boolean checkAndRequestPermissions(final Activity context) {
         int WExtstorePermission = ContextCompat.checkSelfPermission(context,
@@ -181,34 +327,5 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        imageView.setImageBitmap(selectedImage);
-                    }
-                    break;
-                case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
-                            }
-                        }
-                    }
-                    break;
-            }
-        }
-    }
+
 }
