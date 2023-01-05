@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnSignUp, btnLogin;
+    private TextInputLayout textInputUsername;
+    static String usernameInput;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -26,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        TextInputLayout textInputUsername = findViewById(R.id.username_login);
+        textInputUsername = findViewById(R.id.username_login);
         TextInputLayout textInputPassword = findViewById(R.id.password_login);
 
         btnSignUp = (Button) findViewById(R.id.btn_signup);
@@ -42,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String usernameInput = textInputUsername.getEditText().getText().toString();
+                usernameInput = textInputUsername.getEditText().getText().toString();
                 String passwordInput = textInputPassword.getEditText().getText().toString();
 
                 if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
@@ -81,4 +83,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }

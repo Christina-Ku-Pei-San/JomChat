@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private String nameInput, usernameInput, emailInput, passwordInput, confirm_passwordInput, yearInput, departmentInput;
 
+
     private String[] departments = {"Artificial Intelligence", "Computer System Networking", "Software Engineering",
             "Information System", "Data Science", "Multimedia Computing"};
 
