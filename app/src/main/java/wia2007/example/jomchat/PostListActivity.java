@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -23,15 +24,18 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostListActivity extends AppCompatActivity {
-    private FloatingActionButton search_button, add_button;
+    FloatingActionButton search_button, add_button, feedback_button;
     private RecyclerView mRecyclerView;
     private PostAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private ImageView ivMessenger, ivNotification;
-    private CircleImageView ivProfilePhoto;
+    ImageView ivMessenger, ivNotification;
+    CircleImageView ivProfilePhoto;
 
     private String musername;
+
+//    SwipeRefreshLayout swipeRefreshLayout;
+
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -41,6 +45,15 @@ public class PostListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_list);
+//
+//        swipeRefreshLayout = findViewById(R.id.SRLPostListAct);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//               swipeRefreshLayout.setRefreshing(false);
+//
+//            }
+//        });
 
         ivMessenger = findViewById(R.id.IVMessenger);
         ivNotification = findViewById(R.id.IVNotification);
@@ -128,9 +141,17 @@ public class PostListActivity extends AppCompatActivity {
                 startActivity(a);
             }
         });
+
+        feedback_button = findViewById(R.id.FABFeedback);
+        feedback_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent b= new Intent(PostListActivity.this,FeedbackActivity.class);
+                startActivity(b);
+            }
+        });
     }
-//    private void InsertData(){
-//
-//    }
+
+
 
 }

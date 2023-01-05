@@ -63,7 +63,7 @@
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
             android:text="JOMCHAT"
-           style="@style/TEXT"
+            style="@style/TEXT"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -82,14 +82,6 @@
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:background="@color/black" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
     </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -113,7 +105,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-       style="@style/BUTTON2"
+        style="@style/BUTTON2"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="SpeakableTextPresentCheck" />
 
@@ -122,5 +114,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/RLPostList"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FABFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/FABSearch"
+        android:layout_alignStart="@+id/FABSearch"
+        android:layout_alignEnd="@+id/FABSearch"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="-3dp"
+        android:backgroundTint="#8B90FF"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/feedback" />
 
 </RelativeLayout>
