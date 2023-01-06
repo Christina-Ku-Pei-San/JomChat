@@ -164,23 +164,23 @@
         android:layout_below="@id/specificuserimageinimageview"
         android:scrollbars="vertical" />
 
+
     <EditText
+        android:id="@+id/getmessage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Type a message"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/message_background"
+        android:hint="Type a message"
         android:paddingLeft="20dp"
         android:paddingEnd="10dp"
-        android:textSize="18sp"
-        android:background="@drawable/message_background"
         android:textAlignment="textStart"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="55dp"
         android:textColor="@color/black"
         android:textColorHint="#A8A7A7"
-        android:id="@+id/getmessage" />
-
+        android:textSize="18sp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="45dp"

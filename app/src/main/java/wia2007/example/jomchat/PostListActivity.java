@@ -70,6 +70,7 @@ public class PostListActivity extends AppCompatActivity {
                     String content = data.child("imageContent").getValue().toString();
                     post.add(new PostItem(R.drawable.profile_pic, username, content, R.drawable.post_photo1));
                 }
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override

@@ -87,6 +87,7 @@ public class MessengerActivity extends AppCompatActivity {
                     MessageItem message = snapshot1.getValue(MessageItem.class);
                     mMessageList.add(new MessageItem(message.getMessage(), message.getTimestamp(), message.getCurrenttime(), message.getSenderORreceiver(), message.getUsername(), message.getReceiverusername()));
                 }
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override

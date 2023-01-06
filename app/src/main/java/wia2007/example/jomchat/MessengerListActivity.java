@@ -84,6 +84,28 @@ public class MessengerListActivity extends AppCompatActivity {
 
         musername = getIntent().getStringExtra("username");
 
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mMessengerList.clear();
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    if (!data.getKey().equals(musername)) {
+                        System.out.println("pgvkonawgvingbaigb");
+
+                            mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
+
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +123,7 @@ public class MessengerListActivity extends AppCompatActivity {
                                 }
                             }
                         }
+                        mAdapter.notifyDataSetChanged();
                     }
 
                     @Override
