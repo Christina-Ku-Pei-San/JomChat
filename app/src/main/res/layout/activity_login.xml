@@ -53,8 +53,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="text"
-            android:textSize="20sp"
-            android:backgroundTint="@color/pale_yellow"/>
+            android:textSize="20sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,8 +76,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="textPassword"
-            android:textSize="20sp"
-            android:backgroundTint="@color/pale_yellow"/>
+            android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

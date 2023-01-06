@@ -57,8 +57,7 @@
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="text"
             android:maxLength="30"
-            android:textColorHighlight="@color/purple_500"
-            android:backgroundTint="@color/pale_yellow"/>
+            android:textColorHighlight="@color/purple_500" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +82,7 @@
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="text"
             android:maxLength="15"
-            android:backgroundTint="@color/pale_yellow"/>
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -103,8 +102,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="textEmailAddress"
-            android:backgroundTint="@color/pale_yellow"/>
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -125,7 +123,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="none"
-            android:backgroundTint="@color/pale_yellow"/>
+           />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -146,7 +144,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
             android:inputType="none"
-            android:backgroundTint="@color/pale_yellow"/>
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -166,8 +164,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/pale_yellow"/>
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -187,8 +184,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/pale_yellow"/>
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
