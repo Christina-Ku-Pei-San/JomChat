@@ -14,7 +14,7 @@ import android.widget.Switch;
 
 public class SettingActivity extends AppCompatActivity {
     ImageView ivHome, ivMessenger, ivNotification;
-    Button btnViewProfile, btnChangePassword, btnLogout;
+    Button btnViewProfile, btnChangePassword, btnFeedback, btnLogout;
     Switch swDarkMode;
     boolean nightMODE;
     SharedPreferences sharedPreferences;
@@ -88,11 +88,21 @@ public class SettingActivity extends AppCompatActivity {
               editor.apply();
           }
         });
+
         btnChangePassword = findViewById(R.id.BtnChangePassword);
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, ChangePasswordActivity.class);
+                startActivity(startintent);
+            }
+        });
+
+        btnFeedback = findViewById(R.id.BtnFeedback);
+        btnFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(SettingActivity.this, FeedbackActivity.class);
                 startActivity(startintent);
             }
         });

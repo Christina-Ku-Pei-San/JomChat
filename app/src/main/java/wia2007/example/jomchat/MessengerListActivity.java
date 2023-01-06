@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -105,22 +107,22 @@ public class MessengerListActivity extends AppCompatActivity {
             }
         });
 
-
-        etSearch.setOnClickListener(new View.OnClickListener() {
+        etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                String search = etSearch.getText().toString();
-                Toast.makeText(getApplicationContext(), search,Toast.LENGTH_SHORT).show();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String search = etSearch.getText().toString();
                 databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         mMessengerList.clear();
                         for (DataSnapshot data: snapshot.getChildren()) {
-                            if (!data.getKey().equals(musername)) {
-                                if (data.getKey().startsWith(search)) {
-                                    mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
-                                }
+                            if (!data.getKey().equals(musername) && data.getKey().contains(search)) {
+                                mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
                             }
                         }
                         mAdapter.notifyDataSetChanged();
@@ -131,6 +133,11 @@ public class MessengerListActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 

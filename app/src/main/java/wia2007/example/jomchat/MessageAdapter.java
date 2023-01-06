@@ -101,6 +101,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
                         Toast.makeText(context, "message deleted", Toast.LENGTH_SHORT).show();
                     }
                 }
+                notifyDataSetChanged();
             }
 
             @Override

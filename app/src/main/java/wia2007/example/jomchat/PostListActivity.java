@@ -142,17 +142,5 @@ public class PostListActivity extends AppCompatActivity {
                 startActivity(a);
             }
         });
-
-        feedback_button = findViewById(R.id.FABFeedback);
-        feedback_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent b= new Intent(PostListActivity.this,FeedbackActivity.class);
-                startActivity(b);
-            }
-        });
     }
-
-
-
 }

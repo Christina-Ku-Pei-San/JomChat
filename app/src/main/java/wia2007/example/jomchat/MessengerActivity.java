@@ -3,6 +3,8 @@ package wia2007.example.jomchat;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -141,12 +143,15 @@ public class MessengerActivity extends AppCompatActivity {
             }
         });
 
-        etSearch.setOnClickListener(new View.OnClickListener() {
+        etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                String search = etSearch.getText().toString();
-                Toast.makeText(getApplicationContext(), search,Toast.LENGTH_SHORT).show();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String search = etSearch.getText().toString();
                 databaseReference.child("chats").child(senderroom).child("messages").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -157,6 +162,7 @@ public class MessengerActivity extends AppCompatActivity {
                                 mMessageList.add(new MessageItem(message.getMessage(), message.getTimestamp(), message.getCurrenttime(), message.getSenderORreceiver(), message.getUsername(), message.getReceiverusername()));
                             }
                         }
+                        mAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -164,6 +170,11 @@ public class MessengerActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 

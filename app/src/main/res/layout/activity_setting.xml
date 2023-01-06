@@ -115,6 +115,18 @@
         app:layout_constraintTop_toBottomOf="@+id/SwDarkMode" />
 
     <Button
+        android:id="@+id/BtnFeedback"
+        style="@style/BUTTON"
+        android:layout_width="225dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:text="Feedback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnChangePassword" />
+
+    <Button
         android:id="@+id/BtnLogout"
         style="@style/BUTTON"
         android:layout_width="225dp"
@@ -124,6 +136,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BtnChangePassword" />
+        app:layout_constraintTop_toBottomOf="@+id/BtnFeedback" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
