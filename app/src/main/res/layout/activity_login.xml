@@ -10,15 +10,14 @@
 
     <TextView
         android:id="@+id/TV_Login"
-        android:layout_width="wrap_content"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/droid_sans_mono"
+        android:fontFamily="@font/bangers"
         android:text="JOMCHAT"
         style="@style/TEXT"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/TV_username"
