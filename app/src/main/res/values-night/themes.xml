@@ -115,7 +115,7 @@
     </style>
 
     <style name = "MESSENGER">
-        <item name = "android:backgroundTint">#000000</item>
+        <item name = "android:backgroundTint">#232323</item>
         <item name="android:strokeColor">#FFFFFF</item>
     </style>
 

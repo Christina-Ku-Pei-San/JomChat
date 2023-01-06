@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -94,7 +93,7 @@ public class MessengerListActivity extends AppCompatActivity {
                     if (!data.getKey().equals(musername)) {
                         System.out.println("pgvkonawgvingbaigb");
 
-                            mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
+                            mMessengerList.add(new MessengerItem(R.drawable.ic_baseline_account_circle_24, data.getKey()));
 
                     }
                 }

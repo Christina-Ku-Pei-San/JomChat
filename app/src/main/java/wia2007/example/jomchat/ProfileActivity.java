@@ -27,8 +27,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        BtnViewPost = findViewById(R.id.BtnViewPost);
-
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,10 +81,12 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(startintent);
             }
         });
+
+        BtnViewPost = findViewById(R.id.BtnViewPost);
         BtnViewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent( ProfileActivity.this, PostActivity.class);
+                Intent startintent = new Intent( ProfileActivity.this, PostListActivity.class);
                 startActivity(startintent);
             }
         });

@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -68,7 +67,7 @@ public class PostListActivity extends AppCompatActivity {
                 for (DataSnapshot data: snapshot.getChildren()) {
                     String username = data.child("userName").getValue().toString();
                     String content = data.child("imageContent").getValue().toString();
-                    post.add(new PostItem(R.drawable.profile_pic, username, content, R.drawable.post_photo1));
+                    post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, R.drawable.post_photo1));
                 }
                 mAdapter.notifyDataSetChanged();
             }
