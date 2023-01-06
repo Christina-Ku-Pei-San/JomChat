@@ -65,9 +65,18 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data: snapshot.getChildren()) {
+                    String userurl = data.child("userURL").getValue().toString();
                     String username = data.child("userName").getValue().toString();
                     String content = data.child("imageContent").getValue().toString();
-                    post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, R.drawable.post_photo1));
+                    if (data.hasChild("imageURL")) {
+                        String imageurl = data.child("imageURL").getValue().toString();
+                        post.add(new PostItem(userurl, username, content, imageurl));
+//                        post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, imageurl));
+                    }
+                    else {
+                        post.add(new PostItem(userurl, username, content, null));
+//                        post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, null));
+                    }
                 }
                 mAdapter.notifyDataSetChanged();
             }
