@@ -33,7 +33,7 @@ public class MessengerListActivity extends AppCompatActivity {
     private CircleImageView ivProfilePhoto;
     private EditText etSearch;
 
-    private String musername;
+    private String username;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -48,12 +48,14 @@ public class MessengerListActivity extends AppCompatActivity {
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         etSearch = findViewById(R.id.ETSearch);
 
+        username = getIntent().getStringExtra("username");
+
         mMessengerList = new ArrayList<>();
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data: snapshot.getChildren()) {
-                    if (!data.getKey().equals(musername)) {
+                    if (!data.getKey().equals(username)) {
                         mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
                     }
                 }
@@ -76,22 +78,20 @@ public class MessengerListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent startintent = new Intent(MessengerListActivity.this, MessengerActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startintent.putExtra("receiverusername", mMessengerList.get(position).getText1());
                 startintent.putExtra("imageuri", mMessengerList.get(position).getImageResource());
                 startActivity(startintent);
             }
         });
 
-        musername = getIntent().getStringExtra("username");
-
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mMessengerList.clear();
                 for (DataSnapshot data: snapshot.getChildren()) {
-                    if (!data.getKey().equals(musername)) {
-                        System.out.println("pgvkonawgvingbaigb");
+                    if (!data.getKey().equals(username)) {
+//                        System.out.println("pgvkonawgvingbaigb");
 
                             mMessengerList.add(new MessengerItem(R.drawable.ic_baseline_account_circle_24, data.getKey()));
 
@@ -120,8 +120,8 @@ public class MessengerListActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         mMessengerList.clear();
                         for (DataSnapshot data: snapshot.getChildren()) {
-                            if (!data.getKey().equals(musername) && data.getKey().contains(search)) {
-                                mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
+                            if (!data.getKey().equals(username) && data.getKey().contains(search)) {
+                                mMessengerList.add(new MessengerItem(R.drawable.ic_baseline_account_circle_24, data.getKey()));
                             }
                         }
                         mAdapter.notifyDataSetChanged();
@@ -144,7 +144,7 @@ public class MessengerListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerListActivity.this, PostListActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -153,7 +153,7 @@ public class MessengerListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerListActivity.this, NotificationListActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -162,7 +162,7 @@ public class MessengerListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerListActivity.this, SettingActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

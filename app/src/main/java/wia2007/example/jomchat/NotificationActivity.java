@@ -22,10 +22,14 @@ public class NotificationActivity extends AppCompatActivity {
     ImageView ivBack, ivHome, ivMessenger;
     CircleImageView ivProfilePhoto;
 
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
+        username = getIntent().getStringExtra("username");
 
         createNotificationList();
         buildRecyclerView();
@@ -35,6 +39,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(NotificationActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -44,6 +49,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(NotificationActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -53,6 +59,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(NotificationActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -62,6 +69,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(NotificationActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

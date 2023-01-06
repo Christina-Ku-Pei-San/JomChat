@@ -12,16 +12,21 @@ public class ChangePasswordActivity extends AppCompatActivity {
     ImageView ivBack, ivHome, ivMessenger, ivNotification;
     Button btnConfirm;
 
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+
+        username = getIntent().getStringExtra("username");
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -31,6 +36,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -40,6 +46,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -49,6 +56,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -58,6 +66,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

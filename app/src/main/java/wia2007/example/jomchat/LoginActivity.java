@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     static String usernameInput;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +63,14 @@ public class LoginActivity extends AppCompatActivity {
                                 // now get password of user from firebase data and match it with user entered password
                                 final String getPassword = snapshot.child(usernameInput).child("password").getValue(String.class);
                                 if (getPassword.equals(passwordInput)) {
+                                    sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                                    sharedPreferences.edit().putString("username", usernameInput).apply();
+
                                     Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
                                     Intent login = new Intent(LoginActivity.this, PostListActivity.class);
                                     login.putExtra("username", usernameInput);
                                     startActivity(login);
+                                    finish();
                                 }
                                 else {
                                     Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
@@ -82,13 +88,13 @@ public class LoginActivity extends AppCompatActivity {
                     });
                 }
                 // After login is successful, set the flag in shared preferences
-                SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
                 sharedPreferences.edit().putBoolean("logged_in", true).apply();
 
                 // Launch the homepage activity
-                Intent intent = new Intent(LoginActivity.this, PostListActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(LoginActivity.this, PostListActivity.class);
+//                startActivity(intent);
+//                finish();
             }
         });
     }

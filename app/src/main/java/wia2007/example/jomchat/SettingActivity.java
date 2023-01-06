@@ -20,16 +20,21 @@ public class SettingActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        username = getIntent().getStringExtra("username");
 
         ivHome = findViewById(R.id.IVHome);
         ivHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -39,6 +44,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -48,6 +54,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -57,6 +64,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, ProfileActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -94,6 +102,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, ChangePasswordActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -103,6 +112,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, FeedbackActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

@@ -31,7 +31,7 @@ public class PostListActivity extends AppCompatActivity {
     ImageView ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
 
-    private String musername;
+    private String username;
 
 //    SwipeRefreshLayout swipeRefreshLayout;
 
@@ -86,13 +86,13 @@ public class PostListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        musername = getIntent().getStringExtra("username");
+        username = getIntent().getStringExtra("username");
 
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(PostListActivity.this, MessengerListActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -101,7 +101,7 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(PostListActivity.this, NotificationListActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -110,7 +110,7 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(PostListActivity.this, SettingActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -119,7 +119,7 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(PostListActivity.this, PostActivity.class);
-                intent.putExtra("username", musername);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });
@@ -128,7 +128,7 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent s = new Intent(PostListActivity.this,SearchPostActivity.class);
-                s.putExtra("username", musername);
+                s.putExtra("username", username);
                 startActivity(s);
             }
         });
@@ -137,7 +137,7 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent a = new Intent(PostListActivity.this, AddPostActivity.class);
-                a.putExtra("username", musername);
+                a.putExtra("username", username);
                 startActivity(a);
             }
         });

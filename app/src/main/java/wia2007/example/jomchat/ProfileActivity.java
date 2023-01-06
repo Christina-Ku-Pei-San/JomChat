@@ -21,17 +21,22 @@ public class ProfileActivity extends AppCompatActivity {
     TextView displayNickName, displayUserName, displayUserYear, displayUserDepartment;
     Button BtnViewPost;
 
+    String username;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        username = getIntent().getStringExtra("username");
+
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ProfileActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -41,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ProfileActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -50,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ProfileActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -59,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ProfileActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -68,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ProfileActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -78,6 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ProfileActivity.this, ViewProfileActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -87,6 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent( ProfileActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

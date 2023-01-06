@@ -122,4 +122,8 @@
     <style name="FAVOURITE">
         <item name ="android:progressTint">#FFFFFF</item>
     </style>
+
+    <style name = "LINE">
+        <item name = "android:background">#FFFFFF</item>
+    </style>
 </resources>

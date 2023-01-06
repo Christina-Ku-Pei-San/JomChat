@@ -99,7 +99,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#F5C0A2" />
+        style="@style/LINE" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/SRLMessengerList"

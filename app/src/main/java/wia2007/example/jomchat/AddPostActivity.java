@@ -65,11 +65,15 @@ public class AddPostActivity extends AppCompatActivity {
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
 
+    String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
+
+        username = getIntent().getStringExtra("username");
 
         //anaother
         firebaseAuth = FirebaseAuth.getInstance();
@@ -81,6 +85,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -90,6 +95,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -99,6 +105,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -108,6 +115,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

@@ -15,16 +15,21 @@ public class SearchPostActivity extends AppCompatActivity {
     CircleImageView ivProfilePhoto;
     EditText etSearch;
 
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_post);
+
+        username = getIntent().getStringExtra("username");
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SearchPostActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -34,6 +39,7 @@ public class SearchPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SearchPostActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -43,6 +49,7 @@ public class SearchPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SearchPostActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -52,6 +59,7 @@ public class SearchPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SearchPostActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

@@ -20,6 +20,7 @@ public class FeedbackActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     String rating_marks;
+//    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,9 @@ public class FeedbackActivity extends AppCompatActivity {
         Button submit = findViewById(R.id.BtnFeedbackSubmit);
         EditText response = findViewById(R.id.ETFeedback);
 
-
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
+//        username = getIntent().getStringExtra("username");
 
         submit.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -68,11 +68,15 @@ public class ViewProfileActivity extends AppCompatActivity {
     CircleImageView ivProfilePhoto;
     CircleImageView ivProfilePic;
 
+    String username;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
+
+        username = getIntent().getStringExtra("username");
 
         EditText editNickName = findViewById(R.id.editNickName);
         EditText editUserName = findViewById(R.id.editUserName);
@@ -93,6 +97,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -102,6 +107,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -111,6 +117,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, NotificationListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -120,6 +127,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -129,6 +137,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, ViewProfileActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -139,6 +148,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, ProfileActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -181,6 +191,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
                 Intent startintent = new Intent(ViewProfileActivity.this, ProfileActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });

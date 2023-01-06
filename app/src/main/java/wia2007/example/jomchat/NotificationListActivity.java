@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -19,31 +22,30 @@ public class NotificationListActivity extends AppCompatActivity {
     private NotificationAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ImageView ivBack, ivHome, ivMessenger;
-    CircleImageView ivProfilePhoto;
+    private ImageView ivHome, ivMessenger;
+    private CircleImageView ivProfilePhoto;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_list);
 
+        username = getIntent().getStringExtra("username");
+
         createNotificationList();
         buildRecyclerView();
-
-        ivBack = findViewById(R.id.IVBack);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(NotificationListActivity.this, PostListActivity.class);
-                startActivity(startintent);
-            }
-        });
 
         ivHome = findViewById(R.id.IVHome);
         ivHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(NotificationListActivity.this, PostListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -53,6 +55,7 @@ public class NotificationListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(NotificationListActivity.this, MessengerListActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -62,6 +65,7 @@ public class NotificationListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(NotificationListActivity.this, SettingActivity.class);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -99,6 +103,7 @@ public class NotificationListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(NotificationListActivity.this, NotificationActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });

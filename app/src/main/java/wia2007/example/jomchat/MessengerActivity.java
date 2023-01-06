@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -48,7 +47,7 @@ public class MessengerActivity extends AppCompatActivity {
     private TextView mnameofspecificuser;
     private RatingBar rbFavourite;
 
-    private String enteredmessage, mreceivername, mreceiverusername, musername, senderroom, receiverroom, currenttime;
+    private String enteredmessage, receivername, receiverusername, username, senderroom, receiverroom, currenttime;
     private Calendar calendar;
     private SimpleDateFormat simpleDateFormat;
 
@@ -74,11 +73,11 @@ public class MessengerActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("hh:mm a");
 
-        musername = getIntent().getStringExtra("username");
-        mreceiverusername = getIntent().getStringExtra("receiverusername");
+        username = getIntent().getStringExtra("username");
+        receiverusername = getIntent().getStringExtra("receiverusername");
 
-        senderroom = musername + mreceiverusername;
-        receiverroom = mreceiverusername + musername;
+        senderroom = username + receiverusername;
+        receiverroom = receiverusername + username;
 
         mMessageList = new ArrayList<>();
         databaseReference.child("chats").child(senderroom).child("messages").addValueEventListener(new ValueEventListener() {
@@ -107,7 +106,7 @@ public class MessengerActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
-        mnameofspecificuser.setText(mreceiverusername);
+        mnameofspecificuser.setText(receiverusername);
 //        String uri = getIntent().getStringExtra("imageuri");
 //        if(uri.isEmpty()) {
 //            Toast.makeText(getApplicationContext(),"null is recieved",Toast.LENGTH_SHORT).show();
@@ -120,8 +119,8 @@ public class MessengerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
-                startintent.putExtra("username", musername);
-                startintent.putExtra("receiverusername", mreceivername);
+                startintent.putExtra("username", username);
+                startintent.putExtra("receiverusername", receivername);
                 startActivity(startintent);
             }
         });
@@ -130,8 +129,8 @@ public class MessengerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
-                startintent.putExtra("username", musername);
-                startintent.putExtra("receiverusername", mreceivername);
+                startintent.putExtra("username", username);
+                startintent.putExtra("receiverusername", receivername);
                 startActivity(startintent);
             }
         });
@@ -189,8 +188,8 @@ public class MessengerActivity extends AppCompatActivity {
                     Date date = new Date();
                     currenttime = simpleDateFormat.format(calendar.getTime());
 //                    MessageItem message = new MessageItem(enteredmessage, musername, date.getTime(), currenttime);
-                    MessageItem messagesender = new MessageItem(enteredmessage, date.getTime(), currenttime, "sender", musername, mreceiverusername);
-                    MessageItem messagereceiver = new MessageItem(enteredmessage, date.getTime(), currenttime, "receiver", musername, mreceiverusername);
+                    MessageItem messagesender = new MessageItem(enteredmessage, date.getTime(), currenttime, "sender", username, receiverusername);
+                    MessageItem messagereceiver = new MessageItem(enteredmessage, date.getTime(), currenttime, "receiver", username, receiverusername);
                     databaseReference.child("chats")
                             .child(senderroom)
                             .child("messages")
@@ -225,10 +224,10 @@ public class MessengerActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("users").child(mreceiverusername).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("users").child(receiverusername).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mreceivername = snapshot.child("name").getValue().toString();
+                receivername = snapshot.child("name").getValue().toString();
             }
 
             @Override
@@ -241,7 +240,7 @@ public class MessengerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, MessengerListActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -250,7 +249,7 @@ public class MessengerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, PostListActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -259,7 +258,7 @@ public class MessengerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, NotificationListActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
@@ -268,7 +267,7 @@ public class MessengerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, SettingActivity.class);
-                startintent.putExtra("username", musername);
+                startintent.putExtra("username", username);
                 startActivity(startintent);
             }
         });
