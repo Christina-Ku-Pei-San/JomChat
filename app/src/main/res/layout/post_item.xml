@@ -23,6 +23,12 @@
             android:layout_height="50dp"
             android:src="@drawable/ic_baseline_account_circle_24" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVProfilePhoto2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_account_circle_24" />
+
         <TextView
             android:id="@+id/TVUsername"
             android:layout_width="wrap_content"
@@ -51,7 +57,8 @@
         <ImageView
             android:id="@+id/IVPostPhoto"
             android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
+            android:minHeight="120dp"
             android:layout_below="@+id/TVPost"
             android:layout_marginTop="8dp"
             android:src="@drawable/post_photo1"/>

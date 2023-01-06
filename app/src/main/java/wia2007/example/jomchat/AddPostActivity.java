@@ -238,7 +238,7 @@ public class AddPostActivity extends AppCompatActivity {
         if(!postContent.getText().toString().isEmpty()){
 
 
-            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null);
+            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null, "");
 
             String ImageUploadId = databaseReference.push().getKey();
             databaseReference.child("Post").child(ImageUploadId).setValue(textUploadInfo);
@@ -267,7 +267,7 @@ public class AddPostActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                             @SuppressWarnings("VisibleForTests")
-                            uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString());
+                            uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString(), "");
                             // databaseReference.child("users").child("test").child("name").setValue("ck");
                             String ImageUploadId = databaseReference.push().getKey();
                             //databaseReference.child("user").child(MainActivity.ETusername.getText().toString()).setValue(imageUploadInfo);

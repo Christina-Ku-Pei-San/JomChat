@@ -5,9 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,9 +37,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         PostItem currentItem = mPostList.get(position);
-        holder.mImageView.setImageResource(currentItem.getImageResource());
+        System.out.println("ImageResource "+currentItem.getImageResource());
+        if (currentItem.getImageResource().equals("")) {
+            holder.mImageView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            Picasso.get().load(currentItem.getImageResource()).into(holder.mImageView);
+        }
+//        holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getText1());
         holder.mTextView2.setText(currentItem.getText2());
+        if (currentItem.getImageResource2() == null) {
+            holder.mImageView2.setVisibility(View.GONE);
+        }
+        else {
+            Picasso.get().load(currentItem.getImageResource2()).into(holder.mImageView2);
+        }
     }
 
     @Override
@@ -48,12 +64,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public ImageView mImageView;
         public TextView mTextView1;
         public TextView mTextView2;
+        public ImageView mImageView2;
 
         public PostViewHolder(View itemView, final PostAdapter.OnItemClickListener listener){
             super(itemView);
             mImageView = itemView.findViewById(R.id.IVProfilePhoto);
             mTextView1 = itemView.findViewById(R.id.TVUsername);
             mTextView2 = itemView.findViewById(R.id.TVPost);
+            mImageView2 = itemView.findViewById(R.id.IVPostPhoto);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
