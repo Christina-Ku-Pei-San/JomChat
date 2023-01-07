@@ -21,6 +21,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.regex.Pattern;
@@ -80,6 +81,23 @@ public class ChangePasswordActivity extends AppCompatActivity {
             Picasso.get().load(userURL).into(ivProfilePhoto);
         }
 
+        username = getIntent().getStringExtra("username");
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    if (data.getKey().equals(username)) {
+                        current_password = data.child("password").getValue().toString();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,22 +150,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private boolean validateCurrentPassword() {
-        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data: snapshot.getChildren()) {
-                    if (data.getKey().equals(username)) {
-                        current_password = data.child("name").getValue().toString();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         if (current_passwordInput.isEmpty()) {
             textInputCurrentPassword.setError("Field can't be empty");
             return false;
