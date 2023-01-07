@@ -6,7 +6,7 @@ public class uploadinfo {
     public String imageContent;
     public String imageURL;
 
-    public uploadinfo() {}
+    public uploadinfo(String usernameInput, String s, Object o, String s1) {}
 
     public uploadinfo(String name,String imageContent, String url) {
         this.userName = name;
