@@ -1,36 +1,54 @@
 package wia2007.example.jomchat;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Patterns;
-import android.view.LayoutInflater;
+import android.provider.MediaStore;
 import android.view.View;
-
-import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import android.annotation.SuppressLint;
+import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.util.Patterns;
+import android.view.LayoutInflater;
+
+import com.google.android.material.textfield.TextInputLayout;
 import java.util.regex.Pattern;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class ChangePasswordActivity extends AppCompatActivity {
     private static final Pattern PASSWORD_PATTERN =
@@ -44,32 +62,44 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     ".{8,}" +               //at least 8 characters
                     "$");
 
-    private TextInputLayout textInputCurrentPassword;
-    private TextInputLayout textInputNewPassword;
-    private TextInputLayout textInputConfirmNewPassword;
+    ImageView ivBack, ivHome, ivMessenger, ivNotification;
+    CircleImageView ivProfilePhoto;
+    CircleImageView ivProfilePic;
+    TextInputLayout textInputCurrentPassword;
+    TextInputLayout textInputNewPassword;
+    TextInputLayout textInputConfirmNewPassword;
+    Button btnConfirm;
+    StorageReference storageReference;
+    DatabaseReference databaseReference;
+    ProgressDialog progressDialog;
+    FirebaseAuth firebaseAuth;
 
-    private ImageView ivBack, ivHome, ivMessenger, ivNotification;
-    private CircleImageView ivProfilePhoto;
-    private Button btnConfirm;
+    String password, username, current_passwordInput, new_passwordInput, confirm_new_passwordInput, userURL;
 
-    private String usernameInput, current_passwordInput, new_passwordInput, confirm_new_passwordInput;
-    String username, userURL;
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-        userURL = getIntent().getStringExtra("userURL");
-        username = getIntent().getStringExtra("username");
+        ivBack = findViewById(R.id.IVBack);
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivNotification = findViewById(R.id.IVNotification);
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        ivProfilePic = findViewById(R.id.IVProfilePic);
         textInputCurrentPassword = findViewById(R.id.current_password);
         textInputNewPassword = findViewById(R.id.new_password);
         textInputConfirmNewPassword = findViewById(R.id.new_password2);
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        btnConfirm = findViewById(R.id.btn_confirm);
 
+        //another
+        firebaseAuth = FirebaseAuth.getInstance();
+        //checkUserStatus()
+        //get some info of current user to include in post
+
+        current_passwordInput = getIntent().getStringExtra("current_password");
+        userURL = getIntent().getStringExtra("userURL");
         if (userURL.equals("")) {
             ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
         }
@@ -77,7 +107,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             Picasso.get().load(userURL).into(ivProfilePhoto);
         }
 
-        ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +117,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        ivHome = findViewById(R.id.IVHome);
         ivHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +127,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        ivMessenger = findViewById(R.id.IVMessenger);
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +137,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        ivNotification = findViewById(R.id.IVNotification);
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +147,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        btnConfirm = findViewById(R.id.btn_confirm);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,14 +214,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     // check if username is not registered before
-                    if (snapshot.hasChild(usernameInput)) {
-                        Toast.makeText(getApplicationContext(), "Username exists", Toast.LENGTH_SHORT).show();
+                    if (snapshot.hasChild(password)) {
+                        Toast.makeText(getApplicationContext(), "Password for this Username exists", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         // sending data to firebase Realtime Database
                         // we are using username as unique identity for every user
                         // so all the other details of user comes under username
-                        databaseReference.child("passwords").child(usernameInput).child("newpassword").setValue(new_passwordInput);
+                        databaseReference.child("Passwords").child(password).child("newpassword").setValue(new_passwordInput);
+                        databaseReference.child("Passwords").child(password).child("confirm_newpassword").setValue(confirm_new_passwordInput);
 
                         Toast.makeText(getApplicationContext(), "New Password Added Sucessfully", Toast.LENGTH_SHORT).show();
 
