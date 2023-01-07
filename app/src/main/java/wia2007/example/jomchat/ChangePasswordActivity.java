@@ -181,7 +181,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 confirm_new_passwordInput = textInputConfirmNewPassword.getEditText().getText().toString().trim();
                 changePasswordInput(view);
 
-                Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
+                Intent startintent = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
                 startintent.putExtra("username", username);
                 startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
