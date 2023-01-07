@@ -1,51 +1,26 @@
 package wia2007.example.jomchat;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.content.SharedPreferences;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
-import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import android.util.Patterns;
-import android.view.LayoutInflater;
 
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.regex.Pattern;
@@ -65,36 +40,31 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     ImageView ivBack, ivHome, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
-    CircleImageView ivProfilePic;
     TextInputLayout textInputCurrentPassword;
     TextInputLayout textInputNewPassword;
     TextInputLayout textInputConfirmNewPassword;
     Button btnConfirm;
-    StorageReference storageReference;
-    ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
 
-    String current_password, passwordInput, username, current_passwordInput, new_passwordInput, confirm_new_passwordInput, userURL;
+    String current_password, username, current_passwordInput, new_passwordInput, confirm_new_passwordInput, userURL;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
+        ivHome = findViewById(R.id.IVBack);
         ivBack = findViewById(R.id.IVBack);
         ivMessenger = findViewById(R.id.IVMessenger);
         ivNotification = findViewById(R.id.IVNotification);
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
-        ivProfilePic = findViewById(R.id.IVProfilePic);
         textInputCurrentPassword = findViewById(R.id.current_password);
         textInputNewPassword = findViewById(R.id.new_password);
         textInputConfirmNewPassword = findViewById(R.id.new_password2);
-        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         btnConfirm = findViewById(R.id.btn_confirm);
 
         //another
@@ -110,29 +80,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             Picasso.get().load(userURL).into(ivProfilePhoto);
         }
 
-        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            // check if password exist in firebase database
-            if (snapshot.hasChild(passwordInput)) {
-                //password exist in firebase database
-                //now get password of user from firebase data and match it with user entered password
-                final String getPassword = snapshot.child(passwordInput).child("password").getValue(String.class);
-                if (getPassword.equals(current_passwordInput)) {
-                    sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
-                    sharedPreferences.edit().putString("password", passwordInput).apply();
-                    Toast.makeText(getApplicationContext(), "Password for this Username exists", Toast.LENGTH_SHORT).show();
-                    Intent change_password = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
-                    change_password.putExtra("password", passwordInput);
-                    startActivity(change_password);
-                    finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
-                }
-            }
-            else {
-                Toast.makeText(getApplicationContext(), "Password does not exist", Toast.LENGTH_SHORT).show();
-            }
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,29 +127,39 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 new_passwordInput = textInputNewPassword.getEditText().getText().toString().trim();
                 confirm_new_passwordInput = textInputConfirmNewPassword.getEditText().getText().toString().trim();
                 changePasswordInput(view);
-
-                Intent startintent = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
-                startintent.putExtra("username", username);
-                startintent.putExtra("userURL", userURL);
-                startActivity(startintent);
-
             }
         });
     }
 
     private boolean validateCurrentPassword() {
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    if (data.getKey().equals(username)) {
+                        current_password = data.child("name").getValue().toString();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         if (current_passwordInput.isEmpty()) {
-        textInputNewPassword.setError("Field can't be empty");
-        return false;
+            textInputCurrentPassword.setError("Field can't be empty");
+            return false;
         }  else if (!current_password.equals(current_passwordInput)) {
-            textInputConfirmNewPassword.setError("Current Password does not match");
+            textInputCurrentPassword.setError("Current Password does not match");
             return false;
         }
         else {
-        textInputCurrentPassword.setError(null);
-        return true;
+            textInputCurrentPassword.setError(null);
+            return true;
+        }
     }
-}
 
     private boolean validateNewPassword() {
         if (new_passwordInput.isEmpty()) {
@@ -233,18 +190,16 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private void changePasswordInput(View v) {
-        if (!validateCurrentPassword() | validateNewPassword() | validateConfirmNewPassword()) {
+        if (!validateCurrentPassword() | !validateNewPassword() | !validateConfirmNewPassword()) {
             return;
         }
         else {
-            databaseReference.child("users").child("password").setValue(new_passwordInput);
+            databaseReference.child("users").child(username).child("password").setValue(new_passwordInput);
+            Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
+            startintent.putExtra("username", username);
+            startintent.putExtra("userURL", userURL);
+            startActivity(startintent);
         }
     }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+}
 
-                }
-            });
-
-        }
-    }
