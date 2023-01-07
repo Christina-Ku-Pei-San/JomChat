@@ -37,7 +37,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         PostItem currentItem = mPostList.get(position);
-        System.out.println("ImageResource "+currentItem.getImageResource());
+//        System.out.println("ImageResource "+currentItem.getImageResource());
         if (currentItem.getImageResource().equals("")) {
             holder.mImageView.setVisibility(View.INVISIBLE);
         }
@@ -66,11 +66,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public TextView mTextView2;
         public ImageView mImageView2;
 
+
         public PostViewHolder(View itemView, final PostAdapter.OnItemClickListener listener){
             super(itemView);
-            mImageView = itemView.findViewById(R.id.IVProfilePhoto);
+            mImageView = itemView.findViewById(R.id.IVProfile);
             mTextView1 = itemView.findViewById(R.id.TVUsername);
-            mTextView2 = itemView.findViewById(R.id.TVPost);
+            mTextView2 = itemView.findViewById(R.id.TVPostContent);
             mImageView2 = itemView.findViewById(R.id.IVPostPhoto);
 
             itemView.setOnClickListener(new View.OnClickListener() {

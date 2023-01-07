@@ -8,6 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,7 +27,13 @@ public class PostActivity extends AppCompatActivity {
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
 
-    String username;
+    CircleImageView ivProfile;
+    TextView tvPostOwnerUsername, tvPostContent;
+    ImageView ivPostPhoto;
+    String username, postOwnerUsername, postOwnerImageuri, postID, postContent, postURL;
+
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,31 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         username = getIntent().getStringExtra("username");
+        postID = getIntent().getStringExtra("postID");
+        postOwnerUsername = getIntent().getStringExtra("postOwnerUsername");
+        postOwnerImageuri = getIntent().getStringExtra("postOwnerImageuri");
+        postContent = getIntent().getStringExtra("postContent");
+        postURL = getIntent().getStringExtra("postURL");
+
+        ivProfile = findViewById(R.id.IVProfile);
+        tvPostOwnerUsername = findViewById(R.id.TVUsername);
+        tvPostContent = findViewById(R.id.TVPostContent);
+        ivPostPhoto = findViewById(R.id.IVPostPhoto);
+
+        if (postOwnerImageuri.equals("")) {
+            ivProfile.setVisibility(View.INVISIBLE);
+        }
+        else {
+            Picasso.get().load(postOwnerImageuri).into(ivProfile);
+        }
+        tvPostOwnerUsername.setText(postOwnerUsername);
+        tvPostContent.setText(postContent);
+        if (postURL == null) {
+            ivPostPhoto.setVisibility(View.GONE);
+        }
+        else {
+            Picasso.get().load(postURL).into(ivPostPhoto);
+        }
 
         createCommentList();
         buildRecyclerView();

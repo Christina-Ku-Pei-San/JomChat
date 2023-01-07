@@ -266,14 +266,29 @@ public class AddPostActivity extends AppCompatActivity {
                             //String username = LoginActivity.usernameInput;
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            @SuppressWarnings("VisibleForTests")
-                            uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString(), "");
-                            // databaseReference.child("users").child("test").child("name").setValue("ck");
-                            String ImageUploadId = databaseReference.push().getKey();
-                            //databaseReference.child("user").child(MainActivity.ETusername.getText().toString()).setValue(imageUploadInfo);
-                            databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
-                            postContent.setText("");
-                            imgview.setImageURI(null);
+//                            @SuppressWarnings("VisibleForTests")
+//                            uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString(), "");
+//                            // databaseReference.child("users").child("test").child("name").setValue("ck");
+//                            String ImageUploadId = databaseReference.push().getKey();
+//                            //databaseReference.child("user").child(MainActivity.ETusername.getText().toString()).setValue(imageUploadInfo);
+//                            databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
+//                            postContent.setText("");
+//                            imgview.setImageURI(null);
+
+                            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url = uri.toString();
+                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url, "");
+                                    String ImageUploadId = databaseReference.push().getKey();
+                                    databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
+//                                    Upload upload = new Upload(et_localization, url);
+//                                    String uploadId = mDataBaseRef.push().getKey();
+//                                    mDataBaseRef.child(uploadId).setValue(upload);
+                                    postContent.setText("");
+                                    imgview.setImageURI(null);
+                                }
+                            });
 
 
 

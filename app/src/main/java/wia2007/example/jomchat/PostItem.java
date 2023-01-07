@@ -4,6 +4,7 @@ import android.net.Uri;
 
 public class PostItem {
 
+    private String mpostID;
 //    private int mImageResource;
     private String  mImageResource;
     private String mText1;
@@ -19,7 +20,8 @@ public class PostItem {
 //
 //    }
 
-    public PostItem(String imageResource, String text1, String text2, String imageResource2) {
+    public PostItem(String postID, String imageResource, String text1, String text2, String imageResource2) {
+        mpostID = postID;
         mImageResource = imageResource;
         mText1 = text1;
         mText2 = text2;
@@ -60,4 +62,7 @@ public class PostItem {
         return mImageResource2;
     }
 
+    public String getPostID() {
+        return mpostID;
+    }
 }

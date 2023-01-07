@@ -65,16 +65,17 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data: snapshot.getChildren()) {
+                    String postID = data.getKey();
                     String userurl = data.child("userURL").getValue().toString();
                     String username = data.child("userName").getValue().toString();
                     String content = data.child("imageContent").getValue().toString();
                     if (data.hasChild("imageURL")) {
                         String imageurl = data.child("imageURL").getValue().toString();
-                        post.add(new PostItem(userurl, username, content, imageurl));
+                        post.add(new PostItem(postID, userurl, username, content, imageurl));
 //                        post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, imageurl));
                     }
                     else {
-                        post.add(new PostItem(userurl, username, content, null));
+                        post.add(new PostItem(postID, userurl, username, content, null));
 //                        post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, null));
                     }
                 }
@@ -129,6 +130,11 @@ public class PostListActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 Intent intent = new Intent(PostListActivity.this, PostActivity.class);
                 intent.putExtra("username", username);
+                intent.putExtra("postID", post.get(position).getPostID());
+                intent.putExtra("postOwnerUsername", post.get(position).getText1());
+                intent.putExtra("postOwnerImageuri", post.get(position).getImageResource());
+                intent.putExtra("postContent", post.get(position).getText2());
+                intent.putExtra("postURL", post.get(position).getImageResource2());
                 startActivity(intent);
             }
         });
