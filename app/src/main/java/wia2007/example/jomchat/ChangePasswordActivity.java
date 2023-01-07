@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.content.SharedPreferences;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -73,8 +74,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
-    String password, username, current_passwordInput, new_passwordInput, confirm_new_passwordInput, userURL;
+    String passwordInput, username, current_passwordInput, new_passwordInput, confirm_new_passwordInput, userURL;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -167,7 +170,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if (current_passwordInput.isEmpty()) {
         textInputNewPassword.setError("Field can't be empty");
         return false;
-        }  else if (!password.equals(current_passwordInput)) {
+        }  else if (!passwordInput.equals(current_passwordInput)) {
             textInputConfirmNewPassword.setError("Current Password does not match");
             return false;
         }
@@ -210,19 +213,34 @@ public class ChangePasswordActivity extends AppCompatActivity {
             return;
         }
         else {
-            databaseReference.child("passwords").addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    // check if username is not registered before
-                    if (snapshot.hasChild(password)) {
-                        Toast.makeText(getApplicationContext(), "Password for this Username exists", Toast.LENGTH_SHORT).show();
+                    // check if password exist in firebase database
+                    if (snapshot.hasChild(passwordInput)) {
+                        //password exist in firebase database
+                        //now get password of user from firebase data and match it with user entered password
+                        final String getPassword = snapshot.child(passwordInput).child("password").getValue(String.class);
+                        if (getPassword.equals(current_passwordInput)) {
+                            sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                            sharedPreferences.edit().putString("password", passwordInput).apply();
+                            Toast.makeText(getApplicationContext(), "Password for this Username exists", Toast.LENGTH_SHORT).show();
+                            Intent change_password = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
+                            change_password.putExtra("password", passwordInput);
+                            startActivity(change_password);
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else {
+                        Toast.makeText(getApplicationContext(), "Password does not exist", Toast.LENGTH_SHORT).show();
+                    }
                         // sending data to firebase Realtime Database
                         // we are using username as unique identity for every user
                         // so all the other details of user comes under username
-                        databaseReference.child("Passwords").child(password).child("newpassword").setValue(new_passwordInput);
-                        databaseReference.child("Passwords").child(password).child("confirm_newpassword").setValue(confirm_new_passwordInput);
+                        /*databaseReference.child("users").child(password).child("newpassword").setValue(new_passwordInput);
+                        databaseReference.child("users").child(password).child("confirm_newpassword").setValue(confirm_new_passwordInput);
 
                         Toast.makeText(getApplicationContext(), "New Password Added Sucessfully", Toast.LENGTH_SHORT).show();
 
@@ -230,7 +248,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         startintent.putExtra("username", username);
                         startintent.putExtra("userURL", userURL);
                         startActivity(startintent);
-                    }
+                    }*/
                 }
 
                 @Override
