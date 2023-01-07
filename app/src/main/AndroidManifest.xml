@@ -29,6 +29,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".FavouriteActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".OthersProfileActivity"
             android:exported="false">
             <meta-data

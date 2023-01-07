@@ -127,17 +127,29 @@
 <!--        android:text="View Profile"-->
 <!--        style="@style/BUTTON" />-->
 
-    <RatingBar
+<!--    <RatingBar-->
+<!--        android:id="@+id/favourite"-->
+<!--        style="@style/FAVOURITE"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/RLMessenger"-->
+<!--        android:layout_toRightOf="@id/Nameofspecificuser"-->
+<!--        android:numStars="1"-->
+<!--        android:scaleX=".5"-->
+<!--        android:scaleY=".5"-->
+<!--        android:stepSize="1" />-->
+
+    <ImageView
         android:id="@+id/favourite"
-        style="@style/FAVOURITE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/RLMessenger"
         android:layout_toRightOf="@id/Nameofspecificuser"
-        android:numStars="1"
-        android:scaleX=".5"
-        android:scaleY=".5"
-        android:stepSize="1" />
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="12dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:src="@drawable/ic_baseline_star_24_notfav"/>
 
     <EditText
         android:id="@+id/ETSearch"

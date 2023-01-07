@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     style="@style/SCREEN"
-    tools:context=".ProfileActivity">
+    tools:context=".OthersProfileActivity">
 
     <RelativeLayout
         android:id="@+id/RLOthersProfile"

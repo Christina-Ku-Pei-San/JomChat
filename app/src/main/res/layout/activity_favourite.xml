@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RLSearchPostAct"
+    android:id="@+id/LLFavouriteAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
-    tools:context=".SearchPostActivity">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".FavouriteActivity">
 
     <RelativeLayout
-        android:id="@+id/RLSearchPost"
+        android:id="@+id/RLMessengerList"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         style="@style/TOOLBAR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/IVWhiteCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="7.5dp"
+            android:layout_toEndOf="@id/IVHome"
+            android:src="@drawable/ic_circle" />
 
         <ImageView
             android:id="@+id/IVBack"
@@ -25,14 +36,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             style="@style/BACKBUTTON" />
-
-        <ImageView
-            android:id="@+id/IVWhiteCircle"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="7.5dp"
-            android:src="@drawable/ic_circle" />
 
         <ImageView
             android:id="@+id/IVHome"
@@ -64,16 +67,16 @@
             android:src="@drawable/ic_notification" />
 
         <TextView
-            android:id="@+id/TVPost"
+            android:id="@+id/TVMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="46dp"
+            android:layout_marginStart="35dp"
             android:layout_marginLeft="30dp"
             android:layout_toEndOf="@id/IVNotification"
             android:fontFamily="@font/bangers"
-            android:text="JOMCHAT"
-            style="@style/TEXT"
+            android:text="Favourite"
+            android:textColor="@android:color/black"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -96,21 +99,29 @@
         android:id="@+id/ETSearch"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/RLSearchPost"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_below="@id/RLSearchPostAct"
+        android:layout_margin="16dp"
         style="@style/EDITTEXT"
         android:hint="Search"
         android:minHeight="48dp"
         android:padding="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RVPostItem"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/ETSearch"/>
+        android:layout_height="1dp"
+        style="@style/LINE" />
 
-</RelativeLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/SRLMessengerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVFavouriteItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>
