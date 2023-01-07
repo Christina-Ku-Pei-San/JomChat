@@ -12,66 +12,88 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SettingActivity extends AppCompatActivity {
     ImageView ivHome, ivMessenger, ivNotification;
     Button btnViewProfile, btnChangePassword, btnFeedback, btnLogout;
     Switch swDarkMode;
+    CircleImageView ivProfilePhoto;
+
     boolean nightMODE;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    String username;
+    String username, userURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        username = getIntent().getStringExtra("username");
-
         ivHome = findViewById(R.id.IVHome);
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivNotification = findViewById(R.id.IVNotification);
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        btnViewProfile = findViewById(R.id.BtnViewProfile);
+        swDarkMode = findViewById(R.id.SwDarkMode);
+        btnChangePassword = findViewById(R.id.BtnChangePassword);
+        btnFeedback = findViewById(R.id.BtnFeedback);
+        btnLogout = findViewById(R.id.BtnLogout);
+
+        username = getIntent().getStringExtra("username");
+        userURL = getIntent().getStringExtra("userURL");
+
+        if (userURL.equals("")) {
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
+
         ivHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivMessenger = findViewById(R.id.IVMessenger);
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivNotification = findViewById(R.id.IVNotification);
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        btnViewProfile = findViewById(R.id.BtnViewProfile);
         btnViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, ProfileActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
         getSupportActionBar().hide();
-
-        swDarkMode = findViewById(R.id.SwDarkMode);
 
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
         nightMODE = sharedPreferences.getBoolean("night", false);
@@ -97,26 +119,25 @@ public class SettingActivity extends AppCompatActivity {
           }
         });
 
-        btnChangePassword = findViewById(R.id.BtnChangePassword);
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, ChangePasswordActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        btnFeedback = findViewById(R.id.BtnFeedback);
         btnFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, FeedbackActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        btnLogout = findViewById(R.id.BtnLogout);
     }
 }

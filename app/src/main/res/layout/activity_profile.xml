@@ -82,26 +82,26 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/IVProfilePic"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_baseline_account_circle_24"
         android:layout_marginTop="30dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:src="@drawable/ic_baseline_account_circle_24" />
 
     <ImageButton
         android:id="@+id/IBEditProfile"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="-40dp"
+        android:layout_marginTop="-32dp"
         android:layout_gravity="center"
-        android:layout_marginTop="-30dp"
-        android:layout_marginLeft="40dp"
         android:background="@drawable/ic_baseline_circle_24"
         app:srcCompat="@drawable/ic_outline_edit_24" />
 
     <TextView
-        android:id="@+id/displayNickName"
+        android:id="@+id/displayUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -131,7 +131,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/displayUserName"
+            android:id="@+id/displayName"
             style="@style/TEXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

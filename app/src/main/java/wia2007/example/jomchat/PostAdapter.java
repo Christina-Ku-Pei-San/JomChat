@@ -39,7 +39,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         PostItem currentItem = mPostList.get(position);
 //        System.out.println("ImageResource "+currentItem.getImageResource());
         if (currentItem.getImageResource().equals("")) {
-            holder.mImageView.setVisibility(View.INVISIBLE);
+            holder.mImageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
         }
         else {
             Picasso.get().load(currentItem.getImageResource()).into(holder.mImageView);

@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +71,7 @@ public class AddPostActivity extends AppCompatActivity {
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
 
-    String username;
+    String username, userURL;
 
 
     @Override
@@ -78,49 +79,63 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
+        ivBack = findViewById(R.id.IVBack);
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivNotification = findViewById(R.id.IVNotification);
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+
         username = getIntent().getStringExtra("username");
+
+        userURL = getIntent().getStringExtra("userURL");
+        Toast.makeText(getApplicationContext(), userURL,Toast.LENGTH_SHORT).show();
+        if (userURL.equals("")) {
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
 
         //anaother
         firebaseAuth = FirebaseAuth.getInstance();
         //checkUserStatus();
         //get some info of current user to include in post
 
-        ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivMessenger = findViewById(R.id.IVMessenger);
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivNotification = findViewById(R.id.IVNotification);
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -316,14 +331,6 @@ public class AddPostActivity extends AppCompatActivity {
                             //String username = LoginActivity.usernameInput;
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-//                            @SuppressWarnings("VisibleForTests")
-//                            uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString(), "");
-//                            // databaseReference.child("users").child("test").child("name").setValue("ck");
-//                            String ImageUploadId = databaseReference.push().getKey();
-//                            //databaseReference.child("user").child(MainActivity.ETusername.getText().toString()).setValue(imageUploadInfo);
-//                            databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
-//                            postContent.setText("");
-//                            imgview.setImageURI(null);
 
                             storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
@@ -332,16 +339,10 @@ public class AddPostActivity extends AppCompatActivity {
                                     uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url, "");
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
-//                                    Upload upload = new Upload(et_localization, url);
-//                                    String uploadId = mDataBaseRef.push().getKey();
-//                                    mDataBaseRef.child(uploadId).setValue(upload);
                                     postContent.setText("");
                                     imgview.setImageURI(null);
                                 }
                             });
-
-
-
                         }
                     });
         }

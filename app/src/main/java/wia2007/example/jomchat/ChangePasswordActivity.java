@@ -25,8 +25,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.regex.Pattern;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ChangePasswordActivity extends AppCompatActivity {
@@ -46,10 +49,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private TextInputLayout textInputConfirmNewPassword;
 
     private ImageView ivBack, ivHome, ivMessenger, ivNotification;
+    private CircleImageView ivProfilePhoto;
     private Button btnConfirm;
 
     private String usernameInput, current_passwordInput, new_passwordInput, confirm_new_passwordInput;
-    String username;
+    String username, userURL;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -59,10 +63,19 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
+        userURL = getIntent().getStringExtra("userURL");
         username = getIntent().getStringExtra("username");
         textInputCurrentPassword = findViewById(R.id.current_password);
         textInputNewPassword = findViewById(R.id.new_password);
         textInputConfirmNewPassword = findViewById(R.id.new_password2);
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+
+        if (userURL.equals("")) {
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +83,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -80,6 +94,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -90,6 +105,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -100,6 +116,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -110,6 +127,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
 
                 current_passwordInput = textInputCurrentPassword.getEditText().getText().toString().trim();
@@ -183,6 +201,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "New Password Added Sucessfully", Toast.LENGTH_SHORT).show();
 
                         Intent startintent = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
+                        startintent.putExtra("username", username);
+                        startintent.putExtra("userURL", userURL);
                         startActivity(startintent);
                     }
                 }
