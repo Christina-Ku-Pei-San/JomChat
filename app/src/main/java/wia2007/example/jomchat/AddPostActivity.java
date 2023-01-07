@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -25,10 +26,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-//import com.android.volley.Request;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,13 +40,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -74,7 +78,7 @@ public class AddPostActivity extends AppCompatActivity {
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
 
-    String username, userURL;
+    String username;
 
 
     @Override
@@ -82,63 +86,49 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
-        ivBack = findViewById(R.id.IVBack);
-        ivMessenger = findViewById(R.id.IVMessenger);
-        ivNotification = findViewById(R.id.IVNotification);
-        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
-
         username = getIntent().getStringExtra("username");
-
-        userURL = getIntent().getStringExtra("userURL");
-        Toast.makeText(getApplicationContext(), userURL,Toast.LENGTH_SHORT).show();
-        if (userURL.equals("")) {
-            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
-        }
-        else {
-            Picasso.get().load(userURL).into(ivProfilePhoto);
-        }
 
         //anaother
         firebaseAuth = FirebaseAuth.getInstance();
         //checkUserStatus();
         //get some info of current user to include in post
 
+        ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
+        ivMessenger = findViewById(R.id.IVMessenger);
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
+        ivNotification = findViewById(R.id.IVNotification);
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -261,7 +251,7 @@ public class AddPostActivity extends AppCompatActivity {
         if(!postContent.getText().toString().isEmpty()){
 
 
-            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null);
+            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null, "");
 
             String ImageUploadId = databaseReference.push().getKey();
             databaseReference.child("Post").child(ImageUploadId).setValue(textUploadInfo);
@@ -271,54 +261,67 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
-//    private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
-//        //prepare data for notification
-//
-//        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic;
-//        String NOTIFICATION_TITLE = title;
-//        String NOTIFICATION_MESSAGE = description;
-//        String NOTIFICATION_TYPE = notificationType;
-//
-//        JSONObject notificationJo = new JSONObject();
-//        JSONObject notificationBodyJo = new JSONObject();
-//        try {
-//            //what to send
-//            notificationBodyJo.put("notificationType",NOTIFICATION_TYPE);
-//            notificationBodyJo.put("sender",uid);
-//            notificationBodyJo.put("pID",pID);
-//            notificationBodyJo.put("pTitle",NOTIFICATION_TITLE);
-//            notificationBodyJo.put("pDescription",NOTIFICATION_MESSAGE);
-//            //where to send
-//            notificationJo.put("to", NOTIFICATION_TOPIC);
-//
-//            notificationJo.put("data",notificationBodyJo);
-//        } catch (JSONException e){
-//            Toast.makeText(this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
-//        }
-//
-//        sendPostNotification(notificationJo);
-//
-//    }
+    private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
+        //prepare data for notification
 
-//    private void sendPostNotification(JSONObject notificationJo) {
-//        // send volley object request
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,"http://10.0.8.152/json/new.json",null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        System.out.println(response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//    }
+        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic;
+        String NOTIFICATION_TITLE = title;
+        String NOTIFICATION_MESSAGE = description;
+        String NOTIFICATION_TYPE = notificationType;
+
+        JSONObject notificationJo = new JSONObject();
+        JSONObject notificationBodyJo = new JSONObject();
+        try {
+            //what to send
+            notificationBodyJo.put("notificationType",NOTIFICATION_TYPE);
+            notificationBodyJo.put("sender",uid);
+            notificationBodyJo.put("pID",pID);
+            notificationBodyJo.put("pTitle",NOTIFICATION_TITLE);
+            notificationBodyJo.put("pDescription",NOTIFICATION_MESSAGE);
+            //where to send
+            notificationJo.put("to", NOTIFICATION_TOPIC);
+
+            notificationJo.put("data",notificationBodyJo);
+        } catch (JSONException e){
+            Toast.makeText(this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
+        sendPostNotification(notificationJo);
+
+    }
+
+    private void sendPostNotification(JSONObject notificationJo) {
+        // send volley object request
+       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo,
+               new Response.Listener<JSONObject>() {
+                   @Override
+                   public void onResponse(JSONObject response) {
+                       Log.d("FCM_RESPONSE","onResponse: "+response.toString());
+                   }
+               },
+               new Response.ErrorListener() {
+                   @Override
+                   public void onErrorResponse(VolleyError error) {
+                       Toast.makeText(AddPostActivity.this,""+error.toString(), Toast.LENGTH_SHORT);
+                   }
+               })
+       {
+           @Override
+           public Map<String, String> getHeaders() throws AuthFailureError {
+             //put required headers
+               Map<String,String> headers = new HashMap<>();
+               headers.put("Content-Type", "application/json");
+               headers.put("Authorization","key=AAAAWNvrod8:APA91bFCxJ-IorFH_FBLi6q6Ddh9vfDuXHGelkB-VAIBUetcSUJkVZNuhRwo5QRkGmokaxpoejAL3RVeJAUfAD2Yv6h-5a6pj3QH8acu8v0_ErvwE6d9LybrFLE378TlyHebqsV_J5HL");
+
+               return headers;
+           }
+       };
+       //enqueue the volley request
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
+    }
 
 
-    public void UploadImage() {
+        public void UploadImage() {
 
         if (image_rui != null) {
 
@@ -334,18 +337,32 @@ public class AddPostActivity extends AppCompatActivity {
                             //String username = LoginActivity.usernameInput;
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+//                            @SuppressWarnings("VisibleForTests")
+//                            uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString(), "");
+//                            // databaseReference.child("users").child("test").child("name").setValue("ck");
+//                            String ImageUploadId = databaseReference.push().getKey();
+//                            //databaseReference.child("user").child(MainActivity.ETusername.getText().toString()).setValue(imageUploadInfo);
+//                            databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
+//                            postContent.setText("");
+//                            imgview.setImageURI(null);
 
                             storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String url = uri.toString();
-                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url);
+                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url, "");
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
+//                                    Upload upload = new Upload(et_localization, url);
+//                                    String uploadId = mDataBaseRef.push().getKey();
+//                                    mDataBaseRef.child(uploadId).setValue(upload);
                                     postContent.setText("");
                                     imgview.setImageURI(null);
                                 }
                             });
+
+
+
                         }
                     });
         }
