@@ -96,21 +96,21 @@ public class MessengerActivity extends AppCompatActivity {
 
         mnameofspecificuser.setText(receiverusername);
 
-//        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot data: snapshot.getChildren()) {
-//                    if (data.getKey().equals(receiverusername)) {
-//                        receiverURL = data.child("userURL").getValue().toString();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        databaseReference.child("Favourite").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    if (dataSnapshot1.hasChild(receiverusername)) {
+                        rbFavourite.setRating(1);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         senderroom = username + receiverusername;
         receiverroom = receiverusername + username;
@@ -167,8 +167,29 @@ public class MessengerActivity extends AppCompatActivity {
 
         rbFavourite.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if (rating == 1) {
+                    databaseReference.child("Favourite").child(username).child(receiverusername).setValue(receiverusername);
+                    Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    databaseReference.child("Favourite").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                if (dataSnapshot1.getKey().equals(receiverusername)) {
+                                    dataSnapshot1.getRef().removeValue();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    Toast.makeText(getApplicationContext(), "Removed to Favourites", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
