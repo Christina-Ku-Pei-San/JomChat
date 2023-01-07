@@ -167,7 +167,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if (current_passwordInput.isEmpty()) {
         textInputNewPassword.setError("Field can't be empty");
         return false;
-        }  else if (!current_passwordInput.equals(current_passwordInput)) {
+        }  else if (!password.equals(current_passwordInput)) {
             textInputConfirmNewPassword.setError("Current Password does not match");
             return false;
         }
