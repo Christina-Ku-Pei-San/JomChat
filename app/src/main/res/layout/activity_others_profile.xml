@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LLOthersProfileAct"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/SCREEN"
+    tools:context=".ProfileActivity">
+
+    <RelativeLayout
+        android:id="@+id/RLOthersProfile"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        style="@style/TOOLBAR">
+
+        <ImageView
+            android:id="@+id/IVBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            style="@style/BACKBUTTON"/>
+
+        <ImageView
+            android:id="@+id/IVWhiteCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="7.5dp"
+            android:layout_toEndOf="@id/IVHome"
+            android:src="@drawable/ic_circle" />
+
+        <ImageView
+            android:id="@+id/IVHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_home" />
+
+        <ImageView
+            android:id="@+id/IVMessenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/IVHome"
+            android:src="@drawable/ic_messenger" />
+
+        <ImageView
+            android:id="@+id/IVNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/IVMessenger"
+            android:src="@drawable/ic_notification" />
+
+        <TextView
+            android:id="@+id/TVMessage"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@id/IVNotification"
+            android:fontFamily="@font/bangers"
+            android:text="Message"
+            style="@style/TEXT"
+            android:textSize="28sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVProfilePhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_baseline_account_circle_24" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/black" />
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/IVOthersProfilePic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_baseline_account_circle_24" />
+
+    <TextView
+        android:id="@+id/displayOthersUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/droid_sans_mono"
+        android:text="Lily"
+        android:layout_gravity="center"
+        style="@style/TEXT"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TVName"
+            style="@style/TEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_weight="0.36"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Name"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/displayOthersName"
+            style="@style/TEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_weight="1.2"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Lily"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TVYear"
+            style="@style/TEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_weight="0.32"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Year"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/displayOthersUserYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_weight="1.2"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="2"
+            style="@style/TEXT"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/TVDepartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Department"
+            style="@style/TEXT"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/displayOthersUserDepartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_weight="5"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Artificial Intelligence"
+            style="@style/TEXT"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

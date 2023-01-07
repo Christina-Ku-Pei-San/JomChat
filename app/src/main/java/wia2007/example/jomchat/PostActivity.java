@@ -74,7 +74,7 @@ public class PostActivity extends AppCompatActivity {
         tvPostOwnerUsername.setText(postOwnerUsername);
         tvPostContent.setText(postContent);
 
-        if (postURL == null) {
+        if (postURL.equals("")) {
             ivPostPhoto.setVisibility(View.GONE);
         }
         else {

@@ -144,9 +144,9 @@ public class MessengerActivity extends AppCompatActivity {
         mimageviewofspecificuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, OthersProfileActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("receiverusername", receivername);
+                startintent.putExtra("receiverusername", receiverusername);
                 startintent.putExtra("userURL", userURL);
                 startintent.putExtra("receiverURL", receiverURL);
                 startActivity(startintent);
@@ -156,9 +156,9 @@ public class MessengerActivity extends AppCompatActivity {
         mnameofspecificuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, OthersProfileActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("receiverusername", receivername);
+                startintent.putExtra("receiverusername", receiverusername);
                 startintent.putExtra("userURL", userURL);
                 startintent.putExtra("receiverURL", receiverURL);
                 startActivity(startintent);
