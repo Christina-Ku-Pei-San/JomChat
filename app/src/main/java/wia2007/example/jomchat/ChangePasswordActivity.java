@@ -71,14 +71,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
     TextInputLayout textInputConfirmNewPassword;
     Button btnConfirm;
     StorageReference storageReference;
-    DatabaseReference databaseReference;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    String passwordInput, username, current_passwordInput, new_passwordInput, confirm_new_passwordInput, userURL;
+    String current_password, passwordInput, username, current_passwordInput, new_passwordInput, confirm_new_passwordInput, userURL;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         //checkUserStatus()
         //get some info of current user to include in post
 
-        current_passwordInput = getIntent().getStringExtra("current_password");
         userURL = getIntent().getStringExtra("userURL");
         if (userURL.equals("")) {
             ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
@@ -110,6 +110,29 @@ public class ChangePasswordActivity extends AppCompatActivity {
             Picasso.get().load(userURL).into(ivProfilePhoto);
         }
 
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            // check if password exist in firebase database
+            if (snapshot.hasChild(passwordInput)) {
+                //password exist in firebase database
+                //now get password of user from firebase data and match it with user entered password
+                final String getPassword = snapshot.child(passwordInput).child("password").getValue(String.class);
+                if (getPassword.equals(current_passwordInput)) {
+                    sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                    sharedPreferences.edit().putString("password", passwordInput).apply();
+                    Toast.makeText(getApplicationContext(), "Password for this Username exists", Toast.LENGTH_SHORT).show();
+                    Intent change_password = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
+                    change_password.putExtra("password", passwordInput);
+                    startActivity(change_password);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Password does not exist", Toast.LENGTH_SHORT).show();
+            }
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,15 +176,16 @@ public class ChangePasswordActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                current_passwordInput = textInputCurrentPassword.getEditText().getText().toString().trim();
+                new_passwordInput = textInputNewPassword.getEditText().getText().toString().trim();
+                confirm_new_passwordInput = textInputConfirmNewPassword.getEditText().getText().toString().trim();
+                changePasswordInput(view);
+
                 Intent startintent = new Intent(ChangePasswordActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
                 startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
 
-                current_passwordInput = textInputCurrentPassword.getEditText().getText().toString().trim();
-                new_passwordInput = textInputNewPassword.getEditText().getText().toString().trim();
-                confirm_new_passwordInput = textInputConfirmNewPassword.getEditText().getText().toString().trim();
-                changePasswordInput(view);
             }
         });
     }
@@ -170,7 +194,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if (current_passwordInput.isEmpty()) {
         textInputNewPassword.setError("Field can't be empty");
         return false;
-        }  else if (!passwordInput.equals(current_passwordInput)) {
+        }  else if (!current_password.equals(current_passwordInput)) {
             textInputConfirmNewPassword.setError("Current Password does not match");
             return false;
         }
@@ -213,44 +237,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
             return;
         }
         else {
-            databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    // check if password exist in firebase database
-                    if (snapshot.hasChild(passwordInput)) {
-                        //password exist in firebase database
-                        //now get password of user from firebase data and match it with user entered password
-                        final String getPassword = snapshot.child(passwordInput).child("password").getValue(String.class);
-                        if (getPassword.equals(current_passwordInput)) {
-                            sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
-                            sharedPreferences.edit().putString("password", passwordInput).apply();
-                            Toast.makeText(getApplicationContext(), "Password for this Username exists", Toast.LENGTH_SHORT).show();
-                            Intent change_password = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
-                            change_password.putExtra("password", passwordInput);
-                            startActivity(change_password);
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(), "Password does not exist", Toast.LENGTH_SHORT).show();
-                    }
-                        // sending data to firebase Realtime Database
-                        // we are using username as unique identity for every user
-                        // so all the other details of user comes under username
-                        /*databaseReference.child("users").child(password).child("newpassword").setValue(new_passwordInput);
-                        databaseReference.child("users").child(password).child("confirm_newpassword").setValue(confirm_new_passwordInput);
-
-                        Toast.makeText(getApplicationContext(), "New Password Added Sucessfully", Toast.LENGTH_SHORT).show();
-
-                        Intent startintent = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
-                        startintent.putExtra("username", username);
-                        startintent.putExtra("userURL", userURL);
-                        startActivity(startintent);
-                    }*/
-                }
-
+            databaseReference.child("users").child("password").setValue(new_passwordInput);
+        }
+    }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -259,4 +248,3 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         }
     }
-}
