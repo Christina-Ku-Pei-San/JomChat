@@ -47,7 +47,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 //        holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getText1());
         holder.mTextView2.setText(currentItem.getText2());
-        if (currentItem.getImageResource2() == null) {
+        if (currentItem.getImageResource2().equals("")) {
             holder.mImageView2.setVisibility(View.GONE);
         }
         else {
