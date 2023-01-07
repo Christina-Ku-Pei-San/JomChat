@@ -25,7 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.android.volley.toolbox.JsonObjectRequest;
+//import com.android.volley.Request;
+//import com.android.volley.Response;
+//import com.android.volley.VolleyError;
+//import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -258,7 +261,7 @@ public class AddPostActivity extends AppCompatActivity {
         if(!postContent.getText().toString().isEmpty()){
 
 
-            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null, "");
+            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null);
 
             String ImageUploadId = databaseReference.push().getKey();
             databaseReference.child("Post").child(ImageUploadId).setValue(textUploadInfo);
@@ -268,51 +271,51 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
-    private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
-        //prepare data for notification
+//    private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
+//        //prepare data for notification
+//
+//        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic;
+//        String NOTIFICATION_TITLE = title;
+//        String NOTIFICATION_MESSAGE = description;
+//        String NOTIFICATION_TYPE = notificationType;
+//
+//        JSONObject notificationJo = new JSONObject();
+//        JSONObject notificationBodyJo = new JSONObject();
+//        try {
+//            //what to send
+//            notificationBodyJo.put("notificationType",NOTIFICATION_TYPE);
+//            notificationBodyJo.put("sender",uid);
+//            notificationBodyJo.put("pID",pID);
+//            notificationBodyJo.put("pTitle",NOTIFICATION_TITLE);
+//            notificationBodyJo.put("pDescription",NOTIFICATION_MESSAGE);
+//            //where to send
+//            notificationJo.put("to", NOTIFICATION_TOPIC);
+//
+//            notificationJo.put("data",notificationBodyJo);
+//        } catch (JSONException e){
+//            Toast.makeText(this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+//        }
+//
+//        sendPostNotification(notificationJo);
+//
+//    }
 
-        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic;
-        String NOTIFICATION_TITLE = title;
-        String NOTIFICATION_MESSAGE = description;
-        String NOTIFICATION_TYPE = notificationType;
-
-        JSONObject notificationJo = new JSONObject();
-        JSONObject notificationBodyJo = new JSONObject();
-        try {
-            //what to send
-            notificationBodyJo.put("notificationType",NOTIFICATION_TYPE);
-            notificationBodyJo.put("sender",uid);
-            notificationBodyJo.put("pID",pID);
-            notificationBodyJo.put("pTitle",NOTIFICATION_TITLE);
-            notificationBodyJo.put("pDescription",NOTIFICATION_MESSAGE);
-            //where to send
-            notificationJo.put("to", NOTIFICATION_TOPIC);
-
-            notificationJo.put("data",notificationBodyJo);
-        } catch (JSONException e){
-            Toast.makeText(this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
-        }
-
-        sendPostNotification(notificationJo);
-
-    }
-
-    private void sendPostNotification(JSONObject notificationJo) {
-        // send volley object request
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,"http://10.0.8.152/json/new.json",(String)null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-    }
+//    private void sendPostNotification(JSONObject notificationJo) {
+//        // send volley object request
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,"http://10.0.8.152/json/new.json",null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        System.out.println(response);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//    }
 
 
     public void UploadImage() {
@@ -336,7 +339,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String url = uri.toString();
-                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url, "");
+                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url);
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
                                     postContent.setText("");

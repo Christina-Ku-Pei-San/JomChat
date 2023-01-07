@@ -98,18 +98,33 @@ public class PostListActivity extends AppCompatActivity {
                 post.clear();
                 for (DataSnapshot data: snapshot.getChildren()) {
                     String postID = data.getKey();
-                    String userurl = data.child("userURL").getValue().toString();
                     String username = data.child("userName").getValue().toString();
                     String content = data.child("imageContent").getValue().toString();
+                    String imageurl;
                     if (data.hasChild("imageURL")) {
-                        String imageurl = data.child("imageURL").getValue().toString();
-                        post.add(new PostItem(postID, userurl, username, content, imageurl));
-//                        post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, imageurl));
+                        imageurl = data.child("imageURL").getValue().toString();
                     }
                     else {
-                        post.add(new PostItem(postID, userurl, username, content, null));
-//                        post.add(new PostItem(R.drawable.ic_baseline_account_circle_24, username, content, null));
+                        imageurl = null;
                     }
+//                    String userurl = data.child("userURL").getValue().toString();
+
+                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot data: snapshot.getChildren()) {
+                                if (data.getKey().equals(username)) {
+                                    String userurl = data.child("userURL").getValue().toString();
+                                    post.add(new PostItem(postID, userurl, username, content, imageurl));
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
                 mAdapter.notifyDataSetChanged();
             }
