@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class MessengerActivity extends AppCompatActivity {
     private TextView mnameofspecificuser;
     private RatingBar rbFavourite;
 
-    private String enteredmessage, receivername, receiverusername, username, senderroom, receiverroom, currenttime;
+    private String enteredmessage, receivername, receiverusername, username, senderroom, receiverroom, currenttime, userURL, receiverURL;
     private Calendar calendar;
     private SimpleDateFormat simpleDateFormat;
 
@@ -73,8 +74,43 @@ public class MessengerActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("hh:mm a");
 
+
         username = getIntent().getStringExtra("username");
         receiverusername = getIntent().getStringExtra("receiverusername");
+        userURL = getIntent().getStringExtra("userURL");
+        receiverURL = getIntent().getStringExtra("receiverURL");
+
+        if (userURL.equals("")) {
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
+
+        if (receiverURL.equals("")) {
+            mimageviewofspecificuser.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(receiverURL).into(mimageviewofspecificuser);
+        }
+
+        mnameofspecificuser.setText(receiverusername);
+
+//        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot data: snapshot.getChildren()) {
+//                    if (data.getKey().equals(receiverusername)) {
+//                        receiverURL = data.child("userURL").getValue().toString();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         senderroom = username + receiverusername;
         receiverroom = receiverusername + username;
@@ -105,22 +141,14 @@ public class MessengerActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-
-        mnameofspecificuser.setText(receiverusername);
-//        String uri = getIntent().getStringExtra("imageuri");
-//        if(uri.isEmpty()) {
-//            Toast.makeText(getApplicationContext(),"null is recieved",Toast.LENGTH_SHORT).show();
-//        }
-//        else {
-//            Picasso.get().load(uri).into(mimageviewofspecificuser);
-//        }
-
         mimageviewofspecificuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
                 startintent.putExtra("username", username);
                 startintent.putExtra("receiverusername", receivername);
+                startintent.putExtra("userURL", userURL);
+                startintent.putExtra("receiverURL", receiverURL);
                 startActivity(startintent);
             }
         });
@@ -131,6 +159,8 @@ public class MessengerActivity extends AppCompatActivity {
                 Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
                 startintent.putExtra("username", username);
                 startintent.putExtra("receiverusername", receivername);
+                startintent.putExtra("userURL", userURL);
+                startintent.putExtra("receiverURL", receiverURL);
                 startActivity(startintent);
             }
         });
@@ -241,6 +271,7 @@ public class MessengerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -250,6 +281,7 @@ public class MessengerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -259,6 +291,7 @@ public class MessengerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -268,6 +301,7 @@ public class MessengerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });

@@ -30,7 +30,7 @@ public class PostActivity extends AppCompatActivity {
     CircleImageView ivProfile;
     TextView tvPostOwnerUsername, tvPostContent;
     ImageView ivPostPhoto;
-    String username, postOwnerUsername, postOwnerImageuri, postID, postContent, postURL;
+    String username, userURL, postOwnerUsername, postOwnerImageuri, postID, postContent, postURL;
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -40,6 +40,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        userURL = getIntent().getStringExtra("userURL");
         username = getIntent().getStringExtra("username");
         postID = getIntent().getStringExtra("postID");
         postOwnerUsername = getIntent().getStringExtra("postOwnerUsername");
@@ -51,15 +52,28 @@ public class PostActivity extends AppCompatActivity {
         tvPostOwnerUsername = findViewById(R.id.TVUsername);
         tvPostContent = findViewById(R.id.TVPostContent);
         ivPostPhoto = findViewById(R.id.IVPostPhoto);
+        ivBack = findViewById(R.id.IVBack);
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivNotification = findViewById(R.id.IVNotification);
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+
+        if (userURL.equals("")) {
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
 
         if (postOwnerImageuri.equals("")) {
-            ivProfile.setVisibility(View.INVISIBLE);
+            ivProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
         }
         else {
             Picasso.get().load(postOwnerImageuri).into(ivProfile);
         }
+
         tvPostOwnerUsername.setText(postOwnerUsername);
         tvPostContent.setText(postContent);
+
         if (postURL == null) {
             ivPostPhoto.setVisibility(View.GONE);
         }
@@ -70,42 +84,42 @@ public class PostActivity extends AppCompatActivity {
         createCommentList();
         buildRecyclerView();
 
-        ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(PostActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivMessenger = findViewById(R.id.IVMessenger);
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(PostActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivNotification = findViewById(R.id.IVNotification);
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(PostActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(PostActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });

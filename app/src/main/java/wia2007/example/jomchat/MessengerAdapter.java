@@ -1,13 +1,17 @@
 package wia2007.example.jomchat;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,7 +34,7 @@ public class MessengerAdapter extends RecyclerView.Adapter<MessengerAdapter.Mess
 
         public MessengerViewHolder(View itemView, final MessengerAdapter.OnItemClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.IVProfilePhoto);
+            mImageView = itemView.findViewById(R.id.IVOthersProfile);
             mTextView1 = itemView.findViewById(R.id.TVUsername);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +66,13 @@ public class MessengerAdapter extends RecyclerView.Adapter<MessengerAdapter.Mess
     @Override
     public void onBindViewHolder(MessengerAdapter.MessengerViewHolder holder, int position) {
         MessengerItem currentItem = mMessengerList.get(position);
+        if (currentItem.getImageResource().equals("")) {
+            holder.mImageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(currentItem.getImageResource()).into(holder.mImageView);
+        }
 
-        holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getText1());
     }
 

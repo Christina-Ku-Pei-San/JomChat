@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,10 +31,10 @@ public class MessengerListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private ImageView ivHome, ivNotification;
-    private CircleImageView ivProfilePhoto;
+    private CircleImageView ivProfilePhoto, ivOthersProfile;
     private EditText etSearch;
 
-    private String username;
+    private String username, userURL;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -46,9 +47,18 @@ public class MessengerListActivity extends AppCompatActivity {
         ivHome = findViewById(R.id.IVHome);
         ivNotification = findViewById(R.id.IVNotification);
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+//        ivOthersProfile = findViewById(R.id.IVOthersProfile);
         etSearch = findViewById(R.id.ETSearch);
 
         username = getIntent().getStringExtra("username");
+        userURL = getIntent().getStringExtra("userURL");
+
+        if (userURL.equals("")) {
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
 
         mMessengerList = new ArrayList<>();
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -56,9 +66,10 @@ public class MessengerListActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data: snapshot.getChildren()) {
                     if (!data.getKey().equals(username)) {
-                        mMessengerList.add(new MessengerItem(R.drawable.profile_photo1, data.getKey()));
+                        mMessengerList.add(new MessengerItem(data.child("userURL").getValue().toString(), data.getKey()));
                     }
                 }
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -66,6 +77,7 @@ public class MessengerListActivity extends AppCompatActivity {
 
             }
         });
+
         mRecyclerView = findViewById(R.id.RVMessengerItem);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -79,30 +91,10 @@ public class MessengerListActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 Intent startintent = new Intent(MessengerListActivity.this, MessengerActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startintent.putExtra("receiverusername", mMessengerList.get(position).getText1());
-                startintent.putExtra("imageuri", mMessengerList.get(position).getImageResource());
+                startintent.putExtra("receiverURL", mMessengerList.get(position).getImageResource());
                 startActivity(startintent);
-            }
-        });
-
-        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mMessengerList.clear();
-                for (DataSnapshot data: snapshot.getChildren()) {
-                    if (!data.getKey().equals(username)) {
-//                        System.out.println("pgvkonawgvingbaigb");
-
-                            mMessengerList.add(new MessengerItem(R.drawable.ic_baseline_account_circle_24, data.getKey()));
-
-                    }
-                }
-                mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -121,7 +113,7 @@ public class MessengerListActivity extends AppCompatActivity {
                         mMessengerList.clear();
                         for (DataSnapshot data: snapshot.getChildren()) {
                             if (!data.getKey().equals(username) && data.getKey().contains(search)) {
-                                mMessengerList.add(new MessengerItem(R.drawable.ic_baseline_account_circle_24, data.getKey()));
+                                mMessengerList.add(new MessengerItem(userURL, data.getKey()));
                             }
                         }
                         mAdapter.notifyDataSetChanged();
@@ -145,6 +137,7 @@ public class MessengerListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerListActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -154,6 +147,7 @@ public class MessengerListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerListActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -163,6 +157,7 @@ public class MessengerListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(MessengerListActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });

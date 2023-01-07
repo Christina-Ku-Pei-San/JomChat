@@ -17,30 +17,29 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +48,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewProfileActivity extends AppCompatActivity {
     ImageButton IBEditProfilePicture; // added Edit Profile Picture Button
-    EditText editNickName, editUserName, editUserYear, editUserDepartment;
-    TextView displayNickName, displayUserName, displayUserYear, displayUserDepartment;
+    EditText editName, editUserYear, editUserDepartment;
+    TextView displayUsername;
     Button BtnSaveChanges;
     StorageReference storageReference;
     DatabaseReference databaseReference;
@@ -62,13 +61,12 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     Uri image_rui=null;
     FirebaseAuth firebaseAuth;
-    DatabaseReference userDbRef;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
     CircleImageView ivProfilePic;
 
-    String username;
+    String username, name, year, department, userURL;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -76,88 +74,87 @@ public class ViewProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
-        username = getIntent().getStringExtra("username");
-
-        EditText editNickName = findViewById(R.id.editNickName);
-        EditText editUserName = findViewById(R.id.editUserName);
-        EditText editUserYear = findViewById(R.id.editUserYear);
-        EditText editUserDepartment = findViewById(R.id.editUserDepartment);
-        TextView displayNickName = findViewById(R.id.displayNickName);
-        TextView displayUserName = findViewById(R.id.displayUserName);
-        TextView displayUserYear = findViewById(R.id.displayUserYear);
-        TextView displayUserDepartment = findViewById(R.id.displayUserDepartment);
+        ivBack = findViewById(R.id.IVBack);
+        ivMessenger = findViewById(R.id.IVMessenger);
+        ivNotification = findViewById(R.id.IVNotification);
+        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        ivProfilePic = findViewById(R.id.IVProfilePic);
+        //added Edit Profile Picture Button
+        IBEditProfilePicture = findViewById(R.id.IBEditProfilePicture);
+        displayUsername = findViewById(R.id.displayUsername);
+        editName = findViewById(R.id.editName);
+        editUserYear = findViewById(R.id.editUserYear);
+        editUserDepartment = findViewById(R.id.editUserDepartment);
+        BtnSaveChanges = findViewById(R.id.BtnSaveChanges);
 
         //anaother
         firebaseAuth = FirebaseAuth.getInstance();
         //checkUserStatus();
         //get some info of current user to include in post
 
-        ivBack = findViewById(R.id.IVBack);
+        username = getIntent().getStringExtra("username");
+        name = getIntent().getStringExtra("name");
+        year = getIntent().getStringExtra("year");
+        department = getIntent().getStringExtra("department");
+        userURL = getIntent().getStringExtra("userURL");
+
+        if (userURL.equals("")) {
+            ivProfilePic.setImageResource(R.drawable.ic_baseline_account_circle_24);
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePic);
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
+
+        displayUsername.setText(username);
+        editName.setText(name);
+        editUserYear.setText(year);
+        editUserDepartment.setText(department);
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(ViewProfileActivity.this, PostListActivity.class);
+                Intent startintent = new Intent(ViewProfileActivity.this, ProfileActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivMessenger = findViewById(R.id.IVMessenger);
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivNotification = findViewById(R.id.IVNotification);
         ivNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(ViewProfileActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
 
-        ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
-        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(ViewProfileActivity.this, SettingActivity.class);
-                startintent.putExtra("username", username);
-                startActivity(startintent);
-            }
-        });
-
-        ivProfilePic = findViewById(R.id.IVProfilePic);
-        ivProfilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(ViewProfileActivity.this, ViewProfileActivity.class);
-                startintent.putExtra("username", username);
-                startActivity(startintent);
-            }
-        });
-
-        //added Edit Profile Picture Button
-        IBEditProfilePicture = findViewById(R.id.IBEditProfilePicture);
-        IBEditProfilePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(ViewProfileActivity.this, ProfileActivity.class);
-                startintent.putExtra("username", username);
-                startActivity(startintent);
-            }
-        });
+//        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent startintent = new Intent(ViewProfileActivity.this, SettingActivity.class);
+//                startintent.putExtra("username", username);
+//                startintent.putExtra("userURL", userURL);
+//                startActivity(startintent);
+//            }
+//        });
 
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        IBEditProfilePicture = (ImageButton) findViewById(R.id.IBEditProfilePicture);
-        BtnSaveChanges= (Button)findViewById(R.id.BtnSaveChanges);
-        ivProfilePhoto = (CircleImageView) findViewById(R.id.IVProfilePhoto);
+
 
         progressDialog = new ProgressDialog(ViewProfileActivity.this);
 
@@ -174,24 +171,68 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
-        BtnSaveChanges = findViewById(R.id.BtnSaveChanges);
         BtnSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nickname = editNickName.getText().toString();
-                String name = editUserName.getText().toString();
-                Integer year = Integer.parseInt(editUserYear.getText().toString());
+                String name = editName.getText().toString();
+                String year = editUserYear.getText().toString();
                 String department = editUserDepartment.getText().toString();
-                displayNickName.setText(nickname);
-                displayUserName.setText(name);
-                displayUserYear.setText(Integer.toString(year));
-                displayUserDepartment.setText(department);
+
+                databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot data: snapshot.getChildren()) {
+                            if (data.getKey().equals(username)) {
+                                databaseReference.child("users").child(username).child("name").setValue(name);
+                                databaseReference.child("users").child(username).child("year").setValue(year);
+                                databaseReference.child("users").child(username).child("department").setValue(department);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                Intent startintent = new Intent(ViewProfileActivity.this, ProfileActivity.class);
+                startintent.putExtra("username", username);
+                startintent.putExtra("name", name);
+                startintent.putExtra("year", year);
+                startintent.putExtra("department", department);
+
+//                UploadImage();
+                if (image_rui != null) {
+
+                    progressDialog.setTitle("Image is Uploading...");
+                    progressDialog.show();
+                    StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(image_rui));
+                    storageReference2.putFile(image_rui)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+
+                                    storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            String userurl = uri.toString();
+                                            databaseReference.child("users").child(username).child("userURL").setValue(userurl);
+                                            startintent.putExtra("userURL", userurl);
+                                            startActivity(startintent);
+//                                            ivProfilePic.setImageURI(uri);
+                                        }
+                                    });
+                                }
+                            });
+                }
 
                 String message = "Your changes are successfully updated!";
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
-                Intent startintent = new Intent(ViewProfileActivity.this, ProfileActivity.class);
-                startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -250,13 +291,13 @@ public class ViewProfileActivity extends AppCompatActivity {
                 //image is picked from gallery, get uri of image
                 image_rui = data.getData();
                 //set to imageview
-                ivProfilePhoto.setImageURI(image_rui);
+                ivProfilePic.setImageURI(image_rui);
 
             }
             else if(requestCode == IMAGE_PICK_CAMERA_CODE){
                 //image is picked from camera, get uri of image
 
-                ivProfilePhoto.setImageURI(image_rui);
+                ivProfilePic.setImageURI(image_rui);
 
             }
 
@@ -269,39 +310,34 @@ public class ViewProfileActivity extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
 
     }
-    public void UploadImage() {
 
-        if (image_rui != null) {
+//    public void UploadImage() {
+//
+//        if (image_rui != null) {
+//
+//            progressDialog.setTitle("Image is Uploading...");
+//            progressDialog.show();
+//            StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(image_rui));
+//            storageReference2.putFile(image_rui)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            progressDialog.dismiss();
+//                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+//
+//                            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    String url = uri.toString();
+//                                    databaseReference.child("users").child(username).child("userURL").setValue(url);
+////                                    ivProfilePic.setImageURI(uri);
+//                                }
+//                            });
+//                        }
+//                    });
+//        }
+//    }
 
-            progressDialog.setTitle("Image is Uploading...");
-            progressDialog.show();
-            StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(image_rui));
-            storageReference2.putFile(image_rui)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                           /* String TempImageContent =postContent.getText().toString().trim();
-                            //String username = LoginActivity.usernameInput;
-                            progressDialog.dismiss();*/
-                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            @SuppressWarnings("VisibleForTests")
-                            //uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, taskSnapshot.getUploadSessionUri().toString());
-                            // databaseReference.child("users").child("test").child("name").setValue("ck");
-                            String ImageUploadId = databaseReference.push().getKey();
-                            //databaseReference.child("user").child(MainActivity.ETusername.getText().toString()).setValue(imageUploadInfo);
-                            //databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
-                            databaseReference.child("Profile").child(ImageUploadId).setValue("khiru");
-                            ivProfilePhoto.setImageURI(null);
-                        }
-                    });
-        }
-        else {
-
-            Toast.makeText(ViewProfileActivity.this, "Please Select Image ", Toast.LENGTH_LONG).show();
-
-        }
-    }
     // function to check permission
     public static boolean checkAndRequestPermissions(final Activity context) {
         int WExtstorePermission = ContextCompat.checkSelfPermission(context,

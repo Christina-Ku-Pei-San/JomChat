@@ -236,6 +236,7 @@ public class SignUpActivity extends AppCompatActivity {
                         databaseReference.child("users").child(usernameInput).child("year").setValue(yearInput);
                         databaseReference.child("users").child(usernameInput).child("department").setValue(departmentInput);
                         databaseReference.child("users").child(usernameInput).child("password").setValue(passwordInput);
+                        databaseReference.child("users").child(usernameInput).child("userURL").setValue("");
 
                         Toast.makeText(getApplicationContext(), "User Profile Added Sucessfully", Toast.LENGTH_SHORT).show();
 

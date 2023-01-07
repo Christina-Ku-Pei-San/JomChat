@@ -2,13 +2,13 @@ package wia2007.example.jomchat;
 
 public class MessengerItem {
 
-    private int mImageResource;
+    private String mImageResource;
     private String mText1;
 
     public MessengerItem() {
     }
 
-    public MessengerItem(int imageResource, String text1) {
+    public MessengerItem(String imageResource, String text1) {
         mImageResource = imageResource;
         mText1 = text1;
     }
@@ -17,7 +17,7 @@ public class MessengerItem {
         mText1 = text;
     }
 
-    public int getImageResource() {
+    public String getImageResource() {
         return mImageResource;
     }
 
