@@ -19,11 +19,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +35,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -263,6 +268,51 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
+    private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
+        //prepare data for notification
+
+        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic;
+        String NOTIFICATION_TITLE = title;
+        String NOTIFICATION_MESSAGE = description;
+        String NOTIFICATION_TYPE = notificationType;
+
+        JSONObject notificationJo = new JSONObject();
+        JSONObject notificationBodyJo = new JSONObject();
+        try {
+            //what to send
+            notificationBodyJo.put("notificationType",NOTIFICATION_TYPE);
+            notificationBodyJo.put("sender",uid);
+            notificationBodyJo.put("pID",pID);
+            notificationBodyJo.put("pTitle",NOTIFICATION_TITLE);
+            notificationBodyJo.put("pDescription",NOTIFICATION_MESSAGE);
+            //where to send
+            notificationJo.put("to", NOTIFICATION_TOPIC);
+
+            notificationJo.put("data",notificationBodyJo);
+        } catch (JSONException e){
+            Toast.makeText(this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
+        sendPostNotification(notificationJo);
+
+    }
+
+    private void sendPostNotification(JSONObject notificationJo) {
+        // send volley object request
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,"http://10.0.8.152/json/new.json",(String)null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+    }
 
 
     public void UploadImage() {
