@@ -35,6 +35,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private PostAdapter.OnItemClickListener mListener;
     Context context;
 
+    public PostAdapter() {
+    }
+
+    public PostAdapter(ArrayList<PostItem> mPostList, Context context) {
+        this.mPostList = mPostList;
+        this.context = context;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -47,6 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
+        context=parent.getContext();
         PostViewHolder pvh = new PostViewHolder(v, mListener);
         return pvh;
     }

@@ -157,14 +157,19 @@ public class SignUpActivity extends AppCompatActivity {
         if (emailInput.isEmpty()) {
             textInputEmail.setError("Field can't be empty");
             return false;
-        } else if (!emailInput.endsWith("@siswa.um.edu.my")){
+        }
+        if (!yearInput.equals("Alumni")) {
+            if (!emailInput.endsWith("@siswa.um.edu.my") || emailInput.length() != 24) {
+                textInputEmail.setError("Please enter a valid siswamail address");
+                return false;
+            }
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             textInputEmail.setError("Please enter a valid email address");
             return false;
         }
-        else {
-            textInputEmail.setError(null);
-            return true;
-        }
+        textInputEmail.setError(null);
+        return true;
     }
 
     private boolean validateYear() {

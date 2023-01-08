@@ -134,8 +134,8 @@ public class SearchPostActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String search = etSearch.getText().toString();
+                mPostList.clear();
                 if (search.isEmpty()) {
-                    mPostList.clear();
                     mAdapter.notifyDataSetChanged();
                 }
                 else {
@@ -173,6 +173,7 @@ public class SearchPostActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
+                                mAdapter.notifyDataSetChanged();
                             }
                         }
 
