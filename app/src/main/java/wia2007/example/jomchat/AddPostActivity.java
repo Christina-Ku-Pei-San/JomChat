@@ -267,6 +267,13 @@ public class AddPostActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "Post Uploaded Successfully ", Toast.LENGTH_LONG).show();
             postContent.setText("");
+
+            prepareNotification(
+                    ""+ImageUploadId,
+                    ""+username+" added a new post",
+                    "" +"\n"+null,
+                    "PostNotification",
+                    "POST");
         }
     }
 
@@ -283,7 +290,7 @@ public class AddPostActivity extends AppCompatActivity {
         try {
             //what to send
             notificationBodyJo.put("notificationType",NOTIFICATION_TYPE);
-            notificationBodyJo.put("sender",uid);
+            notificationBodyJo.put("sender",username);
             notificationBodyJo.put("pID",pID);
             notificationBodyJo.put("pTitle",NOTIFICATION_TITLE);
             notificationBodyJo.put("pDescription",NOTIFICATION_MESSAGE);
@@ -378,6 +385,13 @@ public class AddPostActivity extends AppCompatActivity {
 //                                    mDataBaseRef.child(uploadId).setValue(upload);
                                     postContent.setText("");
                                     imgview.setImageURI(null);
+
+                                    prepareNotification(
+                                            ""+ImageUploadId,
+                                            ""+username+" added a new post",
+                                            "" +"\n"+TempImageContent,
+                                            "PostNotification",
+                                            "POST");
                                 }
                             });
 

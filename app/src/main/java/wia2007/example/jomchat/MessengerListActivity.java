@@ -112,7 +112,7 @@ public class MessengerListActivity extends AppCompatActivity {
                         mMessengerList.clear();
                         for (DataSnapshot data: snapshot.getChildren()) {
                             if (!data.getKey().equals(username) && data.getKey().contains(search)) {
-                                mMessengerList.add(new MessengerItem(userURL, data.getKey()));
+                                mMessengerList.add(new MessengerItem(data.child("userURL").getValue().toString(), data.getKey()));
                             }
                         }
                         mAdapter.notifyDataSetChanged();
