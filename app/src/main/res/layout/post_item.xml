@@ -53,23 +53,23 @@
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:layout_below="@+id/TVPostContent"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/post_photo1"/>
+            android:layout_marginTop="8dp" />
 
         <Button
-            style="@style/LIKEPOST"
             android:id="@+id/BtnLike"
+            style="@style/LIKEPOST"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/TVLike"
+            android:drawableLeft="@drawable/ic_likes"
             android:fontFamily="@font/droid_sans_mono"
-            android:layout_below="@+id/IVPostPhoto"
             android:text="Like" />
 
         <Button
             android:id="@+id/BtnComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/IVPostPhoto"
+            android:layout_below="@+id/TVLike"
             android:layout_toEndOf="@+id/BtnLike"
             android:fontFamily="@font/droid_sans_mono"
             style="@style/COMMENTPOST"
@@ -81,10 +81,21 @@
             android:fontFamily="@font/droid_sans_mono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/IVPostPhoto"
+            android:layout_below="@+id/TVLike"
             android:layout_alignParentEnd="true"
             android:text="Share"
              />
+        <TextView
+            android:id="@+id/TVLike"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/m_plus_1p"
+            android:text="4 people liked this."
+            style="@style/TEXT"
+            android:layout_below="@id/IVPostPhoto"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>
