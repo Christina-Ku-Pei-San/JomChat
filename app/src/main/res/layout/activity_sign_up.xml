@@ -5,7 +5,8 @@
     android:id="@+id/SVSignUpAct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/SCREEN" >
+    style="@style/SCREEN"
+    tools:context=".SignUpActivity" >
 
 <RelativeLayout
     android:id="@+id/RLSignUp"

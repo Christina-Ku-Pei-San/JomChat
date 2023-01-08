@@ -18,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingActivity extends AppCompatActivity {
     ImageView ivHome, ivMessenger, ivNotification;
-    Button btnViewProfile, btnChangePassword, btnFeedback, btnLogout;
+    Button btnViewProfile, btnFavourite, btnChangePassword, btnFeedback, btnLogout;
     Switch swDarkMode;
     CircleImageView ivProfilePhoto;
 
@@ -38,6 +38,7 @@ public class SettingActivity extends AppCompatActivity {
         ivNotification = findViewById(R.id.IVNotification);
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         btnViewProfile = findViewById(R.id.BtnViewProfile);
+        btnFavourite = findViewById(R.id.BtnFavourite);
         swDarkMode = findViewById(R.id.SwDarkMode);
         btnChangePassword = findViewById(R.id.BtnChangePassword);
         btnFeedback = findViewById(R.id.BtnFeedback);
@@ -46,7 +47,7 @@ public class SettingActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         userURL = getIntent().getStringExtra("userURL");
 
-        if (userURL.equals("")) {
+        if (userURL.equals("") || userURL == null) {
             ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
         }
         else {
@@ -87,6 +88,16 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startintent = new Intent(SettingActivity.this, ProfileActivity.class);
+                startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
+                startActivity(startintent);
+            }
+        });
+
+        btnFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startintent = new Intent(SettingActivity.this, FavouriteActivity.class);
                 startintent.putExtra("username", username);
                 startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
@@ -136,6 +147,19 @@ public class SettingActivity extends AppCompatActivity {
                 startintent.putExtra("username", username);
                 startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // After log out is successful, set the flag in shared preferences
+                SharedPreferences sp = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                sp.edit().putBoolean("logged_in", false).apply();
+
+                Intent startintent = new Intent(SettingActivity.this, LoginActivity.class);
+                startActivity(startintent);
+                finish();
             }
         });
 

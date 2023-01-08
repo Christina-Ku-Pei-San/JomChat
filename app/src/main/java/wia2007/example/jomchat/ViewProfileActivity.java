@@ -142,16 +142,6 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
-//        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent startintent = new Intent(ViewProfileActivity.this, SettingActivity.class);
-//                startintent.putExtra("username", username);
-//                startintent.putExtra("userURL", userURL);
-//                startActivity(startintent);
-//            }
-//        });
-
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 

@@ -1,7 +1,9 @@
 package wia2007.example.jomchat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -110,12 +112,21 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
 
         // Check if the user is already logged in
-        boolean isLoggedIn = preferences.getBoolean("logged_ins", false);
-        // I add the 's' cuz our app got a little bug lah, we hv to start from login then only can continue smoothly
+        boolean isLoggedIn = preferences.getBoolean("logged_in", false);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        boolean nightMODE = sharedPreferences.getBoolean("night", false);
+
+        if (nightMODE){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
 
         if (isLoggedIn) {
             // Show the homepage activity
-            startActivity(new Intent(this, PostListActivity.class));
+            String username = preferences.getString("username", "");
+            Intent login = new Intent(MainActivity.this, PostListActivity.class);
+            login.putExtra("username", username);
+            startActivity(login);
             finish();
         } else {
             // Show the login activity

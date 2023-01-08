@@ -62,6 +62,8 @@ public class PostListActivity extends AppCompatActivity {
         search_button = (FloatingActionButton)findViewById(R.id.FABSearch);
         add_button = (FloatingActionButton)findViewById(R.id.FABAdd);
 
+        username = getIntent().getStringExtra("username");
+
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -84,40 +86,32 @@ public class PostListActivity extends AppCompatActivity {
             }
         });
 
-//        if (userURL.equals("")) {
-//            ivProfilePhoto.setVisibility(View.INVISIBLE);
-//        }
-//        else {
-//            Picasso.get().load(userURL).into(ivProfilePhoto);
-//        }
-
         ArrayList<PostItem> post = new ArrayList<>();
         databaseReference.child("Post").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                post.clear();
                 for (DataSnapshot data: snapshot.getChildren()) {
                     String postID = data.getKey();
-                    String username = data.child("userName").getValue().toString();
+                    String postUsername = data.child("userName").getValue().toString();
                     String content = data.child("imageContent").getValue().toString();
                     String imageurl;
                     if (data.hasChild("imageURL")) {
                         imageurl = data.child("imageURL").getValue().toString();
                     }
                     else {
-                        imageurl = null;
+                        imageurl = "";
                     }
-//                    String userurl = data.child("userURL").getValue().toString();
 
                     databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot data: snapshot.getChildren()) {
-                                if (data.getKey().equals(username)) {
-                                    String userurl = data.child("userURL").getValue().toString();
-                                    post.add(new PostItem(postID, userurl, username, content, imageurl));
+                                if (data.getKey().equals(postUsername)) {
+                                    String postUserURL = data.child("userURL").getValue().toString();
+                                    post.add(new PostItem(postID, postUserURL, postUsername, content, imageurl));
                                 }
                             }
+                            mAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -126,7 +120,6 @@ public class PostListActivity extends AppCompatActivity {
                         }
                     });
                 }
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -142,8 +135,6 @@ public class PostListActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-        username = getIntent().getStringExtra("username");
 
         ivMessenger.setOnClickListener(new View.OnClickListener() {
             @Override

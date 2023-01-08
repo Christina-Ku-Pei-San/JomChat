@@ -44,9 +44,8 @@ public class MessengerActivity extends AppCompatActivity {
     private CircleImageView ivProfilePhoto;
     private EditText mgetmessage, etSearch;
     private ImageButton msendmessagebutton;
-    private ImageView ivBack, ivHome, ivNotification, mimageviewofspecificuser;
+    private ImageView ivBack, ivHome, ivNotification, mimageviewofspecificuser, ivFavourite;
     private TextView mnameofspecificuser;
-    private RatingBar rbFavourite;
 
     private String enteredmessage, receivername, receiverusername, username, senderroom, receiverroom, currenttime, userURL, receiverURL;
     private Calendar calendar;
@@ -66,7 +65,7 @@ public class MessengerActivity extends AppCompatActivity {
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
         mimageviewofspecificuser = findViewById(R.id.specificuserimageinimageview);
         mnameofspecificuser = findViewById(R.id.Nameofspecificuser);
-        rbFavourite = findViewById(R.id.favourite);
+        ivFavourite = findViewById(R.id.favourite);
         etSearch = findViewById(R.id.ETSearch);
         mgetmessage = findViewById(R.id.getmessage);
         msendmessagebutton = findViewById(R.id.imageviewsendmessage);
@@ -96,21 +95,25 @@ public class MessengerActivity extends AppCompatActivity {
 
         mnameofspecificuser.setText(receiverusername);
 
-//        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot data: snapshot.getChildren()) {
-//                    if (data.getKey().equals(receiverusername)) {
-//                        receiverURL = data.child("userURL").getValue().toString();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        databaseReference.child("Favourite").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    if (dataSnapshot1.getKey().equals(receiverusername)) {
+                        ivFavourite.setImageResource(R.drawable.ic_baseline_star_24_fav);
+                        break;
+                    }
+                    else {
+                        ivFavourite.setImageResource(R.drawable.ic_baseline_star_24_notfav);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         senderroom = username + receiverusername;
         receiverroom = receiverusername + username;
@@ -144,9 +147,9 @@ public class MessengerActivity extends AppCompatActivity {
         mimageviewofspecificuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, OthersProfileActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("receiverusername", receivername);
+                startintent.putExtra("receiverusername", receiverusername);
                 startintent.putExtra("userURL", userURL);
                 startintent.putExtra("receiverURL", receiverURL);
                 startActivity(startintent);
@@ -156,19 +159,39 @@ public class MessengerActivity extends AppCompatActivity {
         mnameofspecificuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent(MessengerActivity.this, ProfileActivity.class);
+                Intent startintent = new Intent(MessengerActivity.this, OthersProfileActivity.class);
                 startintent.putExtra("username", username);
-                startintent.putExtra("receiverusername", receivername);
+                startintent.putExtra("receiverusername", receiverusername);
                 startintent.putExtra("userURL", userURL);
                 startintent.putExtra("receiverURL", receiverURL);
                 startActivity(startintent);
             }
         });
 
-        rbFavourite.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        ivFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                databaseReference.child("Favourite").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            if (dataSnapshot1.getKey().equals(receiverusername)) {
+                                dataSnapshot1.getRef().removeValue();
+                                ivFavourite.setImageResource(R.drawable.ic_baseline_star_24_notfav);
+                                Toast.makeText(getApplicationContext(), "Removed from Favourites", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                        databaseReference.child("Favourite").child(username).child(receiverusername).setValue(receiverURL);
+                        ivFavourite.setImageResource(R.drawable.ic_baseline_star_24_fav);
+                        Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 

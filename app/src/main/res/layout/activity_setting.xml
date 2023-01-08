@@ -86,6 +86,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RLSetting" />
 
+    <Button
+        android:id="@+id/BtnFavourite"
+        style="@style/BUTTON"
+        android:layout_width="225dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:text="Favourite List"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnViewProfile" />
+
     <Switch
         android:id="@+id/SwDarkMode"
         android:layout_width="225dp"
@@ -98,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BtnViewProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/BtnFavourite" />
 
     <Button
         android:id="@+id/BtnChangePassword"

@@ -251,7 +251,7 @@ public class AddPostActivity extends AppCompatActivity {
         if(!postContent.getText().toString().isEmpty()){
 
 
-            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null, "");
+            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null);
 
             String ImageUploadId = databaseReference.push().getKey();
             databaseReference.child("Post").child(ImageUploadId).setValue(textUploadInfo);
@@ -350,7 +350,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String url = uri.toString();
-                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url, "");
+                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url);
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
 //                                    Upload upload = new Upload(et_localization, url);
