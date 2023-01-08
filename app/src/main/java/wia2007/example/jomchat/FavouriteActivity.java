@@ -172,15 +172,5 @@ public class FavouriteActivity extends AppCompatActivity {
             }
         });
 
-        ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startintent = new Intent(FavouriteActivity.this, SettingActivity.class);
-                startintent.putExtra("username", username);
-                startintent.putExtra("userURL", userURL);
-                startActivity(startintent);
-            }
-        });
-
     }
 }

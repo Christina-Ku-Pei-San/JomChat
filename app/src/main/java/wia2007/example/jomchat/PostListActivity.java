@@ -163,7 +163,6 @@ public class PostListActivity extends AppCompatActivity {
                 startintent.putExtra("username", username);
                 startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
-                finish();
             }
         });
 
