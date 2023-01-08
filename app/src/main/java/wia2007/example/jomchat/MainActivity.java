@@ -110,12 +110,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
 
         // Check if the user is already logged in
-        boolean isLoggedIn = preferences.getBoolean("logged_ins", false);
+        boolean isLoggedIn = preferences.getBoolean("logged_in", false);
         // I add the 's' cuz our app got a little bug lah, we hv to start from login then only can continue smoothly
 
         if (isLoggedIn) {
             // Show the homepage activity
-            startActivity(new Intent(this, PostListActivity.class));
+            String username = preferences.getString("username", "");
+            Intent login = new Intent(MainActivity.this, PostListActivity.class);
+            login.putExtra("username", username);
+            startActivity(login);
             finish();
         } else {
             // Show the login activity
