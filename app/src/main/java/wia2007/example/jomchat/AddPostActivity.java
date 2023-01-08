@@ -78,6 +78,9 @@ public class AddPostActivity extends AppCompatActivity {
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
 
+    //progress bar
+    ProgressDialog pd;
+
     String username;
 
 
@@ -88,10 +91,13 @@ public class AddPostActivity extends AppCompatActivity {
 
         username = getIntent().getStringExtra("username");
 
+        pd = new ProgressDialog(this);
         //anaother
         firebaseAuth = FirebaseAuth.getInstance();
         //checkUserStatus();
         //get some info of current user to include in post
+
+
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +245,6 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
-
     public String GetFileExtension(Uri uri) {
 
         ContentResolver contentResolver = getContentResolver();
@@ -320,8 +325,19 @@ public class AddPostActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 
+    private void uploadData(final String title, final String description){
+        pd.setMessage("Publishing post...");
+        pd.show();
 
-        public void UploadImage() {
+        //for post-image name, post-id, post-publish time
+        final String timeStamp = String.valueOf(System.currentTimeMillis());
+
+        String filePathAndName = "Posts/" + "post_" + timeStamp;
+
+
+    }
+
+    public void UploadImage() {
 
         if (image_rui != null) {
 

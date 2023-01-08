@@ -157,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (emailInput.isEmpty()) {
             textInputEmail.setError("Field can't be empty");
             return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+        } else if (!emailInput.endsWith("@siswa.um.edu.my")){
             textInputEmail.setError("Please enter a valid email address");
             return false;
         }

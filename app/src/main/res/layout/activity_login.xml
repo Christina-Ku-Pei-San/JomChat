@@ -9,6 +9,17 @@
     style="@style/SCREEN">
 
     <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FSKTM"
+        style="@style/TEXT"
+        android:textSize="13sp"
+        android:fontFamily="@font/droid_sans_mono"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
         android:id="@+id/TV_Login"
         android:layout_width="125dp"
         android:layout_height="wrap_content"

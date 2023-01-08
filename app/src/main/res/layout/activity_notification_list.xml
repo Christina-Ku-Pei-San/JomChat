@@ -55,7 +55,7 @@
 
         <TextView
             android:id="@+id/TVNotification"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
@@ -64,6 +64,18 @@
             android:text="NOTIFICATION"
             style="@style/TEXT"
             android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TEXT"
+            android:layout_marginTop="63dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="FSKTM"
+            android:textAlignment="center"
+            android:textSize="13sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/IVProfilePhoto"
