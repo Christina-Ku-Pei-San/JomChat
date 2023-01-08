@@ -109,8 +109,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
                 alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Add the comment
-                        addComment(postID, commenter, input.getText().toString());
+                        if (input.getText().toString().equals("")) {
+                            Toast.makeText(context, "Please enter your comment", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            // Add the comment
+                            addComment(postID, commenter, input.getText().toString());
+                            notifyDataSetChanged();
+                        }
                     }
                 });
 

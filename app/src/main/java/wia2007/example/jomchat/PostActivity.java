@@ -173,19 +173,24 @@ public class PostActivity extends AppCompatActivity {
         comment_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder alert = new AlertDialog.Builder(PostActivity.this);
 
                 alert.setTitle("Add Comment");
                 alert.setMessage("Type your comment");
 
                 // Set an EditText view to get user input
-                final EditText input = new EditText(getApplicationContext());
+                final EditText input = new EditText(PostActivity.this);
                 alert.setView(input);
 
                 alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Add the comment
-                        addComment(postID, username, input.getText().toString());
+                        if (input.getText().toString().equals("")) {
+                            Toast.makeText(PostActivity.this, "Please enter your comment", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            // Add the comment
+                            addComment(postID, username, input.getText().toString());
+                        }
                     }
                 });
 
@@ -244,6 +249,8 @@ public class PostActivity extends AppCompatActivity {
                                         String commenterURL = data.child("userURL").getValue().toString();
                                         CommentItem comment = new CommentItem(commenterURL, commenter, message);
                                         databaseReference.child("Post").child(postID).child("comments").push().setValue(comment);
+                                        mCommentList.add(comment);
+                                        mAdapter.notifyDataSetChanged();
                                     }
                                 }
                             }
