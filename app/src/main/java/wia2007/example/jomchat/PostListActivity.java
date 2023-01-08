@@ -2,6 +2,7 @@ package wia2007.example.jomchat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -70,7 +71,9 @@ public class PostListActivity extends AppCompatActivity {
         search_button = (FloatingActionButton)findViewById(R.id.FABSearch);
         add_button = (FloatingActionButton)findViewById(R.id.FABAdd);
 
-        username = getIntent().getStringExtra("username");
+//        username = getIntent().getStringExtra("username");
+        SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        String username = preferences.getString("username", "");
 
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

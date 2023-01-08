@@ -6,6 +6,8 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +39,7 @@ public class PostActivity extends AppCompatActivity {
     private CommentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    Button share_button;
+    Button comment_button, share_button;
     static String p_username;
     static String p_content;
 
@@ -99,8 +102,32 @@ public class PostActivity extends AppCompatActivity {
             Picasso.get().load(postURL).into(ivPostPhoto);
         }
 
-        createCommentList();
-        buildRecyclerView();
+        mCommentList = new ArrayList<>();
+        databaseReference.child("Post").child(postID).child("comments").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    String commenterURl = data.child("commenterURL").getValue().toString();
+                    String commenterUsername = data.child("commenterUsername").getValue().toString();
+                    String comment = data.child("comment").getValue().toString();
+                    mCommentList.add(new CommentItem(commenterURl, commenterUsername, comment));
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mRecyclerView = findViewById(R.id.RVCommentItem);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new CommentAdapter(mCommentList);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +168,38 @@ public class PostActivity extends AppCompatActivity {
                 startActivity(startintent);
             }
         });
+
+        comment_button = findViewById(R.id.BtnComment);
+        comment_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
+
+                alert.setTitle("Add Comment");
+                alert.setMessage("Type your comment");
+
+                // Set an EditText view to get user input
+                final EditText input = new EditText(getApplicationContext());
+                alert.setView(input);
+
+                alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Add the comment
+                        addComment(postID, username, input.getText().toString());
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+            }
+        });
+
         share_button = findViewById(R.id.BtnShare);
         share_button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -171,6 +230,39 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+    private void addComment(String postID, String commenter, String message) {
+        databaseReference.child("Post").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    if (dataSnapshot1.getKey().equals(postID)) {
+                        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot data: snapshot.getChildren()) {
+                                    if (data.getKey().equals(commenter)) {
+                                        String commenterURL = data.child("userURL").getValue().toString();
+                                        CommentItem comment = new CommentItem(commenterURL, commenter, message);
+                                        databaseReference.child("Post").child(postID).child("comments").push().setValue(comment);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void shareTextOnly(String p_username, String p_content){
         //concentrate username and description to share
@@ -238,8 +330,8 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-    public void createCommentList() {
-        mCommentList = new ArrayList<>();
+//    public void createCommentList() {
+//        mCommentList = new ArrayList<>();
 //        mCommentList.add(new CommentItem(R.drawable.ic_baseline_account_circle_24, "Adam", "So beautiful!"));
 //        mCommentList.add(new CommentItem(R.drawable.ic_baseline_account_circle_24, "Line 3", "Line 4"));
 //        mCommentList.add(new CommentItem(R.drawable.ic_baseline_account_circle_24, "Line 5", "Line 6"));
@@ -255,15 +347,15 @@ public class PostActivity extends AppCompatActivity {
 //        mCommentList.add(new CommentItem(R.drawable.profile_photo1, "Line 25", "Line 26"));
 //        mCommentList.add(new CommentItem(R.drawable.profile_photo1, "Line 27", "Line 28"));
 //        mCommentList.add(new CommentItem(R.drawable.profile_photo1, "Line 29", "Line 30"));
-    }
+//    }
 
-    public void buildRecyclerView() {
-        mRecyclerView = findViewById(R.id.RVCommentItem);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new CommentAdapter(mCommentList);
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-    }
+//    public void buildRecyclerView() {
+//        mRecyclerView = findViewById(R.id.RVCommentItem);
+//        mRecyclerView.setHasFixedSize(true);
+//        mLayoutManager = new LinearLayoutManager(this);
+//        mAdapter = new CommentAdapter(mCommentList);
+//
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+//        mRecyclerView.setAdapter(mAdapter);
+//    }
 }
