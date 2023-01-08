@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
@@ -40,10 +42,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
         CommentItem currentItem = mCommentList.get(position);
-
-        holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
+        if (currentItem.getCommenterURL().equals("")) {
+            holder.mImageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(currentItem.getCommenterURL()).into(holder.mImageView);
+        }
+        holder.mTextView1.setText(currentItem.getCommenterUsername());
+        holder.mTextView2.setText(currentItem.getComment());
     }
 
     @Override

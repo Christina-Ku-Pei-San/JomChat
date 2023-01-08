@@ -2,30 +2,25 @@ package wia2007.example.jomchat;
 
 public class CommentItem {
 
-    private int mImageResource;
-    private String mText1;
-    private String mText2;
+    private String commenterURL;
+    private String commenterUsername;
+    private String comment;
 
-    public CommentItem(int imageResource, String text1, String text2) {
-        mImageResource = imageResource;
-        mText1 = text1;
-        mText2 = text2;
+    public CommentItem(String commenterURL, String commenterUsername, String comment) {
+        this.commenterURL = commenterURL;
+        this.commenterUsername = commenterUsername;
+        this.comment = comment;
     }
 
-    public void changeText1(String text) {
-        mText1 = text;
+    public String getCommenterURL() {
+        return commenterURL;
     }
 
-    public int getImageResource() {
-        return mImageResource;
+    public String getCommenterUsername() {
+        return commenterUsername;
     }
 
-    public String getText1() {
-        return mText1;
+    public String getComment() {
+        return comment;
     }
-
-    public String getText2() {
-        return mText2;
-    }
-
 }

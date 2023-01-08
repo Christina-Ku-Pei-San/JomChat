@@ -1,7 +1,10 @@
 package wia2007.example.jomchat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -9,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +38,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private ArrayList<PostItem> mPostList;
     private PostAdapter.OnItemClickListener mListener;
     Context context;
+
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
     public PostAdapter() {
     }
@@ -63,6 +70,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         PostItem currentItem = mPostList.get(position);
+        String postID = currentItem.getPostID();
+
         if (currentItem.getImageResource().equals("")) {
             holder.mImageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
         }
@@ -81,6 +90,40 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         else {
             Picasso.get().load(currentItem.getImageResource2()).into(holder.mImageView2);
         }
+
+
+        SharedPreferences preferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        String commenter = preferences.getString("username", "");
+
+        holder.comment_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+                alert.setTitle("Add Comment");
+                alert.setMessage("Type your comment");
+
+                // Set an EditText view to get user input
+                final EditText input = new EditText(context);
+                alert.setView(input);
+
+                alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Add the comment
+                        addComment(postID, commenter, input.getText().toString());
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+            }
+        });
 
         holder.share_button.setOnClickListener((v)->{
             BitmapDrawable bitmapDrawable = (BitmapDrawable) holder.mImageView2.getDrawable();
@@ -104,6 +147,40 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         });
 
 
+    }
+
+    private void addComment(String postID, String commenter, String message) {
+        databaseReference.child("Post").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    if (dataSnapshot1.getKey().equals(postID)) {
+                        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot data: snapshot.getChildren()) {
+                                    if (data.getKey().equals(commenter)) {
+                                        String commenterURL = data.child("userURL").getValue().toString();
+                                        CommentItem comment = new CommentItem(commenterURL, commenter, message);
+                                        databaseReference.child("Post").child(postID).child("comments").push().setValue(comment);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void shareImageOnly(String p_username, Bitmap bitmap){
@@ -183,6 +260,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public TextView mTextView2;
         public ImageView mImageView2;
 
+        public Button like_button;
+        public Button comment_button;
         public Button share_button;
 
 
@@ -193,6 +272,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             mTextView2 = itemView.findViewById(R.id.TVPostContent);
             mImageView2 = itemView.findViewById(R.id.IVPostPhoto);
 
+            like_button =itemView.findViewById(R.id.BtnLike);
+            comment_button =itemView.findViewById(R.id.BtnComment);
             share_button =itemView.findViewById(R.id.BtnShare);
 
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -30,7 +30,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-/*
+
 public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostViewHolder> {
     private ArrayList<OwnPostItem> mOwnPostList;
     private OwnPostAdapter.OnItemClickListener mListener;
@@ -56,7 +56,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
     @Override
     public OwnPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.own_post_item, parent, false);
-        context=parent.getContext();
+        context = parent.getContext();
         OwnPostViewHolder opvh = new OwnPostViewHolder(v, mListener);
         return opvh;
     }
@@ -66,8 +66,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         OwnPostItem currentItem = mOwnPostList.get(position);
         if (currentItem.getImageResource().equals("")) {
             holder.mImageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
-        }
-        else {
+        } else {
             Picasso.get().load(currentItem.getImageResource()).into(holder.mImageView);
         }
 
@@ -78,27 +77,24 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
         if (currentItem.getImageResource2().equals("")) {
             holder.mImageView2.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             Picasso.get().load(currentItem.getImageResource2()).into(holder.mImageView2);
         }
 
-        holder.share_button.setOnClickListener((v)->{
+        holder.share_button.setOnClickListener((v) -> {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) holder.mImageView2.getDrawable();
-            if(bitmapDrawable ==null){
+            if (bitmapDrawable == null) {
                 //post without image
                 shareTextOnly(p_username, p_content);
 
-            }
-            else if(bitmapDrawable !=null & p_username.isEmpty() == true){
+            } else if (bitmapDrawable != null & p_username.isEmpty() == true) {
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 shareImageOnly(p_username, bitmap);
-            }
-            else{
+            } else {
                 //post with image
                 //convert image to bitmap
                 Bitmap bitmap = bitmapDrawable.getBitmap();
-                shareImageAndText(p_username,p_content,bitmap);
+                shareImageAndText(p_username, p_content, bitmap);
 
 
             }
@@ -107,9 +103,9 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
     }
 
-    private void shareImageOnly(String p_username, Bitmap bitmap){
+    private void shareImageOnly(String p_username, Bitmap bitmap) {
         //concentrate username and description to share
-        String shareBody = "Username: "+p_username ;
+        String shareBody = "Username: " + p_username;
         //String shareBody =p_username +"\n"+ p_content;
         //String shareBody = p_username;
 
@@ -125,22 +121,24 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
 
     }
-    private void shareTextOnly(String p_username, String p_content){
+
+    private void shareTextOnly(String p_username, String p_content) {
         //concentrate username and description to share
         //String shareBody =p_username +"\n"+ p_content;
-        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content;
+        String shareBody = "Username: " + p_username + "\n" + "Content: " + p_content;
 
         //share intent
         Intent sIntent = new Intent(Intent.ACTION_SEND);
         sIntent.setType("text/plain");
-        sIntent.putExtra(Intent.EXTRA_SUBJECT,"Subject Here");// in case shared via email
-        sIntent.putExtra(Intent.EXTRA_TEXT,shareBody); //text to share
+        sIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");// in case shared via email
+        sIntent.putExtra(Intent.EXTRA_TEXT, shareBody); //text to share
         context.startActivity(Intent.createChooser(sIntent, "Share Via"));
 
     }
-    private void shareImageAndText(String p_username, String p_content, Bitmap bitmap){
+
+    private void shareImageAndText(String p_username, String p_content, Bitmap bitmap) {
         //String shareBody =p_username +"\n"+ p_content;
-        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content;
+        String shareBody = "Username: " + p_username + "\n" + "Content: " + p_content;
         //first we will save this image in cache, get the saved image uri
         Uri uri = saveImageToShare(bitmap);
 
@@ -153,21 +151,21 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         context.startActivity(Intent.createChooser(sIntent, "Share Via"));
 
     }
-    private Uri saveImageToShare(Bitmap bitmap){
-        File imageFolder = new File(context.getCacheDir(),"images" );
+
+    private Uri saveImageToShare(Bitmap bitmap) {
+        File imageFolder = new File(context.getCacheDir(), "images");
         Uri uri = null;
-        try{
+        try {
             imageFolder.mkdirs(); //create if not exists
-            File file = new File(imageFolder,"shared_image.png" );
+            File file = new File(imageFolder, "shared_image.png");
             FileOutputStream stream = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
             stream.flush();
             stream.close();
-            uri = FileProvider.getUriForFile(context,"wia2007.example.jomchat",file);
+            uri = FileProvider.getUriForFile(context, "wia2007.example.jomchat", file);
 
-        }
-        catch(Exception e){
-            Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return uri;
     }
@@ -178,7 +176,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         return mOwnPostList.size();
     }
 
-    public static class PostViewHolder extends RecyclerView.ViewHolder{
+    public static class OwnPostViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView1;
         public TextView mTextView2;
@@ -187,14 +185,14 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         public Button share_button;
 
 
-        public PostViewHolder(View itemView, final PostAdapter.OnItemClickListener listener){
+        public OwnPostViewHolder(View itemView, final OwnPostAdapter.OnItemClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.IVProfile);
             mTextView1 = itemView.findViewById(R.id.TVUsername);
             mTextView2 = itemView.findViewById(R.id.TVPostContent);
             mImageView2 = itemView.findViewById(R.id.IVPostPhoto);
 
-            share_button =itemView.findViewById(R.id.BtnShare);
+            share_button = itemView.findViewById(R.id.BtnShare);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -210,8 +208,9 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         }
     }
 
-    public OwnPostAdapter(ArrayList<OwnPostItem> ownpostList){
+    public OwnPostAdapter(ArrayList<OwnPostItem> ownpostList) {
         mOwnPostList = ownpostList;
     }
-*/
+}
+
 
