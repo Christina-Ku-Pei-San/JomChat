@@ -40,6 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,14 +82,10 @@ public class AddPostActivity extends AppCompatActivity {
     //progress bar
     ProgressDialog pd;
 
-    String username;
-
-
+    String username, userURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
@@ -99,8 +96,6 @@ public class AddPostActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         //checkUserStatus();
         //get some info of current user to include in post
-
-
 
         ivBack = findViewById(R.id.IVBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +128,13 @@ public class AddPostActivity extends AppCompatActivity {
         });
 
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        userURL = getIntent().getStringExtra("userURL");
+        if (userURL.equals("")) {
+            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(userURL).into(ivProfilePhoto);
+        }
         ivProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -258,8 +260,7 @@ public class AddPostActivity extends AppCompatActivity {
     public void uploadText(){
         if(!postContent.getText().toString().isEmpty()){
 
-
-            PostItem textUploadInfo = new PostItem(LoginActivity.usernameInput,postContent.getText().toString(), null);
+            uploadinfo textUploadInfo = new uploadinfo(username, postContent.getText().toString(), null);
 
             String ImageUploadId = databaseReference.push().getKey();
             databaseReference.child("Post").child(ImageUploadId).setValue(textUploadInfo);
@@ -369,7 +370,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String url = uri.toString();
-                                    PostItem imageUploadInfo = new PostItem(LoginActivity.usernameInput,TempImageContent, url);
+                                    uploadinfo imageUploadInfo = new uploadinfo(username,TempImageContent, url);
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
 //                                    Upload upload = new Upload(et_localization, url);

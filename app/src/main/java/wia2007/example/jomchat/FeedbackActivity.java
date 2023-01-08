@@ -15,12 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class FeedbackActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     String rating_marks;
-//    String username;
+    String username, userURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +35,22 @@ public class FeedbackActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
-//        username = getIntent().getStringExtra("username");
+        username = getIntent().getStringExtra("username");
+
+//        userURL = getIntent().getStringExtra("userURL");
+//        if (userURL.equals("") || userURL == null) {
+//            ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
+//        }
+//        else {
+//            Picasso.get().load(userURL).into(ivProfilePhoto);
+//        }
 
         submit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                if(!response.getText().toString().isEmpty()){
                    store_feedback sf = new store_feedback(rating_marks,response.getText().toString());
-                   databaseReference.child("Feedback").child(LoginActivity.usernameInput).setValue(sf);
+                   databaseReference.child("Feedback").child(username).setValue(sf);
                    AlertDialog.Builder alert = new AlertDialog.Builder(FeedbackActivity.this);
                    alert.setTitle("Submitted Feedback!");
                    alert.setNegativeButton("Ok", (dialogInterface, i) -> dialogInterface.cancel());

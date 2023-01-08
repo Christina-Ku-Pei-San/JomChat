@@ -63,7 +63,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         PostItem currentItem = mPostList.get(position);
-//        System.out.println("ImageResource "+currentItem.getImageResource());
         if (currentItem.getImageResource().equals("")) {
             holder.mImageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
         }
@@ -73,15 +72,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         String p_username = mPostList.get(position).getText1();
         String p_content = mPostList.get(position).getText2();
-//        holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getText1());
         holder.mTextView2.setText(currentItem.getText2());
+
         if (currentItem.getImageResource2().equals("")) {
             holder.mImageView2.setVisibility(View.GONE);
         }
         else {
             Picasso.get().load(currentItem.getImageResource2()).into(holder.mImageView2);
         }
+
         holder.share_button.setOnClickListener((v)->{
             BitmapDrawable bitmapDrawable = (BitmapDrawable) holder.mImageView2.getDrawable();
             if(bitmapDrawable ==null){
