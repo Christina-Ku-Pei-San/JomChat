@@ -1,19 +1,31 @@
 package wia2007.example.jomchat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -24,12 +36,18 @@ public class PostActivity extends AppCompatActivity {
     private CommentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    Button share_button;
+    static String p_username;
+    static String p_content;
+
     ImageView ivBack, ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
 
+
     CircleImageView ivProfile;
-    TextView tvPostOwnerUsername, tvPostContent;
-    ImageView ivPostPhoto;
+    static TextView tvPostOwnerUsername;
+    static TextView tvPostContent;
+    static ImageView ivPostPhoto;
     String username, userURL, postOwnerUsername, postOwnerImageuri, postID, postContent, postURL;
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -123,7 +141,102 @@ public class PostActivity extends AppCompatActivity {
                 startActivity(startintent);
             }
         });
+        share_button = findViewById(R.id.BtnShare);
+        share_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                 p_username =  tvPostOwnerUsername.getText().toString().trim();
+                 p_content =  tvPostContent.getText().toString().trim();
+
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) ivPostPhoto.getDrawable();
+                if(bitmapDrawable ==null){
+                    //post without image
+                    shareTextOnly(p_username, p_content);
+
+                }
+                else if(bitmapDrawable !=null & p_username.isEmpty() == true){
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    shareImageOnly(p_username, bitmap);
+                }
+                else{
+                    //post with image
+                    //convert image to bitmap
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    shareImageAndText(p_username,p_content,bitmap);
+
+
+                }
+
+            }
+        });
     }
+
+
+    private void shareTextOnly(String p_username, String p_content){
+        //concentrate username and description to share
+        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content;
+        //String shareBody =p_username +"\n"+ p_content;
+
+        //share intent
+        Intent sIntent = new Intent(Intent.ACTION_SEND);
+        sIntent.setType("text/plain");
+        sIntent.putExtra(Intent.EXTRA_SUBJECT,"Subject Here");// in case shared via email
+        sIntent.putExtra(Intent.EXTRA_TEXT,shareBody); //text to share
+        startActivity(Intent.createChooser(sIntent, "Share Via"));
+
+    }
+    private void shareImageOnly(String p_username, Bitmap bitmap){
+        //concentrate username and description to share
+        String shareBody = "Username: "+p_username ;
+        //String shareBody =p_username +"\n"+ p_content;
+
+        Uri uri = saveImageToShare(bitmap);
+
+        //share intent
+        Intent sIntent = new Intent(Intent.ACTION_SEND);
+        sIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        sIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+        sIntent.setType("image/png");
+        startActivity(Intent.createChooser(sIntent, "Share Via"));
+
+
+    }
+
+    private void shareImageAndText(String p_username, String p_content, Bitmap bitmap){
+        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content;
+        //String shareBody =p_username +"\n"+ p_content;
+        //first we will save this image in cache, get the saved image uri
+        Uri uri = saveImageToShare(bitmap);
+
+        //share intent
+        Intent sIntent = new Intent(Intent.ACTION_SEND);
+        sIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        sIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+        sIntent.setType("image/png");
+        startActivity(Intent.createChooser(sIntent, "Share Via"));
+
+    }
+    private Uri saveImageToShare(Bitmap bitmap){
+        File imageFolder = new File(getCacheDir(),"images" );
+        Uri uri = null;
+        try{
+            imageFolder.mkdirs(); //create if not exists
+            File file = new File(imageFolder,"shared_image.png" );
+            FileOutputStream stream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+            stream.flush();
+            stream.close();
+            uri = FileProvider.getUriForFile(this,"wia2007.example.jomchat",file);
+
+        }
+        catch(Exception e){
+            Toast.makeText(this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+        return uri;
+    }
+
 
     public void createCommentList() {
         mCommentList = new ArrayList<>();

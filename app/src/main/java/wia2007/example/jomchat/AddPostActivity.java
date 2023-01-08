@@ -84,8 +84,11 @@ public class AddPostActivity extends AppCompatActivity {
     String username;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
@@ -141,10 +144,10 @@ public class AddPostActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
-          gallery = (ImageButton) findViewById(R.id.IBGallery);
-          btnsubmit= (Button)findViewById(R.id.BtnSubmit);
-          imgview = (ImageView)findViewById(R.id.IVUploadedImage);
-          postContent =(TextInputEditText) findViewById(R.id.TETAddPost);
+        gallery = (ImageButton) findViewById(R.id.IBGallery);
+        btnsubmit= (Button)findViewById(R.id.BtnSubmit);
+        imgview = (ImageView)findViewById(R.id.IVUploadedImage);
+        postContent =(TextInputEditText) findViewById(R.id.TETAddPost);
 
         progressDialog = new ProgressDialog(AddPostActivity.this);
 
@@ -256,7 +259,7 @@ public class AddPostActivity extends AppCompatActivity {
         if(!postContent.getText().toString().isEmpty()){
 
 
-            uploadinfo textUploadInfo = new uploadinfo(LoginActivity.usernameInput,postContent.getText().toString(), null);
+            PostItem textUploadInfo = new PostItem(LoginActivity.usernameInput,postContent.getText().toString(), null);
 
             String ImageUploadId = databaseReference.push().getKey();
             databaseReference.child("Post").child(ImageUploadId).setValue(textUploadInfo);
@@ -297,31 +300,31 @@ public class AddPostActivity extends AppCompatActivity {
 
     private void sendPostNotification(JSONObject notificationJo) {
         // send volley object request
-       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo,
-               new Response.Listener<JSONObject>() {
-                   @Override
-                   public void onResponse(JSONObject response) {
-                       Log.d("FCM_RESPONSE","onResponse: "+response.toString());
-                   }
-               },
-               new Response.ErrorListener() {
-                   @Override
-                   public void onErrorResponse(VolleyError error) {
-                       Toast.makeText(AddPostActivity.this,""+error.toString(), Toast.LENGTH_SHORT);
-                   }
-               })
-       {
-           @Override
-           public Map<String, String> getHeaders() throws AuthFailureError {
-             //put required headers
-               Map<String,String> headers = new HashMap<>();
-               headers.put("Content-Type", "application/json");
-               headers.put("Authorization","key=AAAAWNvrod8:APA91bFCxJ-IorFH_FBLi6q6Ddh9vfDuXHGelkB-VAIBUetcSUJkVZNuhRwo5QRkGmokaxpoejAL3RVeJAUfAD2Yv6h-5a6pj3QH8acu8v0_ErvwE6d9LybrFLE378TlyHebqsV_J5HL");
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("FCM_RESPONSE","onResponse: "+response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AddPostActivity.this,""+error.toString(), Toast.LENGTH_SHORT);
+                    }
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                //put required headers
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization","key=AAAAWNvrod8:APA91bFCxJ-IorFH_FBLi6q6Ddh9vfDuXHGelkB-VAIBUetcSUJkVZNuhRwo5QRkGmokaxpoejAL3RVeJAUfAD2Yv6h-5a6pj3QH8acu8v0_ErvwE6d9LybrFLE378TlyHebqsV_J5HL");
 
-               return headers;
-           }
-       };
-       //enqueue the volley request
+                return headers;
+            }
+        };
+        //enqueue the volley request
         Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 
@@ -366,7 +369,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String url = uri.toString();
-                                    uploadinfo imageUploadInfo = new uploadinfo(LoginActivity.usernameInput,TempImageContent, url);
+                                    PostItem imageUploadInfo = new PostItem(LoginActivity.usernameInput,TempImageContent, url);
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
 //                                    Upload upload = new Upload(et_localization, url);

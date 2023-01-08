@@ -5,11 +5,11 @@ import android.net.Uri;
 public class PostItem {
 
     private String mpostID;
-//    private int mImageResource;
+    //    private int mImageResource;
     private String  mImageResource;
     private String mText1;
     private String mText2;
-//    private int mImageResource2;
+    //    private int mImageResource2;
     private String mImageResource2;
 
 //    public PostItem(int imageResource, String text1, String text2, int imageResource2) {
@@ -28,7 +28,12 @@ public class PostItem {
         mImageResource2 = imageResource2;
     }
 
-//    public PostItem(int imageResource, String text1, String text2) {
+    public PostItem(String mText1, String mText2, String mImageResource2) {
+        this.mText1 = mText1;
+        this.mText2 = mText2;
+        this.mImageResource2 = mImageResource2;
+    }
+    //    public PostItem(int imageResource, String text1, String text2) {
 //        mImageResource = imageResource;
 //        mText1 = text1;
 //        mText2 = text2;
