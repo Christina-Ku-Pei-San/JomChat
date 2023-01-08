@@ -131,7 +131,7 @@ public class OwnPostListActivity extends AppCompatActivity {
             }
         });
 
-        mRecyclerView = findViewById(R.id.RVPostItem);
+        mRecyclerView = findViewById(R.id.RVOwnPostItem);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager= new LinearLayoutManager(this);
         mAdapter = new OwnPostAdapter(post);
@@ -183,26 +183,5 @@ public class OwnPostListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        search_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent s = new Intent(OwnPostListActivity.this,SearchPostActivity.class);
-                s.putExtra("username", username);
-                s.putExtra("userURL", userURL);
-                startActivity(s);
-            }
-        });
-
-        add_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent a = new Intent(OwnPostListActivity.this, AddPostActivity.class);
-                a.putExtra("username", username);
-                a.putExtra("userURL", userURL);
-                startActivity(a);
-            }
-        });
     }
-
-    }
+}

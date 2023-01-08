@@ -11,8 +11,7 @@
 <RelativeLayout
     android:id="@+id/RLSignUp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/IVBack"

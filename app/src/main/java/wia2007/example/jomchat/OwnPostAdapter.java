@@ -96,6 +96,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deletePost(holder.getAdapterPosition());
+                        notifyDataSetChanged();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -133,7 +134,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
     private void deletePost(int adapterPosition) {
         String postID = mOwnPostList.get(adapterPosition).getPostID();
 
-        databaseReference.child("Post").child(postID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Post").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
@@ -150,7 +151,6 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
             }
         });
-
 
     }
 

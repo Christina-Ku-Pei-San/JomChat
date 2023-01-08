@@ -147,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
         BtnViewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startintent = new Intent( ProfileActivity.this, PostListActivity.class);
+                Intent startintent = new Intent( ProfileActivity.this, OwnPostListActivity.class);
                 startintent.putExtra("username", username);
                 startintent.putExtra("userURL", userURL);
                 startActivity(startintent);

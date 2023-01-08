@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RLLoginAct"
@@ -8,131 +8,137 @@
     tools:context=".LoginActivity"
     style="@style/SCREEN">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FSKTM"
-        style="@style/TEXT"
-        android:textSize="13sp"
-        android:fontFamily="@font/droid_sans_mono"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+    <RelativeLayout
+        android:id="@+id/RLLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/TV_Login"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/bangers"
-        android:text="JOMCHAT"
-        style="@style/TEXT"
-        android:textSize="40sp" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FSKTM"
+            style="@style/TEXT"
+            android:textSize="13sp"
+            android:fontFamily="@font/droid_sans_mono"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
 
-    <TextView
-        android:id="@+id/TV_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TV_Login"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="80dp"
-        android:fontFamily="@font/droid_sans_mono"
-        android:text="Username"
-        style="@style/TEXT"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/TV_Login"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/bangers"
+            android:text="JOMCHAT"
+            style="@style/TEXT"
+            android:textSize="40sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username_login"
-        style="@style/TEXTINPUTLAYOUT"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TV_Login"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
-        android:hint="Username"
-        app:boxBackgroundMode="outline"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true">
+        <TextView
+            android:id="@+id/TV_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TV_Login"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Username"
+            style="@style/TEXT"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enter_username"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_login"
+            style="@style/TEXTINPUTLAYOUT"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/droid_sans_mono"
-            android:inputType="text"
-            android:textSize="20sp" />
+            android:layout_below="@+id/TV_Login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="130dp"
+            android:hint="Username"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/enter_username"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/droid_sans_mono"
+                android:inputType="text"
+                android:textSize="20sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_login"
-        style="@style/TEXTINPUTLAYOUT"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username_login"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:hint="Password"
-        app:boxBackgroundMode="outline"
-        app:endIconMode="password_toggle"
-        app:errorEnabled="true">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enter_password"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_login"
+            style="@style/TEXTINPUTLAYOUT"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/username_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:hint="Password"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/enter_password"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/droid_sans_mono"
+                android:inputType="textPassword"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/TV_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username_login"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/droid_sans_mono"
-            android:inputType="textPassword"
-            android:textSize="20sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="Password"
+            style="@style/TEXT"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/TV_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username_login"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/droid_sans_mono"
-        android:text="Password"
-        style="@style/TEXT"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/password_login"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="100dp"
+            style="@style/BUTTON"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Sign Up"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp"
+            />
 
-    <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/password_login"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp"
-        style="@style/BUTTON"
-        android:fontFamily="@font/droid_sans_mono"
-        android:text="Sign Up"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:cornerRadius="10dp"
-        />
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/password_login"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="30dp"
+            style="@style/BUTTON2"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Login"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="130dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/password_login"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="30dp"
-        style="@style/BUTTON2"
-        android:fontFamily="@font/droid_sans_mono"
-        android:text="Login"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:cornerRadius="10dp" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
 
