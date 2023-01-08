@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/MCVOwnPostItem"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    style="@style/OWNPOSTITEM"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    app:strokeWidth="0.5dp">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/RLOwnPostItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVProfile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_account_circle_24" />
+
+        <TextView
+            android:id="@+id/TVUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/IVProfile"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Siti"
+            style="@style/TEXT"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TVPostContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVProfile"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/droid_sans_mono"
+            android:text="Today was a fine day so I woke up early and went for a jog. Suddenly, a dog came out of nowhere and chased after me, i then ran 50km/h to get rid of it. After that I went to the nearby coffee shop to have my breakfast. When I’m on the way home, i accidentally stepped on a dog’s shit. In conclusion, today is an awful day."
+            style="@style/TEXT"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/IVPostPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_below="@+id/TVPostContent"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/post_photo1"/>
+
+        <Button
+            style="@style/DELETEPOST"
+            android:id="@+id/BtnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/droid_sans_mono"
+            android:layout_above="@+id/TVPostContent"
+            android:layout_alignParentEnd="true"
+            android:text="Delete" />
+
+        <Button
+            style="@style/LIKEPOST"
+            android:id="@+id/BtnLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/droid_sans_mono"
+            android:layout_below="@+id/IVPostPhoto"
+            android:text="Like" />
+
+        <Button
+            android:id="@+id/BtnComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_toEndOf="@+id/BtnLike"
+            android:fontFamily="@font/droid_sans_mono"
+            style="@style/COMMENTPOST"
+            android:text="Comment" />
+
+        <Button
+            android:id="@+id/BtnShare"
+            style="@style/SHAREPOST"
+            android:fontFamily="@font/droid_sans_mono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPostPhoto"
+            android:layout_alignParentEnd="true"
+            android:text="Share"
+            />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -81,6 +81,11 @@
         <item name = "android:strokeColor">#F5C0A2</item>
     </style>
 
+    <style name = "OWNPOSTITEM">
+        <item name = "android:backgroundTint">#FFD1D1</item>
+        <item name = "android:strokeColor">#F5C0A2</item>
+    </style>
+
     <style name = "LIKEPOST">
         <item name = "android:drawableLeft">@drawable/ic_baseline_thumb_up_light_mode</item>
         <item name = "android:backgroundTint">#FFD1D1</item>
@@ -97,6 +102,13 @@
 
     <style name = "SHAREPOST">
         <item name = "android:drawableLeft">@drawable/ic_baseline_share_24_light</item>
+        <item name = "android:backgroundTint">#FFD1D1</item>
+        <item name = "android:textColor">#000000</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name = "DELETEPOST">
+        <item name = "android:drawableLeft">@drawable/ic_baseline_delete_light_mode</item>
         <item name = "android:backgroundTint">#FFD1D1</item>
         <item name = "android:textColor">#000000</item>
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
