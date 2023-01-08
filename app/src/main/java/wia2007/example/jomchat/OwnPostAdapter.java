@@ -1,6 +1,8 @@
 package wia2007.example.jomchat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -36,12 +38,15 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
     private OwnPostAdapter.OnItemClickListener mListener;
     Context context;
 
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
     public OwnPostAdapter() {
     }
 
-    public OwnPostAdapter(ArrayList<OwnPostItem> mOwnPostList, Context context) {
-        this.mOwnPostList = mOwnPostList;
+    public OwnPostAdapter( Context context, ArrayList<OwnPostItem> mOwnPostList) {
         this.context = context;
+        this.mOwnPostList = mOwnPostList;
     }
 
     public interface OnItemClickListener {
@@ -81,6 +86,28 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
             Picasso.get().load(currentItem.getImageResource2()).into(holder.mImageView2);
         }
 
+        holder.delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Delete Post");
+                builder.setMessage("Are You Sure To Delete This Post");
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deletePost(holder.getAdapterPosition());
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
+        
         holder.share_button.setOnClickListener((v) -> {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) holder.mImageView2.getDrawable();
             if (bitmapDrawable == null) {
@@ -96,6 +123,30 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 shareImageAndText(p_username, p_content, bitmap);
 
+
+            }
+        });
+
+
+    }
+
+    private void deletePost(int adapterPosition) {
+        String postID = mOwnPostList.get(adapterPosition).getPostID();
+
+        databaseReference.child("Post").child(postID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    if (dataSnapshot1.getKey().equals(postID)) {
+                        dataSnapshot1.getRef().removeValue();
+                        Toast.makeText(context, "post deleted", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -183,6 +234,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         public ImageView mImageView2;
 
         public Button share_button;
+        public Button delete_button;
 
 
         public OwnPostViewHolder(View itemView, final OwnPostAdapter.OnItemClickListener listener) {
@@ -193,6 +245,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
             mImageView2 = itemView.findViewById(R.id.IVPostPhoto);
 
             share_button = itemView.findViewById(R.id.BtnShare);
+            delete_button = itemView.findViewById(R.id.BtnDelete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

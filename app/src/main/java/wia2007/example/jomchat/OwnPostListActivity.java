@@ -35,8 +35,11 @@ public class OwnPostListActivity extends AppCompatActivity {
 
     FloatingActionButton search_button, add_button, feedback_button;
     private RecyclerView mRecyclerView;
-    private PostAdapter mAdapter;
+    private OwnPostAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    Button share_button;
+    static String postID;
 
     ImageView ivMessenger, ivNotification;
     CircleImageView ivProfilePhoto;
@@ -85,7 +88,7 @@ public class OwnPostListActivity extends AppCompatActivity {
             }
         });
 
-        ArrayList<PostItem> post = new ArrayList<>();
+        ArrayList<OwnPostItem> post = new ArrayList<>();
         databaseReference.child("Post").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -107,7 +110,7 @@ public class OwnPostListActivity extends AppCompatActivity {
                                 for (DataSnapshot data : snapshot.getChildren()) {
                                     if (data.getKey().equals(postUsername)) {
                                         String postUserURL = data.child("userURL").getValue().toString();
-                                        post.add(new PostItem(postID, postUserURL, postUsername, content, imageurl));
+                                        post.add(new OwnPostItem(postID, postUserURL, postUsername, content, imageurl));
                                     }
                                 }
                                 mAdapter.notifyDataSetChanged();
@@ -131,7 +134,7 @@ public class OwnPostListActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.RVPostItem);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager= new LinearLayoutManager(this);
-        mAdapter = new PostAdapter(post);
+        mAdapter = new OwnPostAdapter(post);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -166,7 +169,7 @@ public class OwnPostListActivity extends AppCompatActivity {
             }
         });
 
-        mAdapter.setOnItemClickListener(new PostAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new OwnPostAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(OwnPostListActivity.this, PostActivity.class);
