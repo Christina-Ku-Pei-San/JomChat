@@ -1,6 +1,9 @@
 package wia2007.example.jomchat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -14,8 +17,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +67,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private AutoCompleteTextView autoCompleteYear;
     private ArrayAdapter<String> adapterYears;
+
+    private static final String CHANNEL_ID = "simplified_coding";
+    private static final String CHANNEL_NAME ="Simplified Coding";
+    private static final String CHANNEL_DES = "Simplified Coding Notifications";
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -228,25 +239,34 @@ public class SignUpActivity extends AppCompatActivity {
             databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    // check if username is not registered before
+                    // check if username is registered before
                     if (snapshot.hasChild(usernameInput)) {
                         Toast.makeText(getApplicationContext(), "Username exists", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        // sending data to firebase Realtime Database
-                        // we are using username as unique identity for every user
-                        // so all the other details of user comes under username
-                        databaseReference.child("users").child(usernameInput).child("name").setValue(nameInput);
-                        databaseReference.child("users").child(usernameInput).child("email").setValue(emailInput);
-                        databaseReference.child("users").child(usernameInput).child("year").setValue(yearInput);
-                        databaseReference.child("users").child(usernameInput).child("department").setValue(departmentInput);
-                        databaseReference.child("users").child(usernameInput).child("password").setValue(passwordInput);
-                        databaseReference.child("users").child(usernameInput).child("userURL").setValue("");
+//                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//
+//                        if (!user.isEmailVerified()) {
+//                            user.sendEmailVerification();
+//                            Toast.makeText(getApplicationContext(), "Check your email to verify your account", Toast.LENGTH_LONG).show();
+//                        }
+//                        else {
+                            // sending data to firebase Realtime Database
+                            // we are using username as unique identity for every user
+                            // so all the other details of user comes under username
+                            databaseReference.child("users").child(usernameInput).child("name").setValue(nameInput);
+                            databaseReference.child("users").child(usernameInput).child("email").setValue(emailInput);
+                            databaseReference.child("users").child(usernameInput).child("year").setValue(yearInput);
+                            databaseReference.child("users").child(usernameInput).child("department").setValue(departmentInput);
+                            databaseReference.child("users").child(usernameInput).child("password").setValue(passwordInput);
+                            databaseReference.child("users").child(usernameInput).child("userURL").setValue("");
 
-                        Toast.makeText(getApplicationContext(), "User Profile Added Sucessfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "User Profile Added Sucessfully", Toast.LENGTH_SHORT).show();
+                        displayNotification();
 
-                        Intent startintent = new Intent(SignUpActivity.this, LoginActivity.class);
-                        startActivity(startintent);
+                            Intent startintent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(startintent);
+//                        }
                     }
                 }
 
@@ -255,6 +275,20 @@ public class SignUpActivity extends AppCompatActivity {
 
                 }
             });
+
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O ){
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription(CHANNEL_DES);
+                NotificationManager manager = getSystemService(NotificationManager.class);
+                manager.createNotificationChannel(channel);
+
+            }
+
         }
+    }
+    private void displayNotification(){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(R.drawable.ic_like).setContentTitle("Hurray!Jom Chat...").setContentText("Enjoy and have fun...").setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);
+        mNotificationMgr.notify(1, mBuilder.build());
     }
 }

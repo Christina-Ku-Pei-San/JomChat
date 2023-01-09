@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -35,11 +36,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostActivity extends AppCompatActivity {
     private ArrayList<CommentItem> mCommentList;
+    private ArrayList<PostItem> mPostList;
     private RecyclerView mRecyclerView;
     private CommentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    Button comment_button, share_button;
+    Button like_button, comment_button, share_button;
+    TextView like_num;
     static String p_username;
     static String p_content;
 
@@ -55,6 +58,8 @@ public class PostActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
+
+    boolean mProcessLike= true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,10 @@ public class PostActivity extends AppCompatActivity {
         ivMessenger = findViewById(R.id.IVMessenger);
         ivNotification = findViewById(R.id.IVNotification);
         ivProfilePhoto = findViewById(R.id.IVProfilePhoto);
+        like_num = findViewById(R.id.TVLike);
+        like_button = findViewById(R.id.BtnLike);
+        comment_button = findViewById(R.id.BtnComment);
+        share_button = findViewById(R.id.BtnShare);
 
         if (userURL.equals("")) {
             ivProfilePhoto.setImageResource(R.drawable.ic_baseline_account_circle_24);
@@ -169,7 +178,56 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        comment_button = findViewById(R.id.BtnComment);
+        nrLikes(like_num,postID);
+
+        databaseReference.child("Likes").child(postID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(username)) {
+                    like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0,0,0);
+                    like_button.setText("Liked");
+                }
+                else {
+                    like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_likes, 0,0,0);
+                    like_button.setText("Like");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        like_button.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+               String username = preferences.getString("username", "");
+//
+               databaseReference.child("Likes").child(postID).addListenerForSingleValueEvent(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                       if (snapshot.hasChild(username)) {
+                           FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Likes").child(postID).child(username).removeValue();
+                           like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_likes, 0, 0, 0);
+                           like_button.setText("Like");
+
+                       } else {
+                           FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Likes").child(postID).child(username).setValue(true);
+                           like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0, 0, 0);
+                           like_button.setText("Liked");
+                       }
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError error) {
+
+                   }
+               });
+           }
+        });
+
         comment_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,7 +263,6 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        share_button = findViewById(R.id.BtnShare);
         share_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -230,6 +287,22 @@ public class PostActivity extends AppCompatActivity {
 
 
                 }
+
+            }
+        });
+    }
+
+    private void nrLikes(TextView likes, String postid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Likes").child(postid);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                likes.setText(snapshot.getChildrenCount()+" likes this.");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -273,7 +346,7 @@ public class PostActivity extends AppCompatActivity {
 
     private void shareTextOnly(String p_username, String p_content){
         //concentrate username and description to share
-        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content;
+        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content+"\n"+"#JomChatFSKTM";
         //String shareBody =p_username +"\n"+ p_content;
 
         //share intent
@@ -286,7 +359,7 @@ public class PostActivity extends AppCompatActivity {
     }
     private void shareImageOnly(String p_username, Bitmap bitmap){
         //concentrate username and description to share
-        String shareBody = "Username: "+p_username ;
+        String shareBody = "Username: "+p_username+"\n"+"#JomChatFSKTM";
         //String shareBody =p_username +"\n"+ p_content;
 
         Uri uri = saveImageToShare(bitmap);
@@ -303,7 +376,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void shareImageAndText(String p_username, String p_content, Bitmap bitmap){
-        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content;
+        String shareBody = "Username: "+p_username +"\n"+"Content: "+ p_content+"\n"+"#JomChatFSKTM";
         //String shareBody =p_username +"\n"+ p_content;
         //first we will save this image in cache, get the saved image uri
         Uri uri = saveImageToShare(bitmap);

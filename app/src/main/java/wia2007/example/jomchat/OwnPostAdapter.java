@@ -40,6 +40,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
     private OwnPostAdapter.OnItemClickListener mListener;
     Context context;
 
+    FirebaseUser firebaseUser;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -70,6 +71,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
     @Override
     public void onBindViewHolder(@NonNull OwnPostViewHolder holder, int position) {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         OwnPostItem currentItem = mOwnPostList.get(position);
         String postID = currentItem.getPostID();
         if (currentItem.getImageResource().equals("")) {
@@ -88,6 +90,29 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         } else {
             Picasso.get().load(currentItem.getImageResource2()).into(holder.mImageView2);
         }
+
+        nrLikes(holder.like_num,mOwnPostList.get(position).getPostID());
+
+        databaseReference.child("Likes").child(postID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                SharedPreferences preferences = context.getSharedPreferences("user_prefs", context.MODE_PRIVATE);
+                String username = preferences.getString("username", "");
+                if (snapshot.hasChild(username)) {
+                    holder.like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0,0,0);
+                    holder.like_button.setText("Liked");
+                }
+                else {
+                    holder.like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_likes, 0,0,0);
+                    holder.like_button.setText("Like");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +133,30 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
                     }
                 });
                 builder.create().show();
+            }
+        });
+
+        holder.like_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = context.getSharedPreferences("user_prefs", context.MODE_PRIVATE);
+                String username = preferences.getString("username", "");
+                String srch = holder.like_button.getText().toString();
+                System.out.println(srch);
+
+                if(holder.like_button.getText().toString().equals("Like")){
+                    FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Likes").child(postID).child(username).setValue(true);
+                    //FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Post").child(mPostList.get(position).getPostID()).child(firebaseUser.getUid()).setValue(true);
+                    holder.like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0,0,0);
+                    holder.like_button.setText("Liked");
+
+                }
+                else {
+                    //FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Post").child(mPostList.get(position).getPostID()).child(firebaseUser.getUid()).removeValue();
+                    FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Likes").child(postID).child(username).removeValue();
+                    holder.like_button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_likes, 0,0,0);
+                    holder.like_button.setText("Like");
+                }
             }
         });
 
@@ -196,6 +245,22 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
     }
 
+    private void nrLikes(TextView likes, String postid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://jomchat-9f535-default-rtdb.asia-southeast1.firebasedatabase.app/").child("Likes").child(postid);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                likes.setText(snapshot.getChildrenCount()+" likes this.");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void addComment(String postID, String commenter, String message) {
         databaseReference.child("Post").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -232,7 +297,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
     private void shareImageOnly(String p_username, Bitmap bitmap) {
         //concentrate username and description to share
-        String shareBody = "Username: " + p_username;
+        String shareBody = "Username: " + p_username+"\n"+"#JomChatFSKTM";
         //String shareBody =p_username +"\n"+ p_content;
         //String shareBody = p_username;
 
@@ -252,7 +317,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
     private void shareTextOnly(String p_username, String p_content) {
         //concentrate username and description to share
         //String shareBody =p_username +"\n"+ p_content;
-        String shareBody = "Username: " + p_username + "\n" + "Content: " + p_content;
+        String shareBody = "Username: " + p_username + "\n" + "Content: " + p_content +"\n"+"#JomChatFSKTM";
 
         //share intent
         Intent sIntent = new Intent(Intent.ACTION_SEND);
@@ -265,7 +330,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
 
     private void shareImageAndText(String p_username, String p_content, Bitmap bitmap) {
         //String shareBody =p_username +"\n"+ p_content;
-        String shareBody = "Username: " + p_username + "\n" + "Content: " + p_content;
+        String shareBody = "Username: " + p_username + "\n" + "Content: " + p_content +"\n"+"#JomChatFSKTM";
         //first we will save this image in cache, get the saved image uri
         Uri uri = saveImageToShare(bitmap);
 
@@ -313,6 +378,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
         public Button comment_button;
         public Button share_button;
         public Button delete_button;
+        public TextView like_num;
 
 
         public OwnPostViewHolder(View itemView, final OwnPostAdapter.OnItemClickListener listener) {
@@ -326,6 +392,7 @@ public class OwnPostAdapter extends RecyclerView.Adapter<OwnPostAdapter.OwnPostV
             comment_button =itemView.findViewById(R.id.BtnComment);
             share_button = itemView.findViewById(R.id.BtnShare);
             delete_button = itemView.findViewById(R.id.BtnDelete);
+            like_num = itemView.findViewById(R.id.TVLike);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
