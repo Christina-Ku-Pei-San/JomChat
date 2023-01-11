@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -33,6 +35,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +48,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -336,17 +341,6 @@ public class AddPostActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 
-    private void uploadData(final String title, final String description){
-        pd.setMessage("Publishing post...");
-        pd.show();
-
-        //for post-image name, post-id, post-publish time
-        final String timeStamp = String.valueOf(System.currentTimeMillis());
-
-        String filePathAndName = "Posts/" + "post_" + timeStamp;
-
-
-    }
 
     public void UploadImage() {
 
@@ -354,6 +348,8 @@ public class AddPostActivity extends AppCompatActivity {
 
             progressDialog.setTitle("Image is Uploading...");
             progressDialog.show();
+            //for post-image name, post-id, post-publish time
+
             StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(image_rui));
             storageReference2.putFile(image_rui)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -362,6 +358,10 @@ public class AddPostActivity extends AppCompatActivity {
 
                             String TempImageContent =postContent.getText().toString().trim();
                             //String username = LoginActivity.usernameInput;
+                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uriTask.isSuccessful());
+                            String downloadUri = uriTask.getResult().toString();
+
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
 //                            @SuppressWarnings("VisibleForTests")
@@ -372,6 +372,7 @@ public class AddPostActivity extends AppCompatActivity {
 //                            databaseReference.child("Post").child(ImageUploadId).setValue(imageUploadInfo);
 //                            postContent.setText("");
 //                            imgview.setImageURI(null);
+
 
                             storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
