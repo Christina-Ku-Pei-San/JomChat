@@ -5,6 +5,7 @@
     android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN2"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -12,60 +13,70 @@
         android:id="@+id/BtnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login Activity" />
+        android:text="Login Activity"
+        style="@style/SIGNUPBUTTON"/>
 
     <Button
         android:id="@+id/BtnSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SignUp Activity" />
+        android:text="SignUp Activity"
+        style="@style/SIGNUPBUTTON"/>
 
     <Button
         android:id="@+id/BtnPostList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post List Activity" />
+        android:text="Post List Activity"
+        style="@style/SIGNUPBUTTON"/>
 
     <Button
         android:id="@+id/BtnPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post Activity" />
+        android:text="Post Activity"
+        style="@style/SIGNUPBUTTON"/>
 
     <Button
         android:id="@+id/BtnMessengerList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Messenger List Activity" />
+        android:text="Messenger List Activity"
+        style="@style/SIGNUPBUTTON" />
 
     <Button
         android:id="@+id/BtnMessenger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Messenger Activity" />
+        android:text="Messenger Activity"
+        style="@style/SIGNUPBUTTON" />
 
     <Button
         android:id="@+id/BtnNotificationList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notification List Activity" />
+        android:text="Notification List Activity"
+        style="@style/SIGNUPBUTTON" />
 
     <Button
         android:id="@+id/BtnNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notification Activity" />
+        android:text="Notification Activity"
+        style="@style/SIGNUPBUTTON" />
 
     <Button
         android:id="@+id/BtnSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Setting Activity" />
+        android:text="Setting Activity"
+        style="@style/SIGNUPBUTTON" />
 
     <Button
         android:id="@+id/BtnProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile Activity" />
+        android:text="Profile Activity"
+        style="@style/SIGNUPBUTTON" />
 
 </LinearLayout>

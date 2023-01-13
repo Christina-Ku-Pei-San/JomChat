@@ -61,7 +61,7 @@
             android:layout_marginLeft="180dp"
             android:fontFamily="@font/bangers"
             android:text="JOMCHAT"
-            style="@style/TEXT"
+            style="@style/TITLE"
             android:textSize="28sp" />
 
         <TextView
@@ -113,7 +113,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        style="@style/BUTTON2"
+        style="@style/ADDPOSTBUTTON"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="SpeakableTextPresentCheck" />
 

@@ -24,6 +24,17 @@
         android:layout_marginBottom="8dp" />
 
     <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FSKTM"
+        android:textColor="#3B7DD8"
+        android:textSize="13sp"
+        android:fontFamily="@font/droid_sans_mono"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"/>
+
+    <TextView
         android:id="@+id/TV_signUp"
         style="@style/TEXT"
         android:layout_width="wrap_content"
@@ -32,6 +43,7 @@
         android:layout_marginTop="18dp"
         android:fontFamily="@font/droid_sans_mono"
         android:text="SIGN UP"
+        android:textColor="#3B7DD8"
         android:textSize="35sp"
         android:textStyle="bold" />
 
@@ -189,7 +201,7 @@
 
     <Button
         android:id="@+id/btn_signup"
-        style="@style/BUTTON"
+        style="@style/SIGNUPBUTTON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/til_confirm_password"
@@ -202,17 +214,6 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="10dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FSKTM"
-        style="@style/TEXT"
-        android:textSize="13sp"
-        android:fontFamily="@font/droid_sans_mono"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="3dp"/>
 
 </RelativeLayout>
 

@@ -47,7 +47,7 @@
 
         <TextView
             android:id="@+id/TVSettings"
-            style="@style/TEXT"
+            style="@style/TITLE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -86,7 +86,7 @@
 
     <Button
         android:id="@+id/BtnViewProfile"
-        style="@style/BUTTON"
+        style="@style/SIGNUPBUTTON"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"
@@ -98,7 +98,7 @@
 
     <Button
         android:id="@+id/BtnFavourite"
-        style="@style/BUTTON"
+        style="@style/SIGNUPBUTTON"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
@@ -124,7 +124,7 @@
 
     <Button
         android:id="@+id/BtnChangePassword"
-        style="@style/BUTTON"
+        style="@style/SIGNUPBUTTON"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
@@ -136,7 +136,7 @@
 
     <Button
         android:id="@+id/BtnFeedback"
-        style="@style/BUTTON"
+        style="@style/SIGNUPBUTTON"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
@@ -148,7 +148,7 @@
 
     <Button
         android:id="@+id/BtnLogout"
-        style="@style/BUTTON"
+        style="@style/SIGNUPBUTTON"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"

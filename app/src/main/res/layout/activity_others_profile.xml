@@ -71,7 +71,7 @@
             android:layout_marginLeft="180dp"
             android:fontFamily="@font/bangers"
             android:text="Message"
-            style="@style/TEXT"
+            style="@style/TITLE"
             android:textSize="28sp" />
 
         <TextView

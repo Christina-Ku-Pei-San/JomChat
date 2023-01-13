@@ -226,7 +226,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
         android:layout_gravity="right"
-        style="@style/BUTTON2"
+        style="@style/LOGINBUTTON"
         android:capitalize="words"
         android:fontFamily="@font/m_plus_1p_bold"
         android:padding="8dp"

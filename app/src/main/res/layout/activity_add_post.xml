@@ -71,7 +71,7 @@
             android:layout_marginLeft="180dp"
             android:fontFamily="@font/bangers"
             android:text="JOMCHAT"
-           style="@style/TEXT"
+           style="@style/TITLE"
             android:textSize="28sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -107,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        style="@style/BUTTON"
+        style="@style/LOGINBUTTON"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -159,7 +159,6 @@
         android:layout_marginRight="60dp"
         android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
-        style="@style/BUTTON"
         android:padding="8dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@id/TILAddPost"

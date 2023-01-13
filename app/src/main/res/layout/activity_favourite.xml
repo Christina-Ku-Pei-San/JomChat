@@ -68,13 +68,12 @@
 
         <TextView
             android:id="@+id/TVMessage"
+            style="@style/TITLE"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="180dp"
             android:fontFamily="@font/bangers"
             android:text="Favourite"
-            style="@style/TEXT"
             android:textSize="28sp" />
 
         <TextView
