@@ -26,14 +26,13 @@
 
         <TextView
             android:id="@+id/TV_Login"
-            style="@style/TEXT"
+            style="@style/TITLE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:fontFamily="@font/bangers"
             android:text="JOMCHAT"
-            android:textColor="#3B7DD8"
             android:textSize="40sp" />
 
         <TextView
@@ -46,8 +45,7 @@
             android:layout_marginTop="80dp"
             android:fontFamily="@font/droid_sans_mono"
             android:text="Username"
-            android:textColor="#3B7DD8"
-            style="@style/TEXT"
+            style="@style/TITLE"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -106,8 +104,7 @@
             android:layout_marginTop="50dp"
             android:fontFamily="@font/droid_sans_mono"
             android:text="Password"
-            android:textColor="#3B7DD8"
-            style="@style/TEXT"
+            style="@style/TITLE"
             android:textSize="25sp"
             android:textStyle="bold" />
 

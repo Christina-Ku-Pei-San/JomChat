@@ -110,11 +110,11 @@
 
     <Switch
         android:id="@+id/SwDarkMode"
+        style="@style/SWITCH"
         android:layout_width="225dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:padding="8dp"
-        style="@style/SWITCH"
         android:text="DARK MODE"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
