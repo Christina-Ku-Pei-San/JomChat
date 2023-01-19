@@ -62,7 +62,7 @@
 
     <!-- AddPost background if light mode on -->
     <style name="ADDPOST">
-        <item name ="android:background">#FFF7BB</item>
+        <item name ="android:background">#FFFFFF</item>
         <item name="android:textColor">#6E6B6B</item>
         <item name ="textInputOutlinedStyle"> @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
     </style>
