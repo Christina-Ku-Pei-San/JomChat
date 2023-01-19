@@ -95,6 +95,7 @@ public class AddPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_post);
 
         username = getIntent().getStringExtra("username");
+        userURL = getIntent().getStringExtra("userURL");
 
         pd = new ProgressDialog(this);
         //anaother
@@ -108,6 +109,7 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, PostListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -118,6 +120,7 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, MessengerListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -128,6 +131,7 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, NotificationListActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
@@ -145,6 +149,7 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startintent = new Intent(AddPostActivity.this, SettingActivity.class);
                 startintent.putExtra("username", username);
+                startintent.putExtra("userURL", userURL);
                 startActivity(startintent);
             }
         });
