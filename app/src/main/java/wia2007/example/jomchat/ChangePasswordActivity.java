@@ -58,7 +58,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-        ivHome = findViewById(R.id.IVBack);
+        ivHome = findViewById(R.id.IVHome);
         ivBack = findViewById(R.id.IVBack);
         ivMessenger = findViewById(R.id.IVMessenger);
         ivNotification = findViewById(R.id.IVNotification);

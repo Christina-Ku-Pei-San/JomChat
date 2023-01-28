@@ -408,7 +408,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else {
 
-            Toast.makeText(AddPostActivity.this, "Please Select Image ", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddPostActivity.this, "Please enter your post content", Toast.LENGTH_LONG).show();
 
         }
     }
